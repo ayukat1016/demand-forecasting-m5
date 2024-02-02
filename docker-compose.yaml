@@ -1,0 +1,112 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:14.3
+    container_name: postgres
+    volumes:
+      - ./postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - default
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=demand_forecasting_m5
+      - POSTGRES_INITDB_ARGS="--encoding=UTF-8"
+    ports:
+      - 5432:5432
+    hostname: postgres
+    restart: always
+    stdin_open: true
+
+  data_registration:
+    container_name: data_registration
+    image: ml_development_template_m5:ml_development_template_m5_machine_learning_0.0.0
+    restart: "no"
+    networks:
+      - default
+    environment:
+      - POSTGRESQL_HOST=postgres
+      - POSTGRESQL_PORT=5432
+      - POSTGRESQL_USER=postgres
+      - POSTGRESQL_PASSWORD=password
+      - POSTGRESQL_DBNAME=demand_forecasting_m5
+      - LOG_LEVEL=DEBUG
+    command: >
+      /bin/sh -c "sleep 10s && python -m src.main --create_sql_filepath "/opt/data/create.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv" "
+    volumes:
+      - ./data:/opt/data
+      - ./data_registration/src:/opt/src
+    depends_on:
+      - postgres
+
+  # bi:
+  #   container_name: bi
+  #   image: shibui/building-ml-system:beverage_sales_forecasting_bi_1.0.0
+  #   restart: always
+  #   networks:
+  #     - default
+  #   environment:
+  #     - POSTGRESQL_HOST=postgres
+  #     - POSTGRESQL_PORT=5432
+  #     - POSTGRESQL_USER=postgres
+  #     - POSTGRESQL_PASSWORD=password
+  #     - POSTGRESQL_DBNAME=beverage_sales_forecasting
+  #     - LOG_LEVEL=DEBUG
+  #   command: >
+  #     /bin/sh -c "sleep 30s &&  streamlit run src/main.py"
+  #   ports:
+  #     - 8501:8501
+  #   depends_on:
+  #     - data_registration
+
+  # mlflow:
+  #   container_name: mlflow
+  #   image: shibui/building-ml-system:beverage_sales_forecasting_mlflow_1.0.0
+  #   volumes:
+  #     - ./ml/outputs/mlruns:/opt/outputs/mlruns
+  #   command:
+  #     - "mlflow"
+  #     - "server"
+  #     - "--backend-store-uri"
+  #     - "/opt/outputs/mlruns"
+  #     - "--default-artifact-root"
+  #     - "/opt/outputs/mlruns"
+  #     - "--host"
+  #     - "0.0.0.0"
+  #   ports:
+  #     - 15000:5000
+  #   restart: always
+  #   hostname: mlflow
+  #   depends_on:
+  #     - postgres
+
+  # ml:
+  #   container_name: ml
+  #   image: shibui/building-ml-system:beverage_sales_forecasting_ml_1.0.0
+  #   restart: "no"
+  #   volumes:
+  #     - ./data:/opt/data
+  #     - ./ml/hydra:/opt/hydra
+  #     - ./ml/outputs:/opt/outputs
+  #   networks:
+  #     - default
+  #   environment:
+  #     - POSTGRESQL_HOST=postgres
+  #     - POSTGRESQL_PORT=5432
+  #     - POSTGRESQL_USER=postgres
+  #     - POSTGRESQL_PASSWORD=password
+  #     - POSTGRESQL_DBNAME=beverage_sales_forecasting
+  #     - LOG_LEVEL=INFO
+  #     - MLFLOW_TRACKING_URI=http://mlflow:5000
+  #     - TARGET_CONFIG_NAME=default
+  #     - TARGET_YEAR=2021
+  #     - TARGET_WEEK=27
+  #   command: /bin/sh -c "sleep 60s && python -m src.main"
+  #   depends_on:
+  #     - data_registration
+  #     - mlflow
+
+networks:
+  default:
+    name: demand_forecasting_m5
