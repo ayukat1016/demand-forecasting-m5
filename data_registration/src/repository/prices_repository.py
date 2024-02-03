@@ -1,9 +1,9 @@
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.prices import Prices
-from src.model.table import TABLES
-from src.repository.abstract_repository import AbstractRepository
+from src.model.prices_model import Prices
+from src.model.table_model import TABLES
+from src.repository.abstract_repository import AbstractBulkInsertRepository
 
 
 # class AbstractPricesRepository(ABC):
@@ -22,7 +22,7 @@ from src.repository.abstract_repository import AbstractRepository
 #         raise NotImplementedError
 
 
-class PricesRepository(AbstractRepository):
+class PricesRepository(AbstractBulkInsertRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

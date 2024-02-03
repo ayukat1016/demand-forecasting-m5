@@ -1,9 +1,9 @@
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.calendar import Calendar
-from src.model.table import TABLES
-from src.repository.abstract_repository import AbstractRepository
+from src.model.calendar_model import Calendar
+from src.model.table_model import TABLES
+from src.repository.abstract_repository import AbstractBulkInsertRepository
 
 # class AbstractCalendarRepository(ABC):
 #     def __init__(
@@ -21,7 +21,7 @@ from src.repository.abstract_repository import AbstractRepository
 #         raise NotImplementedError
 
 
-class CalendarRepository(AbstractRepository):
+class CalendarRepository(AbstractBulkInsertRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

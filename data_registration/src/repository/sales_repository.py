@@ -1,12 +1,12 @@
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.sales import Sales
-from src.model.table import TABLES
-from src.repository.abstract_repository import AbstractRepository
+from src.model.sales_model import Sales
+from src.model.table_model import TABLES
+from src.repository.abstract_repository import AbstractBulkInsertRepository
 
 
-class SalesRepository(AbstractRepository):
+class SalesRepository(AbstractBulkInsertRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

@@ -5,9 +5,9 @@ from src.middleware.file_reader import read_csv_to_list
 from src.middleware.logger import configure_logger
 from src.middleware.file_reader import read_text_file
 from src.middleware.strings import get_uuid
-from src.model.calendar import Calendar
-from src.model.prices import Prices
-from src.model.sales import Sales
+from src.model.calendar_model import Calendar
+from src.model.prices_model import Prices
+from src.model.sales_model import Sales
 from src.repository.calendar_repository import CalendarRepository
 from src.repository.prices_repository import PricesRepository
 from src.repository.sales_repository import SalesRepository

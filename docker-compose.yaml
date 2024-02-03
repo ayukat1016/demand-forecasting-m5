@@ -26,11 +26,11 @@ services:
     networks:
       - default
     environment:
-      - POSTGRESQL_HOST=postgres
-      - POSTGRESQL_PORT=5432
-      - POSTGRESQL_USER=postgres
-      - POSTGRESQL_PASSWORD=password
-      - POSTGRESQL_DBNAME=demand_forecasting_m5
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DBNAME=demand_forecasting_m5
       - LOG_LEVEL=DEBUG
     command: >
       /bin/sh -c "sleep 10s && python -m src.main --create_sql_filepath "/opt/data/create.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv" "

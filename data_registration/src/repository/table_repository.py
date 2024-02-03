@@ -1,12 +1,11 @@
 from src.infrastructure.database import AbstractDBClient
-from src.middleware.file_reader import read_text_file
 from src.middleware.logger import configure_logger
-from src.repository.abstract_repository import AbstractTableRepository
+from src.repository.abstract_repository import AbstractCreateTablesRepository
 
 logger = configure_logger(__name__)
 
 
-class TableRepository(AbstractTableRepository):
+class TableRepository(AbstractCreateTablesRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,
