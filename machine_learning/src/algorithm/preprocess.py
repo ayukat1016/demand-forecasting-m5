@@ -4,22 +4,12 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 import pandas as pd
+from src.algorithm.abstract_algorithm import AbstractExtractor
 from src.middleware.logger import configure_logger
 from src.entity.preprocessed_data import ExtractedPriceSchema, ExtractedLagSalesSchema
 
 logger = configure_logger(__name__)
 
-class AbstractExtractor(ABC):
-    def __init__(self):
-        pass
-        # self.logger = getLogger(__name__)
-
-    @abstractmethod
-    def run(
-        self,
-        df: pd.DataFrame,
-    ) -> pd.DataFrame:
-        raise NotImplementedError
 
 class PricesExtractor(AbstractExtractor):
     def __init__(self):

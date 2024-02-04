@@ -9,9 +9,10 @@ from src.middleware.logger import configure_logger
 from src.model.calendar_model import Calendar
 from src.model.prices_model import Prices
 from src.model.sales_calendar_model import SalesCalendar
-from src.repository.calendar_repository import CalendarRepository
-from src.repository.prices_repository import PricesRepository
-from src.repository.sales_calendar_repository import SalesCalendarRepository
+from src.repository.abstract_repository import AbstractSelectRepository
+# from src.repository.calendar_repository import CalendarRepository
+# from src.repository.prices_repository import PricesRepository
+# from src.repository.sales_calendar_repository import SalesCalendarRepository
 
 logger = configure_logger(__name__)
 
@@ -60,16 +61,16 @@ logger = configure_logger(__name__)
 class DataLoaderUsecase(object):
     def __init__(
         self,
-        calendar_repository: CalendarRepository,
-        prices_repository: PricesRepository,
-        sales_calendar_repository: SalesCalendarRepository,
+        calendar_repository: AbstractSelectRepository,
+        prices_repository: AbstractSelectRepository,
+        sales_calendar_repository: AbstractSelectRepository,
     ):
         """Data loader usecase.
 
         Args:
-            calendar_repository (AbstractCalendarRepository): Repository to retrieve data for calendar.
-            prices_repository (AbstractPricesRepository): Repository to retrieve data for prices.
-            training_repository (AbstractTrainingRepository): Repository to retrieve data for training.
+            calendar_repository (AbstractSelectRepository): Repository to retrieve data for calendar.
+            prices_repository (AbstractSelectRepository): Repository to retrieve data for prices.
+            sales_calendar_repository  (AbstractSelectRepository): Repository to retrieve data for training.
         """
 
         # super().__init__(

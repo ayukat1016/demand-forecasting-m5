@@ -6,6 +6,19 @@ import pandas as pd
 from src.entity.evaluation_data import FeatureImportance
 
 
+class AbstractExtractor(ABC):
+    def __init__(self):
+        pass
+        # self.logger = getLogger(__name__)
+
+    @abstractmethod
+    def run(
+        self,
+        df: pd.DataFrame,
+    ) -> pd.DataFrame:
+        raise NotImplementedError
+
+
 class AbstractModel(ABC):
     def __init__(self):
         self.name: str = "base_model"

@@ -5,7 +5,7 @@ import pandas as pd
 import yaml
 from lightgbm import Booster, LGBMRegressor
 import lightgbm as lgb
-from src.algorithm.abstract_model import AbstractModel
+from src.algorithm.abstract_algorithm import AbstractModel
 from src.entity.evaluation_data import FeatureImportance
 
 LGB_REGRESSION_DEFAULT_PARAMS = {

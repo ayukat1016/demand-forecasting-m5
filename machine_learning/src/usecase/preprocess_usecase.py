@@ -2,7 +2,9 @@
 # from logging import getLogger
 
 import pandas as pd
-from src.algorithm.preprocess import PricesExtractor, LagSalesExtractor
+from src.algorithm.abstract_algorithm import AbstractExtractor
+# from src.algorithm.preprocess import LagSalesExtractor
+# from src.algorithm.preprocess import PricesExtractor
 from src.entity.common_data import XY
 from src.entity.preprocessed_data import PreprocessedDataset
 from src.entity.raw_data import RawDataset, RawDataWithTargetDates
@@ -39,14 +41,14 @@ logger = configure_logger(__name__)
 class PreprocessUsecase(object):
     def __init__(
         self,
-        prices_extractor: PricesExtractor,
-        lag_sales_extractor: LagSalesExtractor,
+        prices_extractor: AbstractExtractor,
+        lag_sales_extractor: AbstractExtractor,
     ):
         """Preprocess usecase.
 
         Args:
-            prices_extractor (PricesExtractor): Algorithm to extract prices statitics.
-            lag_sales_extractor (LagSalesExtractor): Algorithm to extract lag sales data.
+            prices_extractor (AbstractExtractor): Algorithm to extract prices statitics.
+            lag_sales_extractor (AbstractExtractor): Algorithm to extract lag sales data.
         """
         self.prices_extractor=prices_extractor
         self.lag_sales_extractor=lag_sales_extractor
@@ -55,7 +57,7 @@ class PreprocessUsecase(object):
         #     lag_sales_extractor=lag_sales_extractor,
         # )
 
-    def run(
+    def preprocess_dataset(
         self,
         dataset: RawDataset,
     ) -> PreprocessedDataset:
@@ -82,17 +84,17 @@ class PreprocessUsecase(object):
         preds_mask = dataset.prediction_data.date_from <= df["date_id"]
 
         logger.info(f"transform training data...")
-        training_data = self._run(
+        training_data = self.split_dataset(
             raw_data=df[train_mask],            
         )
 
         logger.info(f"transform validation data...")
-        validation_data = self._run(
+        validation_data = self.split_dataset(
             raw_data=df[valid_mask],
         )
 
         logger.info(f"transform prediction data...")
-        prediction_data = self._run(
+        prediction_data = self.split_dataset(
            raw_data=df[preds_mask],            
         )
         return PreprocessedDataset(
@@ -101,7 +103,7 @@ class PreprocessUsecase(object):
             prediction_data=prediction_data,
         )
 
-    def _run(
+    def split_dataset(
         self,
         raw_data: RawDataWithTargetDates,
     ) -> XY:

@@ -1,31 +1,39 @@
-name: beverage_sales_forecasting
-jobs:
-  data:
-    source: db
-  predict_after:
-    year: 2021
-    week_of_year: 26
+name: demand_forecasting_m5
+model:
+  # name: light_gbm_regression
+  # params:
+  #   task: "train"
+  #   boosting: "gbdt"
+  #   objective: "regression"
+  #   num_leaves: 3
+  #   learning_rate: 0.05
+  #   feature_fraction: 0.5
+  #   max_depth: -1
+  #   num_iterations: 1000000
+  #   num_threads: 0
+  #   seed: 1234
+  #   early_stopping_rounds: 200
+  #   eval_metrics: mse
+  #   verbose_eval: 1000
+  name: lightgbm_regression
+  params:
+    boosting_type: gbdt
+    n_estimators: 1000
+    objective: rmse
+    metric: rmse
+    learning_rate: 0.03
+    num_leaves: 31
+    min_data_in_leaf: 20
+    random_state: 42
+    importance_type: gain
+  train_params:
+    early_stopping_rounds: 10
+    log_evaluation: 10
 
-  model:
-    name: light_gbm_regression
-    params:
-      task: "train"
-      boosting: "gbdt"
-      objective: "regression"
-      num_leaves: 3
-      learning_rate: 0.05
-      feature_fraction: 0.5
-      max_depth: -1
-      num_iterations: 1000000
-      num_threads: 0
-      seed: 1234
-      early_stopping_rounds: 200
-      eval_metrics: mse
-      verbose_eval: 1000
-
-  train:
-    run: true
-
-  predict:
-    run: true
-    register: true
+period:
+  training_date_from: 1
+  training_date_to: 93
+  validation_date_from: 94
+  validation_date_to: 100
+  prediction_date_from: 101
+  prediction_date_to: 107

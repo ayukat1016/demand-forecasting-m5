@@ -14,15 +14,23 @@ from src.configurations import Configurations
 # from src.middleware.db_client import PostgreSQLClient
 # from src.models.models import MODELS
 # from src.models.preprocess import DataPreprocessPipeline
+from src.algorithm.abstract_algorithm import AbstractModel
+from src.algorithm.lightgbm_regressor import LightGBMRegression
+from src.algorithm.models import get_model
 from src.algorithm.preprocess import LagSalesExtractor
 from src.algorithm.preprocess import PricesExtractor
+from src.entity.prediction_data import PredictionDataset
+from src.entity.training_data import TrainingDataset
 from src.infrastructure.database import PostgreSQLClient
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import CalendarRepository
 from src.repository.prices_repository import PricesRepository
 from src.repository.sales_calendar_repository import SalesCalendarRepository
 from src.usecase.data_loader_usecase import DataLoaderUsecase
+from src.usecase.evaluation_usecase import EvaluationUsecase
+from src.usecase.prediction_usecase import PredictionUsecase
 from src.usecase.preprocess_usecase import PreprocessUsecase
+from src.usecase.training_usecase import TrainingUsecase
 
 logger = configure_logger(__name__)
 
@@ -57,12 +65,12 @@ def main(cfg: DictConfig):
     )
 
     raw_dataset = data_loader_usecase.load_dataset(
-        training_date_from=1,
-        training_date_to=93,
-        validation_date_from=94,
-        validation_date_to=100,
-        prediction_date_from=101,
-        prediction_date_to=107,                
+        training_date_from=cfg.period.training_date_from,
+        training_date_to=cfg.period.training_date_to,
+        validation_date_from=cfg.period.validation_date_from,
+        validation_date_to=cfg.period.validation_date_to,
+        prediction_date_from=cfg.period.prediction_date_from,
+        prediction_date_to=cfg.period.prediction_date_to,
     )
 
     prices_extractor = PricesExtractor()
@@ -72,7 +80,9 @@ def main(cfg: DictConfig):
         lag_sales_extractor=lag_sales_extractor,        
     )
 
-    preprocessed_dataset = preprocess_usecase.run(dataset=raw_dataset)
+    preprocessed_dataset = preprocess_usecase.preprocess_dataset(
+        dataset=raw_dataset
+    )
 
     for col in ["item_id", "dept_id", "event_name_1", "event_type_1", "event_name_2", "event_type_2"]:
         preprocessed_dataset.training_data.x[col] = preprocessed_dataset.training_data.x[col].astype("category")
@@ -89,6 +99,64 @@ prediction:
 {preprocessed_dataset.prediction_data}
             """
     )
+
+    model_class = get_model(model=cfg.model.name)
+    model: AbstractModel = model_class()
+    if isinstance(model, LightGBMRegression):
+        model.reset_model(
+            params=cfg.model.params,
+            train_params=cfg.model.train_params,
+            )
+
+    training_usecase = TrainingUsecase()
+    # training_usecase = TrainingUsecase(
+    #     model=model,
+    # )
+    prediction_usecase = PredictionUsecase()
+    evaluation_usecase = EvaluationUsecase()
+
+    for store_id in sorted(list(preprocessed_dataset.training_data.keys["store_id"].unique())):
+
+        logger.info(f"START machine learning task for {store_id}")
+        train_mask = preprocessed_dataset.training_data.keys["store_id"] == store_id
+        valid_mask = preprocessed_dataset.validation_data.keys["store_id"] == store_id
+        preds_mask = preprocessed_dataset.prediction_data.keys["store_id"] == store_id
+
+        training_dataset = TrainingDataset(
+            training_data=preprocessed_dataset.training_data,
+            validation_data=preprocessed_dataset.validation_data,
+        )
+
+        training_usecase.train(
+            model=model,
+            training_data=training_dataset,
+            train_mask=train_mask,
+            valid_mask=valid_mask,
+        )    
+
+        validation_prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.validation_data)
+        validation_prediction = prediction_usecase.predict(
+            model=model,
+            data=validation_prediction_dataset,
+            mask=valid_mask,                    
+        )
+
+        evaluation = evaluation_usecase.evaluate(
+            date_id=validation_prediction.prediction.date_id.tolist(),
+            store_id=validation_prediction.prediction.store_id.tolist(),
+            item_id=validation_prediction.prediction.item_id.tolist(),
+            y_true=preprocessed_dataset.validation_data.y[valid_mask].sales.tolist(),
+            y_pred=validation_prediction.prediction.prediction.tolist(),
+        )
+        feature_importance = evaluation_usecase.export_feature_importance(model=model)
+
+        prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.prediction_data)
+        prediction = prediction_usecase.predict(
+            model=model,
+            data=prediction_dataset,
+            mask=preds_mask,
+        )
+        print(prediction)
 
     # db_data_manager = DBDataManager(db_client=db_client)
     # data_retriever = DataRetriever(db_data_manager=db_data_manager)

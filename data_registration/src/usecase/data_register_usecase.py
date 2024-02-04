@@ -8,10 +8,12 @@ from src.middleware.strings import get_uuid
 from src.model.calendar_model import Calendar
 from src.model.prices_model import Prices
 from src.model.sales_model import Sales
-from src.repository.calendar_repository import CalendarRepository
-from src.repository.prices_repository import PricesRepository
-from src.repository.sales_repository import SalesRepository
-from src.repository.table_repository import TableRepository
+from src.repository.abstract_repository import AbstractBulkInsertRepository
+from src.repository.abstract_repository import AbstractCreateTablesRepository
+# from src.repository.calendar_repository import CalendarRepository
+# from src.repository.prices_repository import PricesRepository
+# from src.repository.sales_repository import SalesRepository
+# from src.repository.table_repository import TableRepository
 
 logger = configure_logger(__name__)
 
@@ -61,10 +63,10 @@ class DataRegisterUsecase(object):
         calendar_filepath: str,
         prices_filepath: str,
         sales_filepath: str,
-        table_repository: TableRepository,
-        calendar_repository: CalendarRepository,
-        prices_repository: PricesRepository,
-        sales_repository: SalesRepository,
+        table_repository: AbstractCreateTablesRepository,
+        calendar_repository: AbstractBulkInsertRepository,
+        prices_repository: AbstractBulkInsertRepository,
+        sales_repository: AbstractBulkInsertRepository,
     ):
         # super().__init__(
         self.create_sql_filepath = create_sql_filepath
