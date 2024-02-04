@@ -40,6 +40,27 @@ services:
     depends_on:
       - postgres
 
+  mlflow:
+    container_name: mlflow
+    image: ml_development_template_m5:ml_development_template_m5_mlflow_0.0.0
+    volumes:
+      - ./machine_learning/outputs/mlruns:/opt/outputs/mlruns
+    command:
+      - "mlflow"
+      - "server"
+      - "--backend-store-uri"
+      - "/opt/outputs/mlruns" 
+      - "--default-artifact-root"
+      - "/opt/outputs/mlruns"
+      - "--host"
+      - "0.0.0.0"
+    ports:
+      - 15000:5000
+    restart: always
+    hostname: mlflow
+    depends_on:
+      - postgres
+
   # bi:
   #   container_name: bi
   #   image: shibui/building-ml-system:beverage_sales_forecasting_bi_1.0.0
@@ -59,27 +80,6 @@ services:
   #     - 8501:8501
   #   depends_on:
   #     - data_registration
-
-  # mlflow:
-  #   container_name: mlflow
-  #   image: shibui/building-ml-system:beverage_sales_forecasting_mlflow_1.0.0
-  #   volumes:
-  #     - ./ml/outputs/mlruns:/opt/outputs/mlruns
-  #   command:
-  #     - "mlflow"
-  #     - "server"
-  #     - "--backend-store-uri"
-  #     - "/opt/outputs/mlruns"
-  #     - "--default-artifact-root"
-  #     - "/opt/outputs/mlruns"
-  #     - "--host"
-  #     - "0.0.0.0"
-  #   ports:
-  #     - 15000:5000
-  #   restart: always
-  #   hostname: mlflow
-  #   depends_on:
-  #     - postgres
 
   # ml:
   #   container_name: ml

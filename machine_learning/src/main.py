@@ -2,7 +2,7 @@ import os
 from datetime import date, datetime, timedelta
 
 import hydra
-# import mlflow
+import mlflow
 from omegaconf import DictConfig
 from src.configurations import Configurations
 # from src.dataset.data_manager import DBDataManager
@@ -24,11 +24,13 @@ from src.entity.training_data import TrainingDataset
 from src.infrastructure.database import PostgreSQLClient
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import CalendarRepository
+from src.repository.predictions_repository import PredictionsRepository
 from src.repository.prices_repository import PricesRepository
 from src.repository.sales_calendar_repository import SalesCalendarRepository
 from src.usecase.data_loader_usecase import DataLoaderUsecase
 from src.usecase.evaluation_usecase import EvaluationUsecase
 from src.usecase.prediction_usecase import PredictionUsecase
+from src.usecase.prediction_register_usecase import PredictionRegisterUsecase
 from src.usecase.preprocess_usecase import PreprocessUsecase
 from src.usecase.training_usecase import TrainingUsecase
 
@@ -50,288 +52,331 @@ def main(cfg: DictConfig):
     logger.info(f"current working directory: {cwd}")
     logger.info(f"run_name: {run_name}")
 
-    # mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000"))
-    # mlflow.set_experiment(cfg.name)
-    # with mlflow.start_run(run_name=run_name) as run:
-    db_client = PostgreSQLClient()
-    calendar_repository = CalendarRepository(db_client=db_client)
-    prices_repository = PricesRepository(db_client=db_client)
-    sales_calendar_repository = SalesCalendarRepository(db_client=db_client)
+    mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000"))
+    mlflow.set_experiment(cfg.name)
+    with mlflow.start_run(run_name=run_name) as run:
 
-    data_loader_usecase = DataLoaderUsecase(        
-        calendar_repository = calendar_repository,
-        prices_repository = prices_repository,
-        sales_calendar_repository = sales_calendar_repository,        
-    )
+        mlflow.log_artifact(os.path.join(cwd, ".hydra/config.yaml"))
+        mlflow.log_artifact(os.path.join(cwd, ".hydra/hydra.yaml"))
+        mlflow.log_artifact(os.path.join(cwd, ".hydra/overrides.yaml"))
 
-    raw_dataset = data_loader_usecase.load_dataset(
-        training_date_from=cfg.period.training_date_from,
-        training_date_to=cfg.period.training_date_to,
-        validation_date_from=cfg.period.validation_date_from,
-        validation_date_to=cfg.period.validation_date_to,
-        prediction_date_from=cfg.period.prediction_date_from,
-        prediction_date_to=cfg.period.prediction_date_to,
-    )
+        mlflow.log_param("training_date_from", cfg.period.training_date_from)
+        mlflow.log_param("training_date_to", cfg.period.training_date_to)
+        mlflow.log_param("validation_date_from", cfg.period.validation_date_from)
+        mlflow.log_param("validation_date_to", cfg.period.validation_date_to)
+        mlflow.log_param("prediction_date_from", cfg.period.prediction_date_from)
+        mlflow.log_param("prediction_date_to", cfg.period.prediction_date_to)        
 
-    prices_extractor = PricesExtractor()
-    lag_sales_extractor = LagSalesExtractor()
-    preprocess_usecase = PreprocessUsecase(        
-        prices_extractor=prices_extractor,
-        lag_sales_extractor=lag_sales_extractor,        
-    )
+        db_client = PostgreSQLClient()
+        calendar_repository = CalendarRepository(db_client=db_client)
+        prices_repository = PricesRepository(db_client=db_client)
+        sales_calendar_repository = SalesCalendarRepository(db_client=db_client)
 
-    preprocessed_dataset = preprocess_usecase.preprocess_dataset(
-        dataset=raw_dataset
-    )
+        data_loader_usecase = DataLoaderUsecase(        
+            calendar_repository = calendar_repository,
+            prices_repository = prices_repository,
+            sales_calendar_repository = sales_calendar_repository,        
+        )
 
-    for col in ["item_id", "dept_id", "event_name_1", "event_type_1", "event_name_2", "event_type_2"]:
-        preprocessed_dataset.training_data.x[col] = preprocessed_dataset.training_data.x[col].astype("category")
-        preprocessed_dataset.validation_data.x[col] = preprocessed_dataset.validation_data.x[col].astype("category")
-        preprocessed_dataset.prediction_data.x[col] = preprocessed_dataset.prediction_data.x[col].astype("category")
+        raw_dataset = data_loader_usecase.load_dataset(
+            training_date_from=cfg.period.training_date_from,
+            training_date_to=cfg.period.training_date_to,
+            validation_date_from=cfg.period.validation_date_from,
+            validation_date_to=cfg.period.validation_date_to,
+            prediction_date_from=cfg.period.prediction_date_from,
+            prediction_date_to=cfg.period.prediction_date_to,
+        )
 
-    logger.info(
-        f"""loaded preprocessed dataset:
-training:
-{preprocessed_dataset.training_data}
-validation:
-{preprocessed_dataset.validation_data}
-prediction:
-{preprocessed_dataset.prediction_data}
-            """
-    )
+        prices_extractor = PricesExtractor()
+        lag_sales_extractor = LagSalesExtractor()
+        preprocess_usecase = PreprocessUsecase(        
+            prices_extractor=prices_extractor,
+            lag_sales_extractor=lag_sales_extractor,        
+        )
 
-    model_class = get_model(model=cfg.model.name)
-    model: AbstractModel = model_class()
-    if isinstance(model, LightGBMRegression):
-        model.reset_model(
-            params=cfg.model.params,
-            train_params=cfg.model.train_params,
+        preprocessed_dataset = preprocess_usecase.preprocess_dataset(
+            dataset=raw_dataset
+        )
+
+        for col in ["item_id", "dept_id", "event_name_1", "event_type_1", "event_name_2", "event_type_2"]:
+            preprocessed_dataset.training_data.x[col] = preprocessed_dataset.training_data.x[col].astype("category")
+            preprocessed_dataset.validation_data.x[col] = preprocessed_dataset.validation_data.x[col].astype("category")
+            preprocessed_dataset.prediction_data.x[col] = preprocessed_dataset.prediction_data.x[col].astype("category")
+
+        logger.info(
+            f"""loaded preprocessed dataset:
+    training:
+    {preprocessed_dataset.training_data}
+    validation:
+    {preprocessed_dataset.validation_data}
+    prediction:
+    {preprocessed_dataset.prediction_data}
+                """
+        )
+
+        model_class = get_model(model=cfg.model.name)
+        model: AbstractModel = model_class()
+        if isinstance(model, LightGBMRegression):
+            model.reset_model(
+                params=cfg.model.params,
+                train_params=cfg.model.train_params,
+                )
+        # mlflow.log_param("model", model.name)
+        mlflow.log_params(model.params)
+
+        training_usecase = TrainingUsecase()
+        # training_usecase = TrainingUsecase(
+        #     model=model,
+        # )
+        prediction_usecase = PredictionUsecase()
+        evaluation_usecase = EvaluationUsecase()
+
+        predictions_repository = PredictionsRepository(db_client=db_client)
+        prediction_register_usecase = PredictionRegisterUsecase(
+            predictions_repository=predictions_repository,
+        )
+
+        for store_id in sorted(list(preprocessed_dataset.training_data.keys["store_id"].unique())):
+
+            logger.info(f"START machine learning task for {store_id}")
+            train_mask = preprocessed_dataset.training_data.keys["store_id"] == store_id
+            valid_mask = preprocessed_dataset.validation_data.keys["store_id"] == store_id
+            preds_mask = preprocessed_dataset.prediction_data.keys["store_id"] == store_id
+
+            training_dataset = TrainingDataset(
+                training_data=preprocessed_dataset.training_data,
+                validation_data=preprocessed_dataset.validation_data,
             )
 
-    training_usecase = TrainingUsecase()
-    # training_usecase = TrainingUsecase(
-    #     model=model,
-    # )
-    prediction_usecase = PredictionUsecase()
-    evaluation_usecase = EvaluationUsecase()
+            training_usecase.train(
+                model=model,
+                training_data=training_dataset,
+                train_mask=train_mask,
+                valid_mask=valid_mask,
+            )    
 
-    for store_id in sorted(list(preprocessed_dataset.training_data.keys["store_id"].unique())):
+            validation_prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.validation_data)
+            validation_prediction = prediction_usecase.predict(
+                model=model,
+                data=validation_prediction_dataset,
+                mask=valid_mask,                    
+            )
 
-        logger.info(f"START machine learning task for {store_id}")
-        train_mask = preprocessed_dataset.training_data.keys["store_id"] == store_id
-        valid_mask = preprocessed_dataset.validation_data.keys["store_id"] == store_id
-        preds_mask = preprocessed_dataset.prediction_data.keys["store_id"] == store_id
+            evaluation = evaluation_usecase.evaluate(
+                date_id=validation_prediction.prediction.date_id.tolist(),
+                store_id=validation_prediction.prediction.store_id.tolist(),
+                item_id=validation_prediction.prediction.item_id.tolist(),
+                y_true=preprocessed_dataset.validation_data.y[valid_mask].sales.tolist(),
+                y_pred=validation_prediction.prediction.prediction.tolist(),
+            )
+            feature_importance = evaluation_usecase.export_feature_importance(model=model)
 
-        training_dataset = TrainingDataset(
-            training_data=preprocessed_dataset.training_data,
-            validation_data=preprocessed_dataset.validation_data,
-        )
+            prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.prediction_data)
+            prediction = prediction_usecase.predict(
+                model=model,
+                data=prediction_dataset,
+                mask=preds_mask,
+            )
 
-        training_usecase.train(
-            model=model,
-            training_data=training_dataset,
-            train_mask=train_mask,
-            valid_mask=valid_mask,
-        )    
+            predictions = prediction.prediction
 
-        validation_prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.validation_data)
-        validation_prediction = prediction_usecase.predict(
-            model=model,
-            data=validation_prediction_dataset,
-            mask=valid_mask,                    
-        )
+            prediction_register_usecase.register(
+                predictions=predictions,
+                mlflow_experiment_id=run.info.experiment_id,
+                mlflow_run_id=run.info.run_id,
+            )
 
-        evaluation = evaluation_usecase.evaluate(
-            date_id=validation_prediction.prediction.date_id.tolist(),
-            store_id=validation_prediction.prediction.store_id.tolist(),
-            item_id=validation_prediction.prediction.item_id.tolist(),
-            y_true=preprocessed_dataset.validation_data.y[valid_mask].sales.tolist(),
-            y_pred=validation_prediction.prediction.prediction.tolist(),
-        )
-        feature_importance = evaluation_usecase.export_feature_importance(model=model)
+            base_file_name = f"{run_name}"
+            model_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_model.txt")
+            model_file_path = model.save(file_path=model_file_path)
+            evaluation_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_evaluation.csv")
+            evaluation_file_path = evaluation.save_data(file_path=evaluation_file_path)
+            feature_importance_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_feature_importance.csv")
+            feature_importance_file_path = feature_importance.save(file_path=feature_importance_file_path)
+            prediction_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_prediction.csv")
+            prediction_file_path = prediction.save(file_path=prediction_file_path)
 
-        prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.prediction_data)
-        prediction = prediction_usecase.predict(
-            model=model,
-            data=prediction_dataset,
-            mask=preds_mask,
-        )
-        print(prediction)
+            mlflow.log_artifact(model_file_path, "model")
+            mlflow.log_artifact(evaluation_file_path, "evaluation")
+            mlflow.log_artifact(feature_importance_file_path, "feature_importance")
+            mlflow.log_artifact(prediction_file_path, "prediction")
+            mlflow.log_metric(f"{store_id}_mean_absolute_error", evaluation.mean_absolute_error)
+            mlflow.log_metric(f"{store_id}_root_mean_squared_error", evaluation.root_mean_squared_error)
 
-    # db_data_manager = DBDataManager(db_client=db_client)
-    # data_retriever = DataRetriever(db_data_manager=db_data_manager)
+        # db_data_manager = DBDataManager(db_client=db_client)
+        # data_retriever = DataRetriever(db_data_manager=db_data_manager)
 
-    # earliest_sales_date = data_retriever.retrieve_item_sales_earliest_date()
-    # if earliest_sales_date is None:
-    #     raise Exception("no sales record available")
+        # earliest_sales_date = data_retriever.retrieve_item_sales_earliest_date()
+        # if earliest_sales_date is None:
+        #     raise Exception("no sales record available")
 
-    # latest_sales_date = data_retriever.retrieve_item_sales_latest_date()
-    # if latest_sales_date is None:
-    #     raise Exception("no sales record available")
+        # latest_sales_date = data_retriever.retrieve_item_sales_latest_date()
+        # if latest_sales_date is None:
+        #     raise Exception("no sales record available")
 
-    # prediction_target_year = Configurations.target_year
-    # prediction_target_week = Configurations.target_week
-    # if prediction_target_year is None or prediction_target_week is None:
-    #     base_predict_year = cfg.jobs.predict_after.year
-    #     base_predict_week_of_year = cfg.jobs.predict_after.week_of_year
-    #     prediction_latest_date = data_retriever.retrieve_prediction_latest_date()
-    #     if prediction_latest_date is None:
-    #         prediction_target_year = base_predict_year
-    #         prediction_target_week = base_predict_week_of_year
-    #     else:
-    #         next_prediction_latest_date = prediction_latest_date + timedelta(days=1)
-    #         prediction_target_year = next_prediction_latest_date.isocalendar().year
-    #         prediction_target_week = next_prediction_latest_date.isocalendar().week
-    #         if prediction_target_year < base_predict_year:
-    #             prediction_target_year = base_predict_year
-    #             prediction_target_week = base_predict_week_of_year
-    #         if prediction_target_week < base_predict_week_of_year:
-    #             prediction_target_week = base_predict_week_of_year
+        # prediction_target_year = Configurations.target_year
+        # prediction_target_week = Configurations.target_week
+        # if prediction_target_year is None or prediction_target_week is None:
+        #     base_predict_year = cfg.jobs.predict_after.year
+        #     base_predict_week_of_year = cfg.jobs.predict_after.week_of_year
+        #     prediction_latest_date = data_retriever.retrieve_prediction_latest_date()
+        #     if prediction_latest_date is None:
+        #         prediction_target_year = base_predict_year
+        #         prediction_target_week = base_predict_week_of_year
+        #     else:
+        #         next_prediction_latest_date = prediction_latest_date + timedelta(days=1)
+        #         prediction_target_year = next_prediction_latest_date.isocalendar().year
+        #         prediction_target_week = next_prediction_latest_date.isocalendar().week
+        #         if prediction_target_year < base_predict_year:
+        #             prediction_target_year = base_predict_year
+        #             prediction_target_week = base_predict_week_of_year
+        #         if prediction_target_week < base_predict_week_of_year:
+        #             prediction_target_week = base_predict_week_of_year
 
-    # prediction_first_date = date.fromisocalendar(
-    #     year=prediction_target_year,
-    #     week=prediction_target_week,
-    #     day=1,
-    # )
-    # test_last_date = prediction_first_date + timedelta(days=-8)
-    # train_last_date = test_last_date + timedelta(days=-15)
+        # prediction_first_date = date.fromisocalendar(
+        #     year=prediction_target_year,
+        #     week=prediction_target_week,
+        #     day=1,
+        # )
+        # test_last_date = prediction_first_date + timedelta(days=-8)
+        # train_last_date = test_last_date + timedelta(days=-15)
 
-    # if test_last_date > latest_sales_date:
-    #     raise ValueError("not enough days registered to sales")
+        # if test_last_date > latest_sales_date:
+        #     raise ValueError("not enough days registered to sales")
 
-    # train_year = earliest_sales_date.isocalendar().year
-    # train_week = earliest_sales_date.isocalendar().week
-    # train_end_year = train_last_date.isocalendar().year
-    # train_end_week = train_last_date.isocalendar().week
-    # test_year = test_last_date.isocalendar().year
-    # test_week = test_last_date.isocalendar().week
+        # train_year = earliest_sales_date.isocalendar().year
+        # train_week = earliest_sales_date.isocalendar().week
+        # train_end_year = train_last_date.isocalendar().year
+        # train_end_week = train_last_date.isocalendar().week
+        # test_year = test_last_date.isocalendar().year
+        # test_week = test_last_date.isocalendar().week
 
-    # train_year_and_week = YearAndWeek(
-    #     year=train_year,
-    #     week_of_year=train_week,
-    # )
-    # train_end_year_and_week = YearAndWeek(
-    #     year=train_end_year,
-    #     week_of_year=train_end_week,
-    # )
-    # test_year_and_week = YearAndWeek(
-    #     year=test_year,
-    #     week_of_year=test_week,
-    # )
+        # train_year_and_week = YearAndWeek(
+        #     year=train_year,
+        #     week_of_year=train_week,
+        # )
+        # train_end_year_and_week = YearAndWeek(
+        #     year=train_end_year,
+        #     week_of_year=train_end_week,
+        # )
+        # test_year_and_week = YearAndWeek(
+        #     year=test_year,
+        #     week_of_year=test_week,
+        # )
 
-    # data_preprocess_pipeline = DataPreprocessPipeline()
-    # raw_df = data_retriever.retrieve_dataset(
-    #     date_from=earliest_sales_date,
-    #     date_to=test_last_date,
-    #     item=Configurations.target_item,
-    #     store=Configurations.target_store,
-    #     region=Configurations.target_region,
-    # )
-    # xy_train, xy_test = data_retriever.train_test_split(
-    #     raw_df=raw_df,
-    #     train_year_and_week=train_year_and_week,
-    #     train_end_year_and_week=train_end_year_and_week,
-    #     test_year_and_week=test_year_and_week,
-    #     data_preprocess_pipeline=data_preprocess_pipeline,
-    # )
+        # data_preprocess_pipeline = DataPreprocessPipeline()
+        # raw_df = data_retriever.retrieve_dataset(
+        #     date_from=earliest_sales_date,
+        #     date_to=test_last_date,
+        #     item=Configurations.target_item,
+        #     store=Configurations.target_store,
+        #     region=Configurations.target_region,
+        # )
+        # xy_train, xy_test = data_retriever.train_test_split(
+        #     raw_df=raw_df,
+        #     train_year_and_week=train_year_and_week,
+        #     train_end_year_and_week=train_end_year_and_week,
+        #     test_year_and_week=test_year_and_week,
+        #     data_preprocess_pipeline=data_preprocess_pipeline,
+        # )
 
-    # mlflow.log_param("train_start_year", train_year)
-    # mlflow.log_param("train_start_week", train_week)
-    # mlflow.log_param("train_end_year", train_end_year)
-    # mlflow.log_param("train_end_week", train_end_week)
-    # mlflow.log_param("test_year", test_year)
-    # mlflow.log_param("test_week", test_week)
-    # mlflow.log_param("target_data_item", Configurations.target_item)
-    # mlflow.log_param("target_data_store", Configurations.target_store)
-    # mlflow.log_param("target_data_region", Configurations.target_region)
+        # mlflow.log_param("train_start_year", train_year)
+        # mlflow.log_param("train_start_week", train_week)
+        # mlflow.log_param("train_end_year", train_end_year)
+        # mlflow.log_param("train_end_week", train_end_week)
+        # mlflow.log_param("test_year", test_year)
+        # mlflow.log_param("test_week", test_week)
+        # mlflow.log_param("target_data_item", Configurations.target_item)
+        # mlflow.log_param("target_data_store", Configurations.target_store)
+        # mlflow.log_param("target_data_region", Configurations.target_region)
 
-    # _model = MODELS.get_model(name=cfg.jobs.model.name)
-    # model = _model.model(
-    #     early_stopping_rounds=cfg.jobs.model.params.early_stopping_rounds,
-    #     eval_metrics=cfg.jobs.model.params.eval_metrics,
-    #     verbose_eval=cfg.jobs.model.params.verbose_eval,
-    # )
-    # if "params" in cfg.jobs.model.keys():
-    #     model.reset_model(params=cfg.jobs.model.params)
+        # _model = MODELS.get_model(name=cfg.jobs.model.name)
+        # model = _model.model(
+        #     early_stopping_rounds=cfg.jobs.model.params.early_stopping_rounds,
+        #     eval_metrics=cfg.jobs.model.params.eval_metrics,
+        #     verbose_eval=cfg.jobs.model.params.verbose_eval,
+        # )
+        # if "params" in cfg.jobs.model.keys():
+        #     model.reset_model(params=cfg.jobs.model.params)
 
-    # if cfg.jobs.train.run:
-    #     now = datetime.now().strftime("%Y%m%d_%H%M%S")
-    #     preprocess_pipeline_file_path = os.path.join(cwd, f"{model.name}_{now}")
-    #     save_file_path = os.path.join(cwd, f"{model.name}_{now}")
-    #     onnx_file_path = os.path.join(cwd, f"{model.name}_{now}")
-    #     trainer = Trainer()
-    #     evaluation, artifact = trainer.train_and_evaluate(
-    #         model=model,
-    #         x_train=xy_train.x,
-    #         y_train=xy_train.y,
-    #         x_test=xy_test.x,
-    #         y_test=xy_test.y,
-    #         data_preprocess_pipeline=data_preprocess_pipeline,
-    #         preprocess_pipeline_file_path=preprocess_pipeline_file_path,
-    #         save_file_path=save_file_path,
-    #         onnx_file_path=onnx_file_path,
-    #     )
-    #     mlflow.log_metrics(evaluation.dict())
-    #     mlflow.log_artifact(artifact.preprocess_file_path)
-    #     mlflow.log_artifact(artifact.model_file_path)
-    #     mlflow.log_artifact(artifact.onnx_file_path)
+        # if cfg.jobs.train.run:
+        #     now = datetime.now().strftime("%Y%m%d_%H%M%S")
+        #     preprocess_pipeline_file_path = os.path.join(cwd, f"{model.name}_{now}")
+        #     save_file_path = os.path.join(cwd, f"{model.name}_{now}")
+        #     onnx_file_path = os.path.join(cwd, f"{model.name}_{now}")
+        #     trainer = Trainer()
+        #     evaluation, artifact = trainer.train_and_evaluate(
+        #         model=model,
+        #         x_train=xy_train.x,
+        #         y_train=xy_train.y,
+        #         x_test=xy_test.x,
+        #         y_test=xy_test.y,
+        #         data_preprocess_pipeline=data_preprocess_pipeline,
+        #         preprocess_pipeline_file_path=preprocess_pipeline_file_path,
+        #         save_file_path=save_file_path,
+        #         onnx_file_path=onnx_file_path,
+        #     )
+        #     mlflow.log_metrics(evaluation.dict())
+        #     mlflow.log_artifact(artifact.preprocess_file_path)
+        #     mlflow.log_artifact(artifact.model_file_path)
+        #     mlflow.log_artifact(artifact.onnx_file_path)
 
-    # if cfg.jobs.predict.run:
-    #     predictor = Predictor()
-    #     next_date = test_last_date + timedelta(days=1)
-    #     target_date = date.fromisocalendar(
-    #         year=prediction_target_year,
-    #         week=prediction_target_week,
-    #         day=7,
-    #     )
-    #     logger.info(f"retrieve from {next_date} to {target_date}")
+        # if cfg.jobs.predict.run:
+        #     predictor = Predictor()
+        #     next_date = test_last_date + timedelta(days=1)
+        #     target_date = date.fromisocalendar(
+        #         year=prediction_target_year,
+        #         week=prediction_target_week,
+        #         day=7,
+        #     )
+        #     logger.info(f"retrieve from {next_date} to {target_date}")
 
-    #     data_to_be_predicted_df = data_retriever.retrieve_prediction_data(
-    #         date_from=next_date,
-    #         date_to=target_date,
-    #     )
+        #     data_to_be_predicted_df = data_retriever.retrieve_prediction_data(
+        #         date_from=next_date,
+        #         date_to=target_date,
+        #     )
 
-    #     target_items = Configurations.target_items
-    #     if target_items[0] == "ALL":
-    #         target_items = None
+        #     target_items = Configurations.target_items
+        #     if target_items[0] == "ALL":
+        #         target_items = None
 
-    #     target_stores = Configurations.target_stores
-    #     if target_stores[0] == "ALL":
-    #         target_stores = None
+        #     target_stores = Configurations.target_stores
+        #     if target_stores[0] == "ALL":
+        #         target_stores = None
 
-    #     predictions = predictor.predict(
-    #         model=model,
-    #         data_preprocess_pipeline=data_preprocess_pipeline,
-    #         previous_df=raw_df,
-    #         data_to_be_predicted_df=data_to_be_predicted_df,
-    #         target_year=prediction_target_year,
-    #         target_week=prediction_target_week,
-    #         target_items=target_items,
-    #         target_stores=target_stores,
-    #     )
-    #     logger.info(f"predictions: {predictions}")
-    #     if cfg.jobs.predict.register:
-    #         data_register = DataRegister(db_data_manager=db_data_manager)
-    #         data_register.register(
-    #             predictions=predictions,
-    #             mlflow_experiment_id=run.info.experiment_id,
-    #             mlflow_run_id=run.info.run_id,
-    #         )
-    #     mlflow.log_param("predict_year", prediction_target_year)
-    #     mlflow.log_param("predict_week", prediction_target_week)
-    #     mlflow.log_param("predict_items", target_items)
-    #     mlflow.log_param("predict_stores", target_stores)
+        #     predictions = predictor.predict(
+        #         model=model,
+        #         data_preprocess_pipeline=data_preprocess_pipeline,
+        #         previous_df=raw_df,
+        #         data_to_be_predicted_df=data_to_be_predicted_df,
+        #         target_year=prediction_target_year,
+        #         target_week=prediction_target_week,
+        #         target_items=target_items,
+        #         target_stores=target_stores,
+        #     )
+        #     logger.info(f"predictions: {predictions}")
+        #     if cfg.jobs.predict.register:
+        #         data_register = DataRegister(db_data_manager=db_data_manager)
+        #         data_register.register(
+        #             predictions=predictions,
+        #             mlflow_experiment_id=run.info.experiment_id,
+        #             mlflow_run_id=run.info.run_id,
+        #         )
+        #     mlflow.log_param("predict_year", prediction_target_year)
+        #     mlflow.log_param("predict_week", prediction_target_week)
+        #     mlflow.log_param("predict_items", target_items)
+        #     mlflow.log_param("predict_stores", target_stores)
 
-    # mlflow.log_artifact(os.path.join(cwd, ".hydra/config.yaml"))
-    # mlflow.log_artifact(os.path.join(cwd, ".hydra/hydra.yaml"))
-    # mlflow.log_artifact(os.path.join(cwd, ".hydra/overrides.yaml"))
+        # mlflow.log_artifact(os.path.join(cwd, ".hydra/config.yaml"))
+        # mlflow.log_artifact(os.path.join(cwd, ".hydra/hydra.yaml"))
+        # mlflow.log_artifact(os.path.join(cwd, ".hydra/overrides.yaml"))
 
-    # mlflow.log_param("train_year", train_year)
-    # mlflow.log_param("train_week", train_week)
-    # mlflow.log_param("test_year", test_year)
-    # mlflow.log_param("test_week", test_week)
-    # mlflow.log_param("model", model.name)
-    # mlflow.log_params(model.params)
+        # mlflow.log_param("train_year", train_year)
+        # mlflow.log_param("train_week", train_week)
+        # mlflow.log_param("test_year", test_year)
+        # mlflow.log_param("test_week", test_week)
+        # mlflow.log_param("model", model.name)
+        # mlflow.log_params(model.params)
 
 
 if __name__ == "__main__":

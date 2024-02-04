@@ -6,6 +6,7 @@ class TABLES(Enum):
     SALES = "sales"
     PRICES = "prices"
     CALENDAR = "calendar"
+    PREDICTIONS = "predictions"
 
     # @staticmethod
     # def has_value(value: str) -> bool:

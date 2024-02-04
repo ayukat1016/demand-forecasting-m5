@@ -42,3 +42,14 @@ CREATE TABLE IF NOT EXISTS sales (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (key)
 );
+
+CREATE TABLE IF NOT EXISTS predictions (
+    store_id VARCHAR(255) NOT NULL,
+    item_id VARCHAR(255) NOT NULL,
+    date_id INTEGER NOT NULL,
+    prediction FLOAT NOT NULL,
+    mlflow_experiment_id  INTEGER NOT NULL,
+    mlflow_run_id  VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (store_id, item_id, date_id)
+);
