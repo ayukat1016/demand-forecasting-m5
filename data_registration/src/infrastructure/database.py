@@ -1,6 +1,6 @@
 import os
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import psycopg2
 from psycopg2 import extras
@@ -33,13 +33,13 @@ class AbstractDBClient(ABC):
         parameters: Optional[List[Tuple]] = None,
     ):
         raise NotImplementedError
-
+    
     @abstractmethod
-    def execute_bulk_insert_or_update_query(
+    def execute_select(
         self,
         query: str,
-        parameters: Optional[List[Tuple]] = None,
-    ):
+        parameters: Optional[Tuple] = None,
+    ) -> List[Dict[str, Any]]:
         raise NotImplementedError
 
 class PostgreSQLClient(AbstractDBClient):

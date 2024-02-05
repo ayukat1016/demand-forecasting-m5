@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 from src.algorithm.abstract_algorithm import AbstractExtractor
+from src.entity.preprocessed_data import ExtractedLagSalesSchema
+from src.entity.preprocessed_data import ExtractedPriceSchema
 from src.middleware.logger import configure_logger
-from src.entity.preprocessed_data import ExtractedPriceSchema, ExtractedLagSalesSchema
 
 logger = configure_logger(__name__)
 
