@@ -1,5 +1,3 @@
-# from abc import ABC, abstractmethod
-# from logging import getLogger
 from typing import List, Optional
 
 import pandas as pd
@@ -10,33 +8,10 @@ from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)
 
-# class AbstractEvaluationUsecase(ABC):
-#     def __init__(self):
-#         self.logger = getLogger(__name__)
-
-#     @abstractmethod
-#     def evaluate(
-#         self,
-#         store_id: List[str],
-#         item_id: List[str],
-#         date_id: List[int],
-#         y_true: List[float],
-#         y_pred: List[float],
-#     ) -> Evaluation:
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def export_feature_importance(
-#         self,
-#         model: AbstractModel,
-#     ) -> Optional[FeatureImportances]:
-#         raise NotImplementedError
-
 
 class EvaluationUsecase(object):
     def __init__(self):
         pass
-        # super().__init__()
 
     def evaluate(
         self,

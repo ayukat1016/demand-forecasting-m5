@@ -1,6 +1,3 @@
-from abc import ABC, abstractmethod
-from logging import getLogger
-
 import pandas as pd
 from src.algorithm.abstract_algorithm import AbstractModel
 from src.entity.prediction_data import Prediction, PredictionDataset
@@ -8,24 +5,10 @@ from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)
 
-# class AbstractPredictionUsecase(ABC):
-#     def __init__(self):
-#         self.logger = getLogger(__name__)
-
-#     @abstractmethod
-#     def predict(
-#         self,
-#         model: AbstractModel,
-#         data: PredictionDataset,
-#         mask: pd.DataFrame,
-#     ) -> Prediction:
-#         raise NotImplementedError
-
 
 class PredictionUsecase(object):
-    def __init__(self,):
+    def __init__(self):
         pass
-        # super().__init__()
 
     def predict(
         self,

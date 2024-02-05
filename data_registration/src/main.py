@@ -9,7 +9,6 @@ from src.repository.sales_repository import SalesRepository
 from src.repository.table_repository import TableRepository
 from src.usecase.data_register_usecase import DataRegisterUsecase
 
-
 logger = configure_logger(__name__)
 
 
@@ -84,30 +83,6 @@ sales_filepath: {sales_filepath}
     data_register_usecase.register_sales()  
     logger.info("done register sales")
 
-    # table_service = TableService(db_client=db_client)
-    # store_service = StoreService(db_client=db_client)
-    # item_service = ItemService(db_client=db_client)
-
-    # if init_sql_file_path is not None:
-    #     table_service.register(sql_file_path=init_sql_file_path)
-
-    # if region_store_file_paths is not None:
-    #     store_service.register(
-    #         region_file_path=region_store_file_paths[0],
-    #         store_file_path=region_store_file_paths[1],
-    #     )
-
-    # if item_file_paths is not None:
-    #     item_service.register(
-    #         item_file_path=item_file_paths[0],
-    #         item_price_path=item_file_paths[1],
-    #     )
-
-    # if item_sales_records_path is not None:
-    #     if latest_week_only:
-    #         item_service.register_latest_week_item_sales(item_sales_records_path=item_sales_records_path)
-    #     else:
-    #         item_service.register_records(item_sales_records_path=item_sales_records_path)
 
     logger.info("DONE!")
 

@@ -37,7 +37,7 @@ class LightGBMRegression(AbstractModel):
         train_params: Dict[str, Any] = LGB_REGRESSION_TRAIN_PARAMS,
     ):
         super().__init__()
-        self.name = "light_gbm_regression"
+        self.name = "lightgbm_regression"
         self.params = params
         self.train_params = train_params
 

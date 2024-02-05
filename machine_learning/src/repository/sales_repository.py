@@ -1,26 +1,9 @@
-# from abc import ABC, abstractmethod
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
 from src.model.sales_model import Sales
 from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractSelectRepository
-
-# class AbstractSalesRepository(ABC):
-#     def __init__(
-#         self,
-#         db_client: AbstractDBClient,
-#     ):
-#         self.db_client = db_client
-#         self.table_name = TABLES.SALES.value
-
-#     @abstractmethod
-#     def select(
-#         self,
-#         limit: int = 200,
-#         offset: int = 0,
-#     ) -> List[Sales]:
-#         raise NotImplementedError
 
 
 class SalesRepository(AbstractSelectRepository):

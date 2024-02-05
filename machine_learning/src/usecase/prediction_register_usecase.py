@@ -1,10 +1,7 @@
-import os
-from datetime import datetime
 from typing import List, Optional
 
 import pandas as pd
-# from src.dataset.data_manager import DBDataManager
-# from src.dataset.schema import WEEKLY_PREDICTION_SCHEMA, ItemWeeklySalesPredictions
+from src.entity.prediction_data import PredictionDataSchema
 from src.model.prediction_model import Predictions
 from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.middleware.logger import configure_logger
@@ -15,10 +12,8 @@ logger = configure_logger(__name__)
 class PredictionRegisterUsecase(object):
     def __init__(
         self,
-        # db_data_manager: DBDataManager,
         predictions_repository: AbstractBulkInsertRepository
     ):
-        # self.db_data_manager = db_data_manager
         self.predictions_repository = predictions_repository
 
     def register(
@@ -41,7 +36,7 @@ class PredictionRegisterUsecase(object):
         mlflow_experiment_id: int,
         mlflow_run_id: str,
     ):
-        # predictions = WEEKLY_PREDICTION_SCHEMA.validate(predictions)
+        predictions = PredictionDataSchema.validate(predictions)
         records = predictions.to_dict(orient="records")
         predictions: List[Predictions] = []
         for r in records:

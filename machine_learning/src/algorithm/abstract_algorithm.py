@@ -9,7 +9,6 @@ from src.entity.evaluation_data import FeatureImportance
 class AbstractExtractor(ABC):
     def __init__(self):
         pass
-        # self.logger = getLogger(__name__)
 
     @abstractmethod
     def run(

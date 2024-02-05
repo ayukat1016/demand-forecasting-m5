@@ -6,22 +6,6 @@ from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractBulkInsertRepository
 
 
-# class AbstractPricesRepository(ABC):
-#     def __init__(
-#         self,
-#         db_client: AbstractDBClient,
-#     ):
-#         self.db_client = db_client
-#         self.table_name = TABLES.PRICES.value
-
-#     @abstractmethod
-#     def bulk_insert(
-#         self,
-#         sales: List[Prices],
-#     ):
-#         raise NotImplementedError
-
-
 class PricesRepository(AbstractBulkInsertRepository):
     def __init__(
         self,

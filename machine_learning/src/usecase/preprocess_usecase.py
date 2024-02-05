@@ -1,41 +1,11 @@
-# from abc import ABC, abstractmethod
-# from logging import getLogger
-
 import pandas as pd
 from src.algorithm.abstract_algorithm import AbstractExtractor
-# from src.algorithm.preprocess import LagSalesExtractor
-# from src.algorithm.preprocess import PricesExtractor
 from src.entity.common_data import XY
 from src.entity.preprocessed_data import PreprocessedDataset
 from src.entity.raw_data import RawDataset, RawDataWithTargetDates
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)
-
-# class AbstractPreprocessUsecase(ABC):
-#     def __init__(
-#         self,
-#         prices_extractor: PricesExtractor,
-#         lag_sales_extractor: LagSalesExtractor,        
-#     ):
-#         self.prices_extractor = prices_extractor
-#         self.lag_sales_extractor = lag_sales_extractor
-#         self.logger = getLogger(__name__)
-
-#     @abstractmethod
-#     def run(
-#         self,
-#         dataset: RawDataset,
-#     ) -> PreprocessedDataset:
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def split_data_target(
-#         self,
-#         keys: pd.DataFrame,
-#         data: pd.DataFrame,
-#     ) -> XY:
-#         raise NotImplementedError
 
 
 class PreprocessUsecase(object):
@@ -52,10 +22,6 @@ class PreprocessUsecase(object):
         """
         self.prices_extractor=prices_extractor
         self.lag_sales_extractor=lag_sales_extractor
-        # super().__init__(
-        #     prices_extractor=prices_extractor, 
-        #     lag_sales_extractor=lag_sales_extractor,
-        # )
 
     def preprocess_dataset(
         self,

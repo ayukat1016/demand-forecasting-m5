@@ -1,7 +1,3 @@
-from abc import ABC, abstractmethod
-# from logging import getLogger
-# from typing import Dict, List
-
 import numpy as np
 import pandas as pd
 from src.algorithm.abstract_algorithm import AbstractExtractor
@@ -14,8 +10,6 @@ logger = configure_logger(__name__)
 class PricesExtractor(AbstractExtractor):
     def __init__(self):
         pass
-        # """Price extractor."""
-        # super().__init__()
 
     def run(
         self,
@@ -56,8 +50,6 @@ type:
 class LagSalesExtractor(AbstractExtractor):
     def __init__(self):
         pass
-        # """Date extractor."""
-        # super().__init__()
 
     def run(
         self,

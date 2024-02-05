@@ -5,21 +5,6 @@ from src.model.calendar_model import Calendar
 from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractBulkInsertRepository
 
-# class AbstractCalendarRepository(ABC):
-#     def __init__(
-#         self,
-#         db_client: AbstractDBClient,
-#     ):
-#         self.db_client = db_client
-#         self.table_name = TABLES.CALENDAR.value
-
-#     @abstractmethod
-#     def bulk_insert(
-#         self,
-#         calendar: List[Calendar],
-#     ):
-#         raise NotImplementedError
-
 
 class CalendarRepository(AbstractBulkInsertRepository):
     def __init__(

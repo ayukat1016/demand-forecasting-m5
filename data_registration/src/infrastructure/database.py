@@ -34,6 +34,14 @@ class AbstractDBClient(ABC):
     ):
         raise NotImplementedError
 
+    @abstractmethod
+    def execute_bulk_insert_or_update_query(
+        self,
+        query: str,
+        parameters: Optional[List[Tuple]] = None,
+    ):
+        raise NotImplementedError
+
 class PostgreSQLClient(AbstractDBClient):
     def __init__(self):
         self.__postgres_user = os.getenv("POSTGRES_USER")
@@ -82,3 +90,15 @@ class PostgreSQLClient(AbstractDBClient):
                     message=f"failed to bulk insert or update query: {e}",
                     detail=f"{query} {parameters}: {e}",
                 )
+
+    def execute_select(
+        self,
+        query: str,
+        parameters: Optional[Tuple] = None,
+    ) -> List[Dict[str, Any]]:
+        # logger.info(f"select query: {query}, parameters: {parameters}")
+        with self.get_connection() as conn:
+            with conn.cursor(cursor_factory=DictCursor) as cursor:
+                cursor.execute(query, parameters)
+                rows = cursor.fetchall()
+        return rows

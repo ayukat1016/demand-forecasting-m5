@@ -1,6 +1,3 @@
-# import logging
-# from abc import ABC, abstractmethod
-
 from src.middleware.file_reader import read_csv_to_list
 from src.middleware.logger import configure_logger
 from src.middleware.file_reader import read_text_file
@@ -10,50 +7,8 @@ from src.model.prices_model import Prices
 from src.model.sales_model import Sales
 from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.repository.abstract_repository import AbstractCreateTablesRepository
-# from src.repository.calendar_repository import CalendarRepository
-# from src.repository.prices_repository import PricesRepository
-# from src.repository.sales_repository import SalesRepository
-# from src.repository.table_repository import TableRepository
 
 logger = configure_logger(__name__)
-
-# class AbstractDataInitializationUsecase(ABC):
-#     def __init__(
-#         self,
-#         create_sql_filepath: str,
-#         calendar_filepath: str,
-#         prices_filepath: str,
-#         sales_filepath: str,
-#         table_repository: AbstractTableRepository,
-#         calendar_repository: AbstractCalendarRepository,
-#         prices_repository: AbstractPricesRepository,
-#         sales_repository: AbstractSalesRepository,
-#     ):
-#         self.create_sql_filepath = create_sql_filepath
-#         self.calendar_filepath = calendar_filepath
-#         self.prices_filepath = prices_filepath
-#         self.sales_filepath = sales_filepath
-#         self.table_repository = table_repository
-#         self.calendar_repository = calendar_repository
-#         self.prices_repository = prices_repository
-#         self.sales_repository = sales_repository
-#         self.logger = logging.getLogger(__name__)
-
-#     @abstractmethod
-#     def create_table(self):
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def register_calendar(self):
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def register_prices(self):
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def register_sales(self):
-#         raise NotImplementedError
 
 
 class DataRegisterUsecase(object):
@@ -68,7 +23,6 @@ class DataRegisterUsecase(object):
         prices_repository: AbstractBulkInsertRepository,
         sales_repository: AbstractBulkInsertRepository,
     ):
-        # super().__init__(
         self.create_sql_filepath = create_sql_filepath
         self.calendar_filepath = calendar_filepath
         self.prices_filepath = prices_filepath
@@ -77,7 +31,6 @@ class DataRegisterUsecase(object):
         self.calendar_repository = calendar_repository
         self.prices_repository = prices_repository
         self.sales_repository = sales_repository
-        # )
 
     def create_table(self):
         query = read_text_file(file_path=self.create_sql_filepath)

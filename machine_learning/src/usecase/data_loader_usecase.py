@@ -1,5 +1,3 @@
-# from abc import ABC, abstractmethod
-# from logging import getLogger
 from typing import List
 
 import numpy as np
@@ -10,52 +8,8 @@ from src.model.calendar_model import Calendar
 from src.model.prices_model import Prices
 from src.model.sales_calendar_model import SalesCalendar
 from src.repository.abstract_repository import AbstractSelectRepository
-# from src.repository.calendar_repository import CalendarRepository
-# from src.repository.prices_repository import PricesRepository
-# from src.repository.sales_calendar_repository import SalesCalendarRepository
 
 logger = configure_logger(__name__)
-
-# class AbstractDataLoaderUsecase(ABC):
-#     def __init__(
-#         self,
-#         calendar_repository: AbstractCalendarRepository,
-#         prices_repository: AbstractPricesRepository,        
-#         training_repository: AbstractTrainingRepository,
-#     ):
-#         self.calendar_repository = calendar_repository
-#         self.prices_repository = prices_repository
-#         self.training_repository = training_repository
-#         self.logger = getLogger(__name__)
-
-#     @abstractmethod
-#     def load_dataset(
-#         self,
-#         training_date_from: int,
-#         training_date_to: int,
-#         validation_date_from: int,
-#         validation_date_to: int,
-#         prediction_date_from: int,
-#         prediction_date_to: int,
-#     ) -> RawDataset:
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def make_training_data(
-#         self,
-#         date_from: int,
-#         date_to: int,
-#     ) -> pd.DataFrame:
-#         raise NotImplementedError
-
-#     @abstractmethod
-#     def make_prediction_data(
-#         self,
-#         training_data: pd.DataFrame,         
-#         date_from: int,
-#         date_to: int,
-#     ) -> pd.DataFrame:
-#         raise NotImplementedError
 
 
 class DataLoaderUsecase(object):
@@ -73,14 +27,9 @@ class DataLoaderUsecase(object):
             sales_calendar_repository  (AbstractSelectRepository): Repository to retrieve data for training.
         """
 
-        # super().__init__(
-        #     calendar_repository=calendar_repository,
-        #     prices_repository=prices_repository, 
-        #     training_repository=training_repository,
-        # )
         self.calendar_repository = calendar_repository
         self.prices_repository = prices_repository
-        self.training_repository = sales_calendar_repository
+        self.sales_calendar_repository = sales_calendar_repository
 
     def load_dataset(
         self,
@@ -274,16 +223,16 @@ type:
         position = 0
         limit = 10000
         while True:
-            training_data = self.training_repository.select(
+            sales_calendar_data = self.sales_calendar_repository.select(
                 date_from=date_from,
                 date_to=date_to,                
                 limit=limit,
                 offset=position,
             )
-            if len(training_data) == 0:
+            if len(sales_calendar_data) == 0:
                 break
-            data.extend(training_data)
-            position += len(training_data)
+            data.extend(sales_calendar_data)
+            position += len(sales_calendar_data)
             logger.info(f"done loading {position}...")
         return data
 
