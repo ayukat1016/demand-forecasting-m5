@@ -119,39 +119,39 @@ machine_learning:
 		-v $(MACHINE_LEARNING_DIR)/hydra:/opt/hydra \
 		-v $(MACHINE_LEARNING_DIR)/src:/opt/src \
 		-v $(MACHINE_LEARNING_DIR)/outputs:/opt/outputs \
-		--net=demand_forecasting_m5 \
+		--net demand_forecasting_m5 \
 		$(DOCKER_MACHINE_LEARNING_IMAGE_NAME) \
 		python -m src.main
 
-############ DEMAND FORECASTING BI COMMANDS ############
-BI_DIR := $(DIR)/bi
-DOCKERFILE_BI = $(BI_DIR)/$(DOCKERFILE)
-DOCKER_BI_TAG = $(TAG)_bi
-DOCKER_BI_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_BI_TAG)_$(VERSION)
+# ############ DEMAND FORECASTING BI COMMANDS ############
+# BI_DIR := $(DIR)/bi
+# DOCKERFILE_BI = $(BI_DIR)/$(DOCKERFILE)
+# DOCKER_BI_TAG = $(TAG)_bi
+# DOCKER_BI_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_BI_TAG)_$(VERSION)
 
-.PHONY: req_bi
-req_bi:
-	cd $(BI_DIR) && \
-	poetry export \
-		--without-hashes \
-		-f requirements.txt \
-		--output requirements.txt
+# .PHONY: req_bi
+# req_bi:
+# 	cd $(BI_DIR) && \
+# 	poetry export \
+# 		--without-hashes \
+# 		-f requirements.txt \
+# 		--output requirements.txt
 
-.PHONY: build_bi
-build_bi:
-	docker build \
-		--platform $(PLATFORM) \
-		-t $(DOCKER_BI_IMAGE_NAME) \
-		-f $(DOCKERFILE_BI) \
-		.
+# .PHONY: build_bi
+# build_bi:
+# 	docker build \
+# 		--platform $(PLATFORM) \
+# 		-t $(DOCKER_BI_IMAGE_NAME) \
+# 		-f $(DOCKERFILE_BI) \
+# 		.
 
-.PHONY: push_bi
-push_bi:
-	docker push $(DOCKER_BI_IMAGE_NAME)
+# .PHONY: push_bi
+# push_bi:
+# 	docker push $(DOCKER_BI_IMAGE_NAME)
 
-.PHONY: pull_bi
-pull_bi:
-	docker pull $(DOCKER_BI_IMAGE_NAME)
+# .PHONY: pull_bi
+# pull_bi:
+# 	docker pull $(DOCKER_BI_IMAGE_NAME)
 
 
 
@@ -160,25 +160,25 @@ pull_bi:
 req_all: req_data_registration \
 	req_machine_learning \
 	req_mlflow \
-	req_bi
+	# req_bi
 
 .PHONY: build_all
 build_all: build_data_registration \
 	build_machine_learning \
 	build_mlflow \
-	build_bi
+	# build_bi
 
 .PHONY: push_all
 push_all: push_data_registration \
 	push_machine_learning \
 	push_mlflow \
-	push_bi
+	# push_bi
 
 .PHONY: pull_all
 pull_all: pull_data_registration \
 	pull_machine_learning \
 	pull_mlflow \
-	pull_bi
+	# pull_bi
 
 
 ############ DOCKER COMPOSE COMMANDS ############

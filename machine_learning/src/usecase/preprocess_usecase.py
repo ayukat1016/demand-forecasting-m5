@@ -102,7 +102,6 @@ y:
         )
         return data
 
-
     def split_data_target(
         self,
         keys: pd.DataFrame,

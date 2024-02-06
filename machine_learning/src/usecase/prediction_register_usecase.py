@@ -16,12 +16,13 @@ class PredictionRegisterUsecase(object):
     ):
         self.prediction_repository = prediction_repository
 
-    def register(
+    def register_prediction(
         self,
         predictions: pd.DataFrame,
         mlflow_experiment_id: Optional[int] = None,
         mlflow_run_id: Optional[str] = None,
     ):
+        logger.info("register prediction")
         if mlflow_experiment_id is None or mlflow_run_id is None:
             raise ValueError("mlflow_experiment_id and mlflow_run_id must not be empty")
         self.register_db(
@@ -29,6 +30,7 @@ class PredictionRegisterUsecase(object):
             mlflow_experiment_id=mlflow_experiment_id,
             mlflow_run_id=mlflow_run_id,
         )
+        logger.info("done register prediction")
 
     def register_db(
         self,

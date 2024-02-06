@@ -25,8 +25,6 @@ from src.usecase.training_usecase import TrainingUsecase
 
 logger = configure_logger(__name__)
 
-DATE_FORMAT = "%Y-%m-%d"
-
 
 @hydra.main(
     config_path="/opt/hydra",
@@ -195,7 +193,7 @@ prediction data: {prediction_data_paths}
 
             predictions = prediction.prediction
 
-            prediction_register_usecase.register(
+            prediction_register_usecase.register_prediction(
                 predictions=predictions,
                 mlflow_experiment_id=run.info.experiment_id,
                 mlflow_run_id=run.info.run_id,
