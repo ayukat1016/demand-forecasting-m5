@@ -5,4 +5,4 @@ class TABLES(Enum):
     SALES = "sales"
     PRICES = "prices"
     CALENDAR = "calendar"
-    PREDICTIONS = "predictions"
+    PREDICTION = "prediction"

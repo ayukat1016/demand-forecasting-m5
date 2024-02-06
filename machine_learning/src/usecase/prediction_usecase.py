@@ -18,7 +18,7 @@ class PredictionUsecase(object):
     ) -> Prediction:
         logger.info(f"start prediction: {model.name}...")
 
-        prediction = model.predict(x=data.prediction_data.x[mask].copy())
+        prediction = model.predict(x=data.prediction_data.x[mask].reset_index(drop=True))
         
         d = [
             dict(

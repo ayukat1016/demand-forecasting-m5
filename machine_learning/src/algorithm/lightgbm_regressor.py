@@ -83,8 +83,8 @@ class LightGBMRegression(AbstractModel):
         self,
         x: pd.DataFrame,
     ) -> List[float]:
-        predictions = self.model.predict(x).tolist()
-        return predictions
+        prediction = self.model.predict(x).tolist()
+        return prediction
 
     def save_model_params(
         self,

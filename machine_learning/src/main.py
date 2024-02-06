@@ -13,7 +13,7 @@ from src.entity.training_data import TrainingDataset
 from src.infrastructure.database import PostgreSQLClient
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import CalendarRepository
-from src.repository.predictions_repository import PredictionsRepository
+from src.repository.prediction_repository import PredictionRepository
 from src.repository.prices_repository import PricesRepository
 from src.repository.sales_calendar_repository import SalesCalendarRepository
 from src.usecase.data_loader_usecase import DataLoaderUsecase
@@ -144,9 +144,9 @@ prediction data: {prediction_data_paths}
         prediction_usecase = PredictionUsecase()
         evaluation_usecase = EvaluationUsecase()
 
-        predictions_repository = PredictionsRepository(db_client=db_client)
+        prediction_repository = PredictionRepository(db_client=db_client)
         prediction_register_usecase = PredictionRegisterUsecase(
-            predictions_repository=predictions_repository,
+            prediction_repository=prediction_repository,
         )
 
         for store_id in sorted(list(preprocessed_dataset.training_data.keys["store_id"].unique())):

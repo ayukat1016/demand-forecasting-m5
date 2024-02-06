@@ -2,7 +2,7 @@ from pydantic import Extra
 from src.model.abstract_model import AbstractModel
 
 
-class Predictions(AbstractModel):
+class Prediction(AbstractModel):
     store_id: str    
     item_id: str
     date_id: int

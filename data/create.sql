@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS sales (
     PRIMARY KEY (key)
 );
 
-CREATE TABLE IF NOT EXISTS predictions (
+CREATE TABLE IF NOT EXISTS prediction (
     store_id VARCHAR(255) NOT NULL,
     item_id VARCHAR(255) NOT NULL,
     date_id INTEGER NOT NULL,

@@ -2,7 +2,7 @@ from typing import List, Optional
 
 import pandas as pd
 from src.entity.prediction_data import PredictionDataSchema
-from src.model.prediction_model import Predictions
+from src.model.prediction_model import Prediction
 from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.middleware.logger import configure_logger
 
@@ -12,9 +12,9 @@ logger = configure_logger(__name__)
 class PredictionRegisterUsecase(object):
     def __init__(
         self,
-        predictions_repository: AbstractBulkInsertRepository
+        prediction_repository: AbstractBulkInsertRepository
     ):
-        self.predictions_repository = predictions_repository
+        self.prediction_repository = prediction_repository
 
     def register(
         self,
@@ -38,10 +38,10 @@ class PredictionRegisterUsecase(object):
     ):
         predictions = PredictionDataSchema.validate(predictions)
         records = predictions.to_dict(orient="records")
-        predictions: List[Predictions] = []
+        predictions: List[Prediction] = []
         for r in records:
             predictions.append(
-                Predictions(
+                Prediction(
                     store_id=r["store_id"],
                     item_id=r["item_id"],
                     date_id=r["date_id"],
@@ -50,6 +50,6 @@ class PredictionRegisterUsecase(object):
                     mlflow_run_id=mlflow_run_id,
                 ),
             )
-        self.predictions_repository.bulk_insert(
+        self.prediction_repository.bulk_insert(
             records=predictions,
         )
