@@ -10,16 +10,15 @@ from src.entity.evaluation_data import FeatureImportance
 
 LGB_REGRESSION_DEFAULT_PARAMS = {
     "boosting_type": "gbdt",
-    "objective": "regression_l1",
-    "metric": "mean_absolute_error",
+    "n_estimators": 1000,
+    "objective": "rmse",
+    "metric": "rmse",
     "learning_rate": 0.05,
     "num_leaves": 32,
     "subsample": 0.7,
     "subsample_freq": 1,
     "feature_fraction": 0.8,
     "min_data_in_leaf": 50,
-    "min_sum_hessian_in_leaf": 50,
-    "n_estimators": 1000,
     "random_state": 123,
     "importance_type": "gain",
 }

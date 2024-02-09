@@ -40,7 +40,7 @@ def main(
     prices_filepath: Optional[str] = None,
     sales_filepath: Optional[str] = None,
 ):
-    logger.info("start jobs")
+    logger.info("START data_registration")
     logger.info(
         f"""
 options:
@@ -84,7 +84,7 @@ sales_filepath: {sales_filepath}
     logger.info("done register sales")
 
 
-    logger.info("DONE!")
+    logger.info("DONE data_registration")
 
 
 if __name__ == "__main__":

@@ -18,8 +18,8 @@ from src.repository.prices_repository import PricesRepository
 from src.repository.sales_calendar_repository import SalesCalendarRepository
 from src.usecase.data_loader_usecase import DataLoaderUsecase
 from src.usecase.evaluation_usecase import EvaluationUsecase
-from src.usecase.prediction_usecase import PredictionUsecase
 from src.usecase.prediction_register_usecase import PredictionRegisterUsecase
+from src.usecase.prediction_usecase import PredictionUsecase
 from src.usecase.preprocess_usecase import PreprocessUsecase
 from src.usecase.training_usecase import TrainingUsecase
 
@@ -31,13 +31,23 @@ logger = configure_logger(__name__)
     config_name="default",
 )
 def main(cfg: DictConfig):
-    logger.info("start ml...")
+    logger.info("START machine_learning...")
     logger.info(f"config: {cfg}")
     cwd = os.getcwd()
     run_name = "-".join(cwd.split("/")[-2:])
 
     logger.info(f"current working directory: {cwd}")
     logger.info(f"run_name: {run_name}")
+    logger.info(
+        f"""parameters:
+training_date_from: {cfg.period.training_date_from}
+training_date_to: {cfg.period.training_date_to}
+validation_date_from: {cfg.period.validation_date_from}
+validation_date_to: {cfg.period.validation_date_to}
+prediction_date_from: {cfg.period.prediction_date_from}
+prediction_date_to: {cfg.period.prediction_date_to}
+    """
+    )
 
     mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000"))
     mlflow.set_experiment(cfg.name)
@@ -220,6 +230,7 @@ prediction data: {prediction_data_paths}
 
         logger.info(f"DONE machine learning task for {cfg.model.name}: {run_name}")
 
+    logger.info("DONE machine_learning")
 
 if __name__ == "__main__":
     main()
