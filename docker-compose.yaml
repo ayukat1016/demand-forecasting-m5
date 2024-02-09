@@ -78,7 +78,6 @@ services:
   #     - POSTGRES_USER=postgres
   #     - POSTGRES_PASSWORD=password
   #     - POSTGRES_DBNAME=demand_forecasting_m5
-  #     - LOG_LEVEL=INFO
   #     - MLFLOW_TRACKING_URI=http://mlflow:5000
   #     - TARGET_CONFIG_NAME=default
   #   command: /bin/sh -c "sleep 180s && python -m src.main"
