@@ -22,8 +22,9 @@
 - デモデータは[kaggleのデータセット](https://www.kaggle.com/competitions/m5-forecasting-accuracy/data)を以下の仕様で加工し、[data](./data/)に格納済みです。デモデータの作成方法は[notebook](./notebook/)を参照してください。
   - `sales_demo.csv`
     - 元ファイルは`sales_train_evaluation.csv`
-    - `store_id`を`CA_1`, `CA_2`、`item_id`を`FOODS_1`, `FOODS_2`で絞り込み
-    - `date_id`を文字列`d_xxx`から数値`xxx`に変換し、1～107の期間で絞り込み
+    - `store_id`を`CA_1`, `CA_2`で絞り込み
+    - `item_id`を`FOODS_1`, `FOODS_2`で絞り込み
+    - `date_id`を文字列`d_xxx`から数値`xxx`に変換し、1～100で絞り込み
     - 売上数量の列を横持から縦持ちに変換し`sales`の列を追加（レコード件数：122,800=店舗数：2×品目数：614×日付数：100）
   - `prices_demo.csv`
     - 元ファイルは`sell_prices.csv`
@@ -89,36 +90,19 @@
 ## Getting started
 
 ### 1. Docker imageのビルド
+- 本リポジトリのルートディレクトリに移動します。
+
+```sh
+# 現在のディレクトリの表示(「/xxx/repository」はユーザにより異なります。)
+$ pwd
+/home/xxx/repository/demand-forecasting-m5
+```
+
 - Dockerファイルは3つあり、[makefile](./makefile)の`make build_all`は全てのDockerをまとめてビルドします。
 
 ```sh
 # 全てのDockerfileを一括でビルド
 $ make build_all
-```
-
-- Dockerファイルを個別にビルドすることも可能です。
-
-```sh
-# data_registrationのビルド
-$ make build_data_registration
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/data_registration/Dockerfile \
-
-# machine_learningのビルド
-$ make build_machine_learning
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/machine_learning/Dockerfile \
-
-# mlflowのビルド
-$ make mlflow
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/mlflow/Dockerfile \
 ```
 
 <details> <summary>make build_all実行ログ</summary>
@@ -214,21 +198,45 @@ What's Next?
 ```
 </details>
 
+- Dockerファイルは個別にビルドすることも可能です。
+
+```sh
+# data_registrationのビルド
+$ make build_data_registration
+docker build \
+        --platform linux/amd64 \
+        -t demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0 \
+        -f /home/xxx/repository/demand-forecasting-m5/data_registration/Dockerfile \
+
+# machine_learningのビルド
+$ make build_machine_learning
+docker build \
+        --platform linux/amd64 \
+        -t demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
+        -f /home/xxx/repository/demand-forecasting-m5/machine_learning/Dockerfile \
+
+# mlflowのビルド
+$ make mlflow
+docker build \
+        --platform linux/amd64 \
+        -t demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0 \
+        -f /home/xxx/repository/demand-forecasting-m5/mlflow/Dockerfile \
+```
+
+- ビルドしたDocker imageを確認します。
+
+```sh
+# Docker imageの確認
+$ docker images
+REPOSITORY                   TAG                                                      IMAGE ID       CREATED         SIZE
+demand_forecasting_m5        demand_forecasting_m5_mlflow_1.0.0                       2c41724a751a   3 days ago      836MB
+demand_forecasting_m5        demand_forecasting_m5_machine_learning_1.0.0             a1e2f080c6d2   3 days ago      1.04GB
+demand_forecasting_m5        demand_forecasting_m5_data_registration_1.0.0            b8cfe5e6670f   3 days ago      378MB
+```
 ### 2. 事前準備
 
 - Docker composeでPosgreSQL database、MLflow、data registrationのコンテナを起動します。
 - [makefile](./makefile)の`make up`は[docker-compose.yaml](docker-compose.yaml)の処理をまとめて実行します。
-- data registrationが学習で使用するデータをPostgreSQL databaseに登録します。登録状況は実行ログをご確認ください。
-
-```sh
-# docker-composeの起動
-$ make up
-docker-compose \
-        -f docker-compose.yaml \
-        up -d
-```
-
-<details> <summary>DB構築とテーブル登録実行ログ</summary>
 
 ```sh
 # docker-composeの起動
@@ -241,7 +249,12 @@ docker-compose \
  ✔ Container postgres             Started                                                                              0.1s
  ✔ Container mlflow               Started                                                                              0.1s
  ✔ Container data_registration    Started
+```
 
+- data registrationが学習で使用するデータをPostgreSQL databaseに登録します。登録状況は実行ログをご確認ください。
+<details> <summary>DB構築とテーブル登録実行ログ</summary>
+
+```sh
 # 起動したDocker containerの確認
 $ docker ps -a
 CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED              STATUS              PORTS                     NAMES
@@ -375,7 +388,7 @@ CREATE TABLE IF NOT EXISTS prediction (
 <details> <summary>DBログインとSQL実行ログ</summary>
 
 ```sh
-# postgresコンテナ内でコマンド実行
+# postgresコンテナに入る
 $ docker exec -it postgres bash
 root@postgres:/#
 
@@ -400,18 +413,17 @@ demand_forecasting_m5=# select count(*) from sales;
 --------
  122800
 (1 row)
+
+# DBログアウト
+demand_forecasting_m5=# \q
+
+# postgresコンテナから抜ける
+root@postgres:/# exit
+exit
+$
 ```
 </details>
 
-- なお、事前準備で作成したコンテナは`make down`で停止、削除できます。
-
-```sh
-# docker-composeの停止
-$ make down
-docker-compose \
-        -f docker-compose.yaml \
-        down
-```
 
 ### 3. 機械学習パイプラインの実行
 
@@ -1301,6 +1313,46 @@ root_mean_squared_error: 1.4475629905483116
 #### 予測（予測データ）
 ![img](images/prediction.png)
 
+### 5. 利用終了時のコンテナ削除
+
+- 削除対象のコンテナを確認します。
+```sh
+# コンテナの一覧
+$ docker ps -a
+CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED          STATUS                      PORTS                     NAMES
+62d400309906   demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0    "python -m src.main"     58 seconds ago   Exited (0) 19 seconds ago                             machine_learning
+845b5f94e37a   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   17 minutes ago   Exited (0) 15 minutes ago                             data_registration
+c5cf7783986a   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   17 minutes ago   Up 17 minutes               0.0.0.0:15000->5000/tcp   mlflow
+c188172432bb   postgres:14.3                                                         "docker-entrypoint.s…"   17 minutes ago   Up 17 minutes               0.0.0.0:5432->5432/tcp    postgres
+```
+
+- 「3. 機械学習パイプラインの実行」で作成したコンテナは`docker rm`で削除します。
+```sh
+# コンテナの削除
+$ docker rm machine_learning
+machine_learning
+```
+
+- 「2. 事前準備」で作成したコンテナは`make down`で削除します。
+```sh
+# docker-composeの停止
+$ make down
+docker-compose \
+        -f docker-compose.yaml \
+        down
+[+] Running 4/4
+ ✔ Container data_registration    Removed                                                                              0.0s
+ ✔ Container mlflow               Removed                                                                             10.6s
+ ✔ Container postgres             Removed                                                                              0.5s
+ ✔ Network demand_forecasting_m5  Removed
+```
+
+- コンテナの削除を確認します。
+```sh
+# コンテナの一覧
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
 
 ## 使用するデータ範囲の変更
 
