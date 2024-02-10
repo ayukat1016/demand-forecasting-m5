@@ -1,8 +1,8 @@
 from pydantic import Extra
-from src.model.abstract_model import AbstractModel
+from src.schema.abstract_schema import AbstractSchema
 
 
-class Prediction(AbstractModel):
+class Prediction(AbstractSchema):
     store_id: str    
     item_id: str
     date_id: int

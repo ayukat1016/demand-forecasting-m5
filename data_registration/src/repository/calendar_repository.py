@@ -1,9 +1,9 @@
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.calendar_model import Calendar
-from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractBulkInsertRepository
+from src.schema.calendar_schema import Calendar
+from src.schema.table_schema import TABLES
 
 
 class CalendarRepository(AbstractBulkInsertRepository):

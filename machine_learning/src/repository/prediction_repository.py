@@ -1,9 +1,9 @@
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.prediction_model import Prediction
-from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractBulkInsertRepository
+from src.schema.prediction_schema import Prediction
+from src.schema.table_schema import TABLES
 
 
 class PredictionRepository(AbstractBulkInsertRepository):

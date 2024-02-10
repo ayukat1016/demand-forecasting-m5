@@ -1,8 +1,8 @@
 from pydantic import Extra
-from src.model.abstract_model import AbstractModel
+from src.schema.abstract_schema import AbstractSchema
 
 
-class Sales(AbstractModel):
+class Sales(AbstractSchema):
     key: str
     id: str    
     item_id: str

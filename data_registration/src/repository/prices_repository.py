@@ -1,9 +1,9 @@
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.prices_model import Prices
-from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractBulkInsertRepository
+from src.schema.prices_schema import Prices
+from src.schema.table_schema import TABLES
 
 
 class PricesRepository(AbstractBulkInsertRepository):

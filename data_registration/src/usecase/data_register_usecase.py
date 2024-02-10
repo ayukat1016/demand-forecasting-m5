@@ -2,11 +2,11 @@ from src.middleware.file_reader import read_csv_to_list
 from src.middleware.logger import configure_logger
 from src.middleware.file_reader import read_text_file
 from src.middleware.strings import get_uuid
-from src.model.calendar_model import Calendar
-from src.model.prices_model import Prices
-from src.model.sales_model import Sales
 from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.repository.abstract_repository import AbstractCreateTablesRepository
+from src.schema.calendar_schema import Calendar
+from src.schema.prices_schema import Prices
+from src.schema.sales_schema import Sales
 
 logger = configure_logger(__name__)
 
