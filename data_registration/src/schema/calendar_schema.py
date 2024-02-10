@@ -1,8 +1,8 @@
 from pydantic import Extra
-from src.model.abstract_model import AbstractModel
+from src.schema.abstract_schema import AbstractSchema
 
 
-class Calendar(AbstractModel):
+class Calendar(AbstractSchema):
     date: str
     wm_yr_wk: int
     weekday : str

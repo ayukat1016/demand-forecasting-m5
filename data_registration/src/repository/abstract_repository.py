@@ -1,10 +1,7 @@
 from abc import ABC, abstractmethod
 
 from src.infrastructure.database import AbstractDBClient
-from src.middleware.logger import configure_logger
-from src.model.abstract_model import AbstractModel
-
-logger = configure_logger(__name__)
+from src.schema.abstract_schema import AbstractSchema
 
 
 class AbstractBulkInsertRepository(ABC):
@@ -17,7 +14,7 @@ class AbstractBulkInsertRepository(ABC):
     @abstractmethod
     def bulk_insert(
         self,
-        record: AbstractModel,
+        record: AbstractSchema,
     ):
         raise NotImplementedError
 

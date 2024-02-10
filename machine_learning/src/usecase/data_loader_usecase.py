@@ -4,10 +4,10 @@ import numpy as np
 import pandas as pd
 from src.entity.raw_data import RawDataset, RawDataWithTargetDates
 from src.middleware.logger import configure_logger
-from src.model.calendar_model import Calendar
-from src.model.prices_model import Prices
-from src.model.sales_calendar_model import SalesCalendar
 from src.repository.abstract_repository import AbstractSelectRepository
+from src.schema.calendar_schema import Calendar
+from src.schema.prices_schema import Prices
+from src.schema.sales_calendar_schema import SalesCalendar
 
 logger = configure_logger(__name__)
 

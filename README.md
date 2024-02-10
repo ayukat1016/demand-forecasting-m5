@@ -1,6 +1,6 @@
 # demand-forecasting-m5
 
-本リポジトリは機械学習パイプライン（データ取得、前処理、学習、評価、予測）を実行する機械学習システムのテンプレートです。テンプレートは時系列データを用いて、店舗ごとに予測モデルを作成、店舗/品目/日付の粒度で売上数量を需要予測します。
+本リポジトリは機械学習パイプライン（データ取得、前処理、学習、評価、予測）を実行する機械学習システムの需要予測テンプレートです。テンプレートは時系列データを用いて、店舗ごとに予測モデルを作成、店舗/品目/日付の粒度で売上数量を需要予測します。
 
 
 ## データ
@@ -15,7 +15,7 @@
   
   - `calendar`: 日付`date`と日付ID`date_id`と週次ID`wm_yr_wk`の紐づけと日付ごとのイベントフラグを持つマスタデータ
 
- - 本テンプレートは日付が1～100日の期間で店舗/品目/日付ごとの売上数量を学習、101日～107日の売上数量を予測します。
+ - テンプレートは日付が1～100日の期間で店舗/品目/日付ごとの売上数量を学習、101日～107日の売上数量を予測します。
 
 - Kaggleのsalesのレコード件数は100万件を超えますが、テンプレートは処理高速化のため、件数を約12万件に絞ったデモデータを使用します。同様に、pricesのレコード件数も約23万件に絞ります。
 
@@ -55,25 +55,25 @@
 
 - 機械学習
   - [pandas](https://pandas.pydata.org/): データフレームのライブラリ。本テンプレートで使用するデータは基本的にPandas DataFrame形式で管理される。
-  - [pandera](https://pandera.readthedocs.io/en/stable/): Pandas DataFrameのデータを検査するライブラリ。各所におけるデータ変換で、正しいデータが出力されていることを検査する。
-  - [scikit-learn](https://scikit-learn.org/stable/): 主にテーブルデータに対する機械学習の機能を提供するライブラリ。
-  - [LightGBM](https://lightgbm.readthedocs.io/en/latest/index.html): LightGBMのアルゴリズムを提供するライブラリ。本テンプレートの予測モデルに作成し、実装はscikit-learn APIを使用。
+  - [pandera](https://pandera.readthedocs.io/en/stable/): Pandas DataFrameのデータを検査するライブラリ
+  - [scikit-learn](https://scikit-learn.org/stable/): テーブルデータの機械学習の前処理及びアルゴリズムを提供するライブラリ
+  - [LightGBM](https://lightgbm.readthedocs.io/en/latest/index.html): 勾配ブースティングのアルゴリズムを提供するライブラリ、実装はscikit-learn APIを使用する。
 - 機械学習の管理
-  - [MLflow](https://mlflow.org/): 機械学習の学習パラメータ及び実行結果を管理するライブラリ。
-  - [Hydra](https://hydra.cc/): 機械学習のパラメータを管理するライブラリ。
+  - [MLflow](https://mlflow.org/): 機械学習の学習パラメータ及び実行結果を管理するライブラリ
+  - [Hydra](https://hydra.cc/): 機械学習のパラメータを管理するライブラリ
 - リポジトリのライブラリ管理
-  - [poetry](https://python-poetry.org/): Pythonのライブラリを管理。
+  - [poetry](https://python-poetry.org/): Pythonのライブラリを管理する。
 
 [machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用し、コンポーネントの依存を一方向になるように整理しています。
 プログラムは以下のコンポーネントで構成されています。
 
-- [main.py](machine_learning/src/main.py): クラスを初期化し、usecaseのメソッドを実行。
-- [usecase](machine_learning/src/usecase/): データ取得、前処理、学習、評価、予測の機械学習パイプラインの各処理。
-- [algorithm](machine_learning/src/algorithm/): 機械学習の各種アルゴリズム。
-- [entity](machine_learning/src/entity/): usecase間でやり取りするデータ。
-- [repository](machine_learning/src/repository/): データベースへのリクエスト。
-- [model](machine_learning/src/model/): データベースから取得するデータ形式。
-- [infrastructure](machine_learning/src/infrastructure/): 外部インフラへのアクセス。
+- [main.py](machine_learning/src/main.py): クラスを初期化し、usecaseのメソッドを実行
+- [usecase](machine_learning/src/usecase/): データ取得、前処理、学習、評価、予測の機械学習パイプラインの各処理
+- [algorithm](machine_learning/src/algorithm/): 機械学習の各種アルゴリズム
+- [entity](machine_learning/src/entity/): usecase間でやり取りするデータ
+- [repository](machine_learning/src/repository/): データベースへのリクエスト
+- [schema](machine_learning/src/schema/): データベースから取得するデータ型
+- [infrastructure](machine_learning/src/infrastructure/): 外部インフラへのアクセス
 
 機械学習で用いる各種パラメータは[hydra](machine_learning/hydra/)で管理します。
 

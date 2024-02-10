@@ -2,10 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 from src.infrastructure.database import AbstractDBClient
-from src.middleware.logger import configure_logger
-from src.model.abstract_model import AbstractModel
-
-logger = configure_logger(__name__)
+from src.schema.abstract_schema import AbstractSchema
 
 
 class AbstractBulkInsertRepository(ABC):
@@ -18,7 +15,7 @@ class AbstractBulkInsertRepository(ABC):
     @abstractmethod
     def bulk_insert(
         self,
-        record: AbstractModel,
+        record: AbstractSchema,
     ):
         raise NotImplementedError
 
@@ -52,5 +49,5 @@ class AbstractSelectRepository(ABC):
         date_to: Optional[int] = None,
         limit: int = 200,
         offset: int = 0,
-    ) -> List[AbstractModel]:
+    ) -> List[AbstractSchema]:
         raise NotImplementedError

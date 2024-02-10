@@ -1,9 +1,9 @@
 from typing import List, Optional, Union
 
 from src.infrastructure.database import AbstractDBClient
-from src.model.sales_calendar_model import SalesCalendar
-from src.model.table_model import TABLES
 from src.repository.abstract_repository import AbstractSelectRepository
+from src.schema.sales_calendar_schema import SalesCalendar
+from src.schema.table_schema import TABLES
 
 
 class SalesCalendarRepository(AbstractSelectRepository):
