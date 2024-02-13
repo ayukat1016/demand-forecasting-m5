@@ -35,6 +35,7 @@ def main(cfg: DictConfig):
     logger.info(f"config: {cfg}")
     cwd = os.getcwd()
     run_name = "-".join(cwd.split("/")[-2:])
+    experiment_id = 0
 
     logger.info(f"current working directory: {cwd}")
     logger.info(f"run_name: {run_name}")
@@ -51,7 +52,7 @@ prediction_date_to: {cfg.period.prediction_date_to}
 
     mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000"))
     mlflow.set_experiment(cfg.name)
-    with mlflow.start_run(run_name=run_name) as run:
+    with mlflow.start_run(run_name=run_name, experiment_id=experiment_id) as run:
 
         mlflow.log_artifact(os.path.join(cwd, ".hydra/config.yaml"))
         mlflow.log_artifact(os.path.join(cwd, ".hydra/hydra.yaml"))
