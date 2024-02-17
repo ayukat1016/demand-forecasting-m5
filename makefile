@@ -41,7 +41,6 @@ pull_data_registration:
 	docker pull $(DOCKER_DATA_REGISTRATION_IMAGE_NAME)
 
 
-
 ############ DEMAND FORECASTING MLFLOW COMMANDS ############
 MLFLOW_DIR := $(DIR)/mlflow
 DOCKERFILE_MLFLOW = $(MLFLOW_DIR)/$(DOCKERFILE)
@@ -95,16 +94,8 @@ build_machine_learning:
 		-f $(DOCKERFILE_MACHINE_LEARNING) \
 		.
 
-.PHONY: push_machine_learning
-push_machine_learning:
-	docker push $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
-
-.PHONY: pull_machine_learning
-pull_machine_learning:
-	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
-
-.PHONY: machine_learning
-machine_learning:
+.PHONY: run_machine_learning
+run_machine_learning:
 	docker run \
 		-it \
 		--name machine_learning \
@@ -121,6 +112,14 @@ machine_learning:
 		--net demand_forecasting_m5 \
 		$(DOCKER_MACHINE_LEARNING_IMAGE_NAME) \
 		python -m src.main
+
+.PHONY: push_machine_learning
+push_machine_learning:
+	docker push $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
+
+.PHONY: pull_machine_learning
+pull_machine_learning:
+	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
 
 
 ############ DEMAND FORECASTING BI COMMANDS ############
@@ -144,6 +143,22 @@ build_bi:
 		-t $(DOCKER_BI_IMAGE_NAME) \
 		-f $(DOCKERFILE_BI) \
 		.
+
+.PHONY: run_bi
+run_bi:
+	docker run \
+		-it \
+		--name BI \
+		-e POSTGRES_HOST=postgres \
+		-e POSTGRES_PORT=5432 \
+		-e POSTGRES_USER=postgres \
+		-e POSTGRES_PASSWORD=password \
+		-e POSTGRES_DBNAME=demand_forecasting_m5 \
+		-p 8501:8501 \
+		-v $(BI_DIR)/src:/opt/src \
+		--net demand_forecasting_m5 \
+		$(DOCKER_BI_IMAGE_NAME) \
+		streamlit run src/main.py
 
 .PHONY: push_bi
 push_bi:

@@ -66,7 +66,7 @@ class SalesCalendarRepository(AbstractSelectRepository):
                 {self.sales_table}.date_id <= %s
             """
             parameters.append(date_to)
-            where = "AND"        
+            where = "AND"
 
         query += f"""        
         LIMIT
