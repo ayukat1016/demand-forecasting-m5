@@ -148,7 +148,7 @@ build_bi:
 run_bi:
 	docker run \
 		-it \
-		--name BI \
+		--name bi \
 		-e POSTGRES_HOST=postgres \
 		-e POSTGRES_PORT=5432 \
 		-e POSTGRES_USER=postgres \

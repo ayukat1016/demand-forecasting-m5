@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from pydantic import Extra
+from pydantic import BaseModel, Extra
 
 
 class Sales(BaseModel):

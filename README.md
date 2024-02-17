@@ -40,6 +40,7 @@
 
  - 学習はcsvファイルを直接利用するのではなく、データベースに登録します。スキーマは[create.sql](./data/create.sql)で定義しています。
 
+
 ## Components
 
 テンプレートは以下のコンポーネントで構成されています。
@@ -49,6 +50,7 @@
 - [data_registration](./data_registration/): [Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータをPostgreSQLに登録するバッチ処理。
 - [machine_learning](./machine_learning/): 機械学習開発のためのテンプレートとして例示したプログラム。PostgreSQLからデータを取得し、前処理、学習、評価、予測を実行し、記録をMLflow tracking serverに記録する。
 - [notebook](./notebook/): 本リポジトリの実装前に[Google Colaboratory](https://colab.google/)で動作確認したnotebookを格納しています。本システムの実行結果はnotebookの予測値と一致します。
+
 
 ## machine_learningの構成
 
@@ -217,11 +219,18 @@ docker build \
         -f /home/xxx/repository/demand-forecasting-m5/machine_learning/Dockerfile \
 
 # mlflowのビルド
-$ make mlflow
+$ make build_mlflow
 docker build \
         --platform linux/amd64 \
         -t demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/mlflow/Dockerfile \
+
+# biのビルド
+$ make build_bi
+docker build \
+        --platform linux/amd64 \
+        -t demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
+        -f /home/xxx/repository/demand-forecasting-m5/bi/Dockerfile \
 ```
 
 - ビルドしたDocker imageを確認します。
@@ -230,6 +239,7 @@ docker build \
 # Docker imageの確認
 $ docker images
 REPOSITORY                   TAG                                                      IMAGE ID       CREATED         SIZE
+demand_forecasting_m5        demand_forecasting_m5_bi_1.0.0                           5de72d20c4ff   5 days ago      825MB
 demand_forecasting_m5        demand_forecasting_m5_mlflow_1.0.0                       2c41724a751a   3 days ago      836MB
 demand_forecasting_m5        demand_forecasting_m5_machine_learning_1.0.0             a1e2f080c6d2   3 days ago      1.04GB
 demand_forecasting_m5        demand_forecasting_m5_data_registration_1.0.0            b8cfe5e6670f   3 days ago      378MB
@@ -428,7 +438,7 @@ $
 
 ### 3. 機械学習パイプラインの実行
 
-- 機械学習パイプラインはDockerコンテナを起動して実行します。[makefile](./makefile)の`machine_learning`は機械学習パイプラインのジョブを一度に実行します。
+- 機械学習パイプラインはDockerコンテナを起動して実行します。[makefile](./makefile)の`run_machine_learning`は機械学習パイプラインのジョブを一度に実行します。
 
 - ジョブ実行は「２．事前準備」のテーブルの登録処理が完了してから実行してください。テーブルへの登録状況は「DB構築とテーブル登録実行ログ」で確認できます。
 
@@ -443,7 +453,7 @@ $
   - -v /home/xxx/repository/demand-forecasting-m5/machine_learning/src:/opt/src
 
 ```sh
-$ make machine_learning
+$ make run_machine_learning
 docker run \
         -it \
         --name machine_learning \
@@ -465,7 +475,7 @@ docker run \
 <details> <summary>machine_learning実行ログ</summary>
 
 ```sh
-$ make machine_learning
+$ make run_machine_learning
 docker run \
         -it \
         --name machine_learning \
@@ -1297,7 +1307,8 @@ root_mean_squared_error: 1.4475629905483116
 ```
 </details>
 
-### 4. 結果の確認
+
+### 4. MLflowの確認
 
 - 前処理、評価、予測、学習の結果はMLflowに登録されます
 - URL: http://localhost:15000
@@ -1314,17 +1325,63 @@ root_mean_squared_error: 1.4475629905483116
 #### 予測（予測データ）
 ![img](images/prediction.png)
 
-### 5. 利用終了時のコンテナ削除
+
+### 5. BIの確認
+
+- BIは[Streamlit](https://streamlit.io/)を使用し、売上数量の過去実績と予測を店舗/品目ごとに表示します。
+
+- 過去実績はテーブル`sales`、予測はテーブル`prediction`を使用します。
+
+- BIはDockerコンテナを起動し、[makefile](./makefile)の`run_bi`で実行します。
+
+- URL: http://localhost:8501
+
+- 下記のコマンドはローカルの`src`を使用して実行します。Docker build時点の`src`を使用する場合、以下のマウントを削除して実行してください。
+  - -v /home/xxx/repository/demand-forecasting-m5/machine_learning/src:/opt/src
+
+```sh
+$ make run_bi
+docker run \
+        -it \
+        --name bi \
+        -e POSTGRES_HOST=postgres \
+        -e POSTGRES_PORT=5432 \
+        -e POSTGRES_USER=postgres \
+        -e POSTGRES_PASSWORD=password \
+        -e POSTGRES_DBNAME=demand_forecasting_m5 \
+        -p 8501:8501 \
+        -v /home/xxx/repository/demand-forecasting-m5/bi/src:/opt/src \
+        --net demand_forecasting_m5 \
+        demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
+        streamlit run src/main.py
+```
+
+#### 過去実績
+![img](images/bi_sales.png)
+
+#### 予測
+![img](images/bi_prediction.png)
+
+
+### 6. 利用終了時のコンテナ削除
 
 - 削除対象のコンテナを確認します。
 ```sh
 # コンテナの一覧
 $ docker ps -a
-CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED          STATUS                      PORTS                     NAMES
-62d400309906   demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0    "python -m src.main"     58 seconds ago   Exited (0) 19 seconds ago                             machine_learning
-845b5f94e37a   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   17 minutes ago   Exited (0) 15 minutes ago                             data_registration
-c5cf7783986a   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   17 minutes ago   Up 17 minutes               0.0.0.0:15000->5000/tcp   mlflow
-c188172432bb   postgres:14.3                                                         "docker-entrypoint.s…"   17 minutes ago   Up 17 minutes               0.0.0.0:5432->5432/tcp    postgres
+CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED          STATUS                     PORTS                     NAMES
+fc7744d79fa6   demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0                  "streamlit run src/m…"   25 minutes ago   Exited (0) 9 seconds ago                             bi
+2e386ee1ffb4   demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0    "python -m src.main"     26 hours ago     Exited (0) 26 hours ago                              machine_learning
+4abe9d059318   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   27 hours ago     Up 27 hours                0.0.0.0:15000->5000/tcp   mlflow
+e57ab08b4cca   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   27 hours ago     Exited (0) 27 hours ago                              data_registration
+7ee8072faefc   postgres:14.3                                                         "docker-entrypoint.s…"   27 hours ago     Up 27 hours                0.0.0.0:5432->5432/tcp    postgres
+```
+
+- 「5. BIの確認」で作成したコンテナは`docker rm`で削除します。
+```sh
+# コンテナの削除
+$ docker rm bi
+bi
 ```
 
 - 「3. 機械学習パイプラインの実行」で作成したコンテナは`docker rm`で削除します。
@@ -1362,7 +1419,6 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ### data_registrationで登録するデータ
 
 [data_registration](data_registration/)で登録するデータは[docker-compose.yaml](docker-compose.yaml)の`command`で指定しています。
-
 
 ### machine_learningで使用するデータ
 
