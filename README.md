@@ -50,7 +50,7 @@
 - [data_registration](./data_registration/): [Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータをPostgreSQLに登録するバッチ処理。
 - [machine_learning](./machine_learning/): 機械学習開発のためのテンプレートとして例示したプログラム。PostgreSQLからデータを取得し、前処理、学習、評価、予測を実行し、記録をMLflow tracking serverに記録する。
 - [notebook](./notebook/): 本リポジトリの実装前に[Google Colaboratory](https://colab.google/)で動作確認したnotebookを格納しています。本システムの実行結果はnotebookの予測値と一致します。
-
+- [bi](./bi/): 過去実績の売上数量と機械学習で得られた予測の売上数量を[Streamlit](https://streamlit.io/)で表示します。
 
 ## machine_learningの構成
 
@@ -1345,9 +1345,9 @@ root_mean_squared_error: 1.4475629905483116
 
 ### 5. BIの確認
 
-- BIは[Streamlit](https://streamlit.io/)を使用し、売上数量の過去実績と予測を店舗/品目ごとに表示します。
+- BIは[Streamlit](https://streamlit.io/)で実装し、過去実績の売上数量と機械学習で得られた予測の売上数量を店舗/品目ごとに表示します。
 
-- 過去実績はテーブル`sales`、予測はテーブル`prediction`を使用します。
+- 過去実績はテーブル`sales`、予測はテーブル`prediction`から抽出します。
 
 - BIはDockerコンテナを起動し、[makefile](./makefile)の`run_bi`で実行します。
 
@@ -1373,10 +1373,10 @@ docker run \
 
 - URL: http://localhost:8501
 
-#### 過去実績
+#### 過去実績の売上数量
 ![img](images/bi_sales.png)
 
-#### 予測
+#### 予測の売上数量
 ![img](images/bi_prediction.png)
 
 
