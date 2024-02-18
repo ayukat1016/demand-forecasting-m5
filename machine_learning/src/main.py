@@ -205,8 +205,6 @@ prediction data: {prediction_data_paths}
 
             prediction_register_usecase.register_prediction(
                 predictions=predictions,
-                mlflow_experiment_id=run.info.experiment_id,
-                mlflow_run_id=run.info.run_id,
             )
 
             base_file_name = f"{run_name}"

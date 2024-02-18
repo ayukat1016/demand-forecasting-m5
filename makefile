@@ -41,7 +41,6 @@ pull_data_registration:
 	docker pull $(DOCKER_DATA_REGISTRATION_IMAGE_NAME)
 
 
-
 ############ DEMAND FORECASTING MLFLOW COMMANDS ############
 MLFLOW_DIR := $(DIR)/mlflow
 DOCKERFILE_MLFLOW = $(MLFLOW_DIR)/$(DOCKERFILE)
@@ -95,16 +94,8 @@ build_machine_learning:
 		-f $(DOCKERFILE_MACHINE_LEARNING) \
 		.
 
-.PHONY: push_machine_learning
-push_machine_learning:
-	docker push $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
-
-.PHONY: pull_machine_learning
-pull_machine_learning:
-	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
-
-.PHONY: machine_learning
-machine_learning:
+.PHONY: run_machine_learning
+run_machine_learning:
 	docker run \
 		-it \
 		--name machine_learning \
@@ -122,6 +113,61 @@ machine_learning:
 		$(DOCKER_MACHINE_LEARNING_IMAGE_NAME) \
 		python -m src.main
 
+.PHONY: push_machine_learning
+push_machine_learning:
+	docker push $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
+
+.PHONY: pull_machine_learning
+pull_machine_learning:
+	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
+
+
+############ DEMAND FORECASTING BI COMMANDS ############
+BI_DIR := $(DIR)/bi
+DOCKERFILE_BI = $(BI_DIR)/$(DOCKERFILE)
+DOCKER_BI_TAG = $(TAG)_bi
+DOCKER_BI_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_BI_TAG)_$(VERSION)
+
+.PHONY: req_bi
+req_bi:
+	cd $(BI_DIR) && \
+	poetry export \
+		--without-hashes \
+		-f requirements.txt \
+		--output requirements.txt
+
+.PHONY: build_bi
+build_bi:
+	docker build \
+		--platform $(PLATFORM) \
+		-t $(DOCKER_BI_IMAGE_NAME) \
+		-f $(DOCKERFILE_BI) \
+		.
+
+.PHONY: run_bi
+run_bi:
+	docker run \
+		-it \
+		--name bi \
+		-e POSTGRES_HOST=postgres \
+		-e POSTGRES_PORT=5432 \
+		-e POSTGRES_USER=postgres \
+		-e POSTGRES_PASSWORD=password \
+		-e POSTGRES_DBNAME=demand_forecasting_m5 \
+		-p 8501:8501 \
+		-v $(BI_DIR)/src:/opt/src \
+		--net demand_forecasting_m5 \
+		$(DOCKER_BI_IMAGE_NAME) \
+		streamlit run src/main.py
+
+.PHONY: push_bi
+push_bi:
+	docker push $(DOCKER_BI_IMAGE_NAME)
+
+.PHONY: pull_bi
+pull_bi:
+	docker pull $(DOCKER_BI_IMAGE_NAME)
+
 
 ############ ALL COMMANDS ############
 .PHONY: req_all
@@ -133,6 +179,7 @@ req_all: req_data_registration \
 build_all: build_data_registration \
 	build_machine_learning \
 	build_mlflow \
+	build_bi \
 
 .PHONY: push_all
 push_all: push_data_registration \
