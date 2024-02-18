@@ -89,7 +89,7 @@ services:
   #   image: demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0
   #   restart: "no"
   #   volumes:
-  #     - ./machine_learning/src:/opt/src
+  #     - ./bi/src:/opt/src
   #   networks:
   #     - default
   #   environment:

@@ -1,6 +1,5 @@
 from typing import List, Optional
 
-import numpy as np
 import pandas as pd
 from database import AbstractDBClient
 from logger import configure_logger
@@ -38,6 +37,7 @@ class SalesService(BaseService):
             item=item,
         )
         df = pd.DataFrame([d.dict() for d in dataset])
+        df.sort_values(by=["store_id", "item_id", "date_id"])
         return df
 
     def list_sales(
@@ -83,6 +83,7 @@ class PredictionService(BaseService):
             item=item,
         )
         df = pd.DataFrame([d.dict() for d in dataset])
+        df.sort_values(by=["store_id", "item_id", "date_id"])
         return df
 
     def list_prediction(

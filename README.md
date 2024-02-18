@@ -117,32 +117,26 @@ docker build \
         -t demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/data_registration/Dockerfile \
         .
-[+] Building 40.7s (10/10) FINISHED                                                                          docker:default
+[+] Building 35.9s (10/10) FINISHED                                                                          docker:default
+ => [internal] load .dockerignore                                                                                      0.0s
+ => => transferring context: 2B                                                                                        0.0s
  => [internal] load build definition from Dockerfile                                                                   0.1s
  => => transferring dockerfile: 464B                                                                                   0.0s
- => [internal] load .dockerignore                                                                                      0.1s
- => => transferring context: 2B                                                                                        0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  3.0s
- => [1/5] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  3.1s
+ => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  1.9s
+ => [1/5] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.2s
  => => resolve docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
- => => sha256:c8ef926b002a8371fff6b4f40142dcc6d6f7e217f7afce2c2d1ed2e6c28e2b7c 1.37kB / 1.37kB                         0.0s
  => => sha256:af1108142cf5dcd629f5542acc4dd4cc055d658821016362fef6dd4759dc9e9f 7.50kB / 7.50kB                         0.0s
- => => sha256:ce77f44508b5f38a750faa3ee16a3195699537f07efd516df1a7a9fd3cb87ae1 12.10MB / 12.10MB                       1.1s
- => => sha256:455a39ac3ab8cbaae8472aafdbd60c6a286eaa41cbfebc22c8d2f5d8639805c5 233B / 233B                             0.3s
- => => sha256:f8c2fbfe50466578cc9034b8cee6d8363342c8b10926bb7e26f0b745688147fd 3.34MB / 3.34MB                         0.6s
  => => sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645209d77 1.86kB / 1.86kB                         0.0s
- => => extracting sha256:ce77f44508b5f38a750faa3ee16a3195699537f07efd516df1a7a9fd3cb87ae1                              1.1s
- => => extracting sha256:455a39ac3ab8cbaae8472aafdbd60c6a286eaa41cbfebc22c8d2f5d8639805c5                              0.0s
- => => extracting sha256:f8c2fbfe50466578cc9034b8cee6d8363342c8b10926bb7e26f0b745688147fd                              0.5s
- => [internal] load build context                                                                                      0.1s
- => => transferring context: 77.20kB                                                                                   0.0s
- => [2/5] WORKDIR /opt                                                                                                 0.3s
- => [3/5] COPY data_registration/requirements.txt /opt/                                                                0.1s
+ => => sha256:c8ef926b002a8371fff6b4f40142dcc6d6f7e217f7afce2c2d1ed2e6c28e2b7c 1.37kB / 1.37kB                         0.0s
+ => [internal] load build context                                                                                      0.0s
+ => => transferring context: 80.61kB                                                                                   0.0s
+ => [2/5] WORKDIR /opt                                                                                                 0.0s
+ => [3/5] COPY data_registration/requirements.txt /opt/                                                                0.0s
  => [4/5] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm -  31.9s
- => [5/5] COPY data_registration/src/ /opt/src/                                                                        0.1s
- => exporting to image                                                                                                 2.0s
- => => exporting layers                                                                                                2.0s
- => => writing image sha256:b8cfe5e6670ffbbb7006705b3eeb9eb86053f895e920de6dc8fb29468f5e7fbc                           0.0s
+ => [5/5] COPY data_registration/src/ /opt/src/                                                                        0.0s
+ => exporting to image                                                                                                 1.7s
+ => => exporting layers                                                                                                1.7s
+ => => writing image sha256:931d9f32b572e1657c01c2d9a977b077d4927042403cb0c2b9e4a6ddbabf34e5                           0.0s
  => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0                 0.0s
 
 What's Next?
@@ -152,23 +146,23 @@ docker build \
         -t demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/machine_learning/Dockerfile \
         .
-[+] Building 97.1s (11/11) FINISHED                                                                          docker:default
+[+] Building 109.0s (11/11) FINISHED                                                                         docker:default
  => [internal] load .dockerignore                                                                                      0.0s
  => => transferring context: 2B                                                                                        0.0s
  => [internal] load build definition from Dockerfile                                                                   0.0s
  => => transferring dockerfile: 511B                                                                                   0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  1.0s
+ => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  0.7s
  => [1/6] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
  => [internal] load build context                                                                                      0.0s
- => => transferring context: 227.88kB                                                                                  0.0s
+ => => transferring context: 231.80kB                                                                                  0.0s
  => CACHED [2/6] WORKDIR /opt                                                                                          0.0s
- => [3/6] COPY machine_learning/requirements.txt /opt/                                                                 0.1s
- => [4/6] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm -  88.6s
+ => [3/6] COPY machine_learning/requirements.txt /opt/                                                                 0.0s
+ => [4/6] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm   101.2s
  => [5/6] COPY machine_learning/src/ /opt/src/                                                                         0.1s
- => [6/6] COPY machine_learning/hydra/ /opt/hydra/                                                                     0.1s
- => exporting to image                                                                                                 7.0s
- => => exporting layers                                                                                                7.0s
- => => writing image sha256:a1e2f080c6d2103a474d0daa0322e986a9c5f51aa79a0c2aacebf79a5f09a1f0                           0.0s
+ => [6/6] COPY machine_learning/hydra/ /opt/hydra/                                                                     0.0s
+ => exporting to image                                                                                                 6.8s
+ => => exporting layers                                                                                                6.8s
+ => => writing image sha256:e7076249c0133611d105a19e33d60995faeff1ec3118e42add075add59bf788d                           0.0s
  => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0                  0.0s
 
 What's Next?
@@ -178,26 +172,50 @@ docker build \
         -t demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/mlflow/Dockerfile \
         .
-[+] Building 103.4s (9/9) FINISHED                                                                           docker:default
- => [internal] load build definition from Dockerfile                                                                   0.0s
- => => transferring dockerfile: 394B                                                                                   0.0s
+[+] Building 111.2s (9/9) FINISHED                                                                           docker:default
  => [internal] load .dockerignore                                                                                      0.0s
  => => transferring context: 2B                                                                                        0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  0.9s
+ => [internal] load build definition from Dockerfile                                                                   0.0s
+ => => transferring dockerfile: 394B                                                                                   0.0s
+ => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  1.6s
  => [1/4] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
  => [internal] load build context                                                                                      0.0s
  => => transferring context: 4.65kB                                                                                    0.0s
  => CACHED [2/4] WORKDIR /opt                                                                                          0.0s
- => [3/4] COPY mlflow/requirements.txt /opt/                                                                           0.0s
- => [4/4] RUN pip install --no-cache-dir -r requirements.txt                                                          94.6s
- => exporting to image                                                                                                 7.6s
- => => exporting layers                                                                                                7.6s
- => => writing image sha256:2c41724a751af10c23dd834de89576231f60cb203baa6144a4a080766ebb70d6                           0.0s
+ => [3/4] COPY mlflow/requirements.txt /opt/                                                                           0.1s
+ => [4/4] RUN pip install --no-cache-dir -r requirements.txt                                                         103.4s
+ => exporting to image                                                                                                 6.0s
+ => => exporting layers                                                                                                6.0s
+ => => writing image sha256:4b13438318a380f81837b833708bb9b6cddc2adfebb280a4441a29c4895179c4                           0.0s
  => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0                            0.0s
 
 What's Next?
   View a summary of image vulnerabilities and recommendations → docker scout quickview
+docker build \
+        --platform linux/amd64 \
+        -t demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
+        -f /home/xxx/repository/demand-forecasting-m5/bi/Dockerfile \
+        .
+[+] Building 109.8s (10/10) FINISHED                                                                         docker:default
+ => [internal] load build definition from Dockerfile                                                                   0.1s
+ => => transferring dockerfile: 492B                                                                                   0.0s
+ => [internal] load .dockerignore                                                                                      0.0s
+ => => transferring context: 2B                                                                                        0.0s
+ => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  0.9s
+ => [1/5] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
+ => [internal] load build context                                                                                      0.0s
+ => => transferring context: 33.12kB                                                                                   0.0s
+ => CACHED [2/5] WORKDIR /opt                                                                                          0.0s
+ => [3/5] COPY bi/requirements.txt /opt/                                                                               0.1s
+ => [4/5] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm   101.1s
+ => [5/5] COPY bi/src/ /opt/src/                                                                                       0.0s
+ => exporting to image                                                                                                 7.6s
+ => => exporting layers                                                                                                7.6s
+ => => writing image sha256:8045fcf658472308625dec7f945e87194e39012d1b2f8d016f43fe286b0e1720                           0.0s
+ => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0                                0.0s
 
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview
 ```
 </details>
 
@@ -239,10 +257,10 @@ docker build \
 # Docker imageの確認
 $ docker images
 REPOSITORY                   TAG                                                      IMAGE ID       CREATED         SIZE
-demand_forecasting_m5        demand_forecasting_m5_bi_1.0.0                           5de72d20c4ff   5 days ago      825MB
-demand_forecasting_m5        demand_forecasting_m5_mlflow_1.0.0                       2c41724a751a   3 days ago      836MB
-demand_forecasting_m5        demand_forecasting_m5_machine_learning_1.0.0             a1e2f080c6d2   3 days ago      1.04GB
-demand_forecasting_m5        demand_forecasting_m5_data_registration_1.0.0            b8cfe5e6670f   3 days ago      378MB
+demand_forecasting_m5        demand_forecasting_m5_bi_1.0.0                           8045fcf65847   2 minutes ago   825MB
+demand_forecasting_m5        demand_forecasting_m5_mlflow_1.0.0                       4b13438318a3   4 minutes ago   836MB
+demand_forecasting_m5        demand_forecasting_m5_machine_learning_1.0.0             e7076249c013   6 minutes ago   1.04GB
+demand_forecasting_m5        demand_forecasting_m5_data_registration_1.0.0            931d9f32b572   7 minutes ago   378MB
 ```
 ### 2. 事前準備
 
@@ -268,26 +286,26 @@ docker-compose \
 ```sh
 # 起動したDocker containerの確認
 $ docker ps -a
-CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED              STATUS              PORTS                     NAMES
-55312f239d28   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   About a minute ago   Up About a minute                             data_registration
-8dedeb93ed5a   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   About a minute ago   Up About a minute   0.0.0.0:15000->5000/tcp   mlflow
-08196a6b5d50   postgres:14.3                                                         "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp    postgres
+CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED         STATUS                     PORTS                     NAMES
+0f653a4a0ef3   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   5 minutes ago   Exited (0) 3 minutes ago                             data_registration
+97a6a652605a   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   5 minutes ago   Up 5 minutes               0.0.0.0:15000->5000/tcp   mlflow
+1f9668221e2a   postgres:14.3                                                         "docker-entrypoint.s…"   5 minutes ago   Up 5 minutes               0.0.0.0:5432->5432/tcp    postgres
 
 # テーブル登録のログ
 $ docker logs -f data_registration
 /usr/local/lib/python3.10/site-packages/pydantic/_internal/_config.py:322: UserWarning: Valid config keys have changed in V2:
 * 'allow_mutation' has been removed
   warnings.warn(message, UserWarning)
-[2024-02-06 06:52:01,462] [INFO] [__main__] [main.py:43] [main] START data_registration
-[2024-02-06 06:52:01,463] [INFO] [__main__] [main.py:44] [main]
+[2024-02-18 03:57:00,861] [INFO] [__main__] [main.py:43] [main] START data_registration
+[2024-02-18 03:57:00,861] [INFO] [__main__] [main.py:44] [main]
 options:
 create_sql_filepath: /opt/data/create.sql
 calendar_filepath: /opt/data/calendar_demo.csv
 prices_filepath: /opt/data/prices_demo.csv
 sales_filepath: /opt/data/sales_demo.csv
 
-[2024-02-06 06:52:01,463] [INFO] [__main__] [main.py:70] [main] create table
-[2024-02-06 06:52:01,463] [DEBUG] [src.infrastructure.database] [database.py:62] [execute_create_query] create query: CREATE TABLE IF NOT EXISTS calendar (
+[2024-02-18 03:57:00,861] [INFO] [__main__] [main.py:70] [main] create table
+[2024-02-18 03:57:00,861] [DEBUG] [src.infrastructure.database] [database.py:62] [execute_create_query] create query: CREATE TABLE IF NOT EXISTS calendar (
     date VARCHAR(255) NOT NULL,
     wm_yr_wk INTEGER NOT NULL,
     weekday VARCHAR(255) NOT NULL,
@@ -332,65 +350,63 @@ CREATE TABLE IF NOT EXISTS sales (
     PRIMARY KEY (key)
 );
 
+
 CREATE TABLE IF NOT EXISTS prediction (
     store_id VARCHAR(255) NOT NULL,
     item_id VARCHAR(255) NOT NULL,
     date_id INTEGER NOT NULL,
     prediction FLOAT NOT NULL,
-    mlflow_experiment_id  INTEGER NOT NULL,
-    mlflow_run_id  VARCHAR(255) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (store_id, item_id, date_id)
 );
 , parameters: None
-[2024-02-06 06:52:01,566] [INFO] [__main__] [main.py:72] [main] done create table
-[2024-02-06 06:52:01,566] [INFO] [__main__] [main.py:74] [main] register calendar
-[2024-02-06 06:52:01,661] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:71] [register_calendar] calendar: 1000 ...
-[2024-02-06 06:52:01,772] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:74] [register_calendar] calendar: 1969 ...
-[2024-02-06 06:52:01,773] [INFO] [__main__] [main.py:76] [main] done register calendar
-[2024-02-06 06:52:01,774] [INFO] [__main__] [main.py:78] [main] register prices
-[2024-02-06 06:52:02,621] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 10000 ...
-[2024-02-06 06:52:03,374] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 20000 ...
-[2024-02-06 06:52:04,518] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 30000 ...
-[2024-02-06 06:52:05,876] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 40000 ...
-[2024-02-06 06:52:07,737] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 50000 ...
-[2024-02-06 06:52:09,797] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 60000 ...
-[2024-02-06 06:52:12,077] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 70000 ...
-[2024-02-06 06:52:14,825] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 80000 ...
-[2024-02-06 06:52:17,817] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 90000 ...
-[2024-02-06 06:52:21,759] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 100000 ...
-[2024-02-06 06:52:25,568] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 110000 ...
-[2024-02-06 06:52:30,039] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 120000 ...
-[2024-02-06 06:52:34,492] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 130000 ...
-[2024-02-06 06:52:39,475] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 140000 ...
-[2024-02-06 06:52:44,422] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 150000 ...
-[2024-02-06 06:52:50,508] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 160000 ...
-[2024-02-06 06:52:56,239] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 170000 ...
-[2024-02-06 06:53:02,131] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 180000 ...
-[2024-02-06 06:53:08,619] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 190000 ...
-[2024-02-06 06:53:15,673] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 200000 ...
-[2024-02-06 06:53:23,024] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 210000 ...
-[2024-02-06 06:53:31,009] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 220000 ...
-[2024-02-06 06:53:38,529] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 230000 ...
-[2024-02-06 06:53:46,467] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:102] [register_prices] prices: 236880 ...
-[2024-02-06 06:53:46,610] [INFO] [__main__] [main.py:80] [main] done register prices
-[2024-02-06 06:53:46,610] [INFO] [__main__] [main.py:82] [main] register sales
-[2024-02-06 06:53:47,628] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 10000 ...
-[2024-02-06 06:53:48,811] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 20000 ...
-[2024-02-06 06:53:50,339] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 30000 ...
-[2024-02-06 06:53:52,365] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 40000 ...
-[2024-02-06 06:53:54,732] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 50000 ...
-[2024-02-06 06:53:57,788] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 60000 ...
-[2024-02-06 06:54:01,082] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 70000 ...
-[2024-02-06 06:54:05,214] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 80000 ...
-[2024-02-06 06:54:09,461] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 90000 ...
-[2024-02-06 06:54:14,374] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 100000 ...
-[2024-02-06 06:54:19,852] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 110000 ...
-[2024-02-06 06:54:25,572] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 120000 ...
-[2024-02-06 06:54:30,974] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:134] [register_sales] sales: 122800 ...
-[2024-02-06 06:54:31,089] [INFO] [__main__] [main.py:84] [main] done register sales
-[2024-02-06 06:54:31,089] [INFO] [__main__] [main.py:87] [main] DONE data_registration
-
+[2024-02-18 03:57:00,961] [INFO] [__main__] [main.py:72] [main] done create table
+[2024-02-18 03:57:00,961] [INFO] [__main__] [main.py:74] [main] register calendar
+[2024-02-18 03:57:01,034] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:71] [register_calendar] calendar: 1000 ...
+[2024-02-18 03:57:01,130] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:74] [register_calendar] calendar: 1969 ...
+[2024-02-18 03:57:01,132] [INFO] [__main__] [main.py:76] [main] done register calendar
+[2024-02-18 03:57:01,132] [INFO] [__main__] [main.py:78] [main] register prices
+[2024-02-18 03:57:02,040] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 10000 ...
+[2024-02-18 03:57:02,847] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 20000 ...
+[2024-02-18 03:57:04,021] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 30000 ...
+[2024-02-18 03:57:05,414] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 40000 ...
+[2024-02-18 03:57:07,016] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 50000 ...
+[2024-02-18 03:57:09,054] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 60000 ...
+[2024-02-18 03:57:11,359] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 70000 ...
+[2024-02-18 03:57:13,891] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 80000 ...
+[2024-02-18 03:57:16,816] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 90000 ...
+[2024-02-18 03:57:20,077] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 100000 ...
+[2024-02-18 03:57:23,549] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 110000 ...
+[2024-02-18 03:57:27,111] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 120000 ...
+[2024-02-18 03:57:31,217] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 130000 ...
+[2024-02-18 03:57:35,934] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 140000 ...
+[2024-02-18 03:57:40,644] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 150000 ...
+[2024-02-18 03:57:45,589] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 160000 ...
+[2024-02-18 03:57:51,117] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 170000 ...
+[2024-02-18 03:57:56,804] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 180000 ...
+[2024-02-18 03:58:02,888] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 190000 ...
+[2024-02-18 03:58:09,089] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 200000 ...
+[2024-02-18 03:58:15,610] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 210000 ...
+[2024-02-18 03:58:22,530] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 220000 ...
+[2024-02-18 03:58:29,922] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:99] [register_prices] prices: 230000 ...
+[2024-02-18 03:58:37,426] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:102] [register_prices] prices: 236880 ...
+[2024-02-18 03:58:37,530] [INFO] [__main__] [main.py:80] [main] done register prices
+[2024-02-18 03:58:37,530] [INFO] [__main__] [main.py:82] [main] register sales
+[2024-02-18 03:58:38,498] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 10000 ...
+[2024-02-18 03:58:39,460] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 20000 ...
+[2024-02-18 03:58:40,835] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 30000 ...
+[2024-02-18 03:58:42,690] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 40000 ...
+[2024-02-18 03:58:45,077] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 50000 ...
+[2024-02-18 03:58:47,696] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 60000 ...
+[2024-02-18 03:58:50,921] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 70000 ...
+[2024-02-18 03:58:54,410] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 80000 ...
+[2024-02-18 03:58:58,565] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 90000 ...
+[2024-02-18 03:59:02,961] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 100000 ...
+[2024-02-18 03:59:07,731] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 110000 ...
+[2024-02-18 03:59:13,083] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:131] [register_sales] sales: 120000 ...
+[2024-02-18 03:59:18,463] [INFO] [src.usecase.data_register_usecase] [data_register_usecase.py:134] [register_sales] sales: 122800 ...
+[2024-02-18 03:59:18,543] [INFO] [__main__] [main.py:84] [main] done register sales
+[2024-02-18 03:59:18,543] [INFO] [__main__] [main.py:87] [main] DONE data_registration
 ```
 </details>
 
@@ -472,7 +488,7 @@ docker run \
         python -m src.main
 ```
 
-<details> <summary>machine_learning実行ログ</summary>
+<details> <summary>make run_machine_learning実行ログ</summary>
 
 ```sh
 $ make run_machine_learning
@@ -506,11 +522,11 @@ Will assume defaults for version 1.1
 /usr/local/lib/python3.10/site-packages/hydra/_internal/hydra.py:119: UserWarning: Future Hydra versions will no longer change working directory at job runtime by default.
 See https://hydra.cc/docs/1.2/upgrades/1.1_to_1.2/changes_to_job_working_dir/ for more information.
   ret = run_job(
-[2024-02-09 03:02:17,011][__main__][INFO] - START machine_learning...
-[2024-02-09 03:02:17,011][__main__][INFO] - config: {'name': 'demand_forecasting_m5', 'model': {'name': 'lightgbm_regression', 'params': {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}, 'train_params': {'early_stopping_rounds': 10, 'log_evaluation': 10}}, 'period': {'training_date_from': 1, 'training_date_to': 93, 'validation_date_from': 94, 'validation_date_to': 100, 'prediction_date_from': 101, 'prediction_date_to': 107}}
-[2024-02-09 03:02:17,012][__main__][INFO] - current working directory: /opt/outputs/2024-02-09/03-02-16
-[2024-02-09 03:02:17,012][__main__][INFO] - run_name: 2024-02-09-03-02-16
-[2024-02-09 03:02:17,014][__main__][INFO] - parameters:
+[2024-02-18 04:03:46,889][__main__][INFO] - START machine_learning...
+[2024-02-18 04:03:46,889][__main__][INFO] - config: {'name': 'demand_forecasting_m5', 'model': {'name': 'lightgbm_regression', 'params': {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}, 'train_params': {'early_stopping_rounds': 10, 'log_evaluation': 10}}, 'period': {'training_date_from': 1, 'training_date_to': 93, 'validation_date_from': 94, 'validation_date_to': 100, 'prediction_date_from': 101, 'prediction_date_to': 107}}
+[2024-02-18 04:03:46,889][__main__][INFO] - current working directory: /opt/outputs/2024-02-18/04-03-46
+[2024-02-18 04:03:46,889][__main__][INFO] - run_name: 2024-02-18-04-03-46
+[2024-02-18 04:03:46,890][__main__][INFO] - parameters:
 training_date_from: 1
 training_date_to: 93
 validation_date_from: 94
@@ -518,7 +534,7 @@ validation_date_to: 100
 prediction_date_from: 101
 prediction_date_to: 107
 
-2024/02/09 03:02:17 WARNING mlflow.utils.git_utils: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
+2024/02/18 04:03:46 WARNING mlflow.utils.git_utils: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
 The git executable must be specified in one of the following ways:
     - be included in your $PATH
     - be set via $GIT_PYTHON_GIT_EXECUTABLE
@@ -535,46 +551,46 @@ $GIT_PYTHON_REFRESH environment variable. Use one of the following values:
 Example:
     export GIT_PYTHON_REFRESH=quiet
 
-[2024-02-09 03:02:17,168][src.usecase.data_loader_usecase][INFO] - load data from: 1 to 100
-[2024-02-09 03:02:17,466][src.usecase.data_loader_usecase][INFO] - done loading 10000...
-[2024-02-09 03:02:17,822][src.usecase.data_loader_usecase][INFO] - done loading 20000...
-[2024-02-09 03:02:18,199][src.usecase.data_loader_usecase][INFO] - done loading 30000...
-[2024-02-09 03:02:18,504][src.usecase.data_loader_usecase][INFO] - done loading 40000...
-[2024-02-09 03:02:18,897][src.usecase.data_loader_usecase][INFO] - done loading 50000...
-[2024-02-09 03:02:19,242][src.usecase.data_loader_usecase][INFO] - done loading 60000...
-[2024-02-09 03:02:19,628][src.usecase.data_loader_usecase][INFO] - done loading 70000...
-[2024-02-09 03:02:19,959][src.usecase.data_loader_usecase][INFO] - done loading 80000...
-[2024-02-09 03:02:20,287][src.usecase.data_loader_usecase][INFO] - done loading 90000...
-[2024-02-09 03:02:20,774][src.usecase.data_loader_usecase][INFO] - done loading 100000...
-[2024-02-09 03:02:21,095][src.usecase.data_loader_usecase][INFO] - done loading 110000...
-[2024-02-09 03:02:21,572][src.usecase.data_loader_usecase][INFO] - done loading 120000...
-[2024-02-09 03:02:21,704][src.usecase.data_loader_usecase][INFO] - done loading 122800...
-[2024-02-09 03:02:24,119][src.usecase.data_loader_usecase][INFO] - done loading 10000...
-[2024-02-09 03:02:24,359][src.usecase.data_loader_usecase][INFO] - done loading 20000...
-[2024-02-09 03:02:24,562][src.usecase.data_loader_usecase][INFO] - done loading 30000...
-[2024-02-09 03:02:24,820][src.usecase.data_loader_usecase][INFO] - done loading 40000...
-[2024-02-09 03:02:25,077][src.usecase.data_loader_usecase][INFO] - done loading 50000...
-[2024-02-09 03:02:25,414][src.usecase.data_loader_usecase][INFO] - done loading 60000...
-[2024-02-09 03:02:25,642][src.usecase.data_loader_usecase][INFO] - done loading 70000...
-[2024-02-09 03:02:25,937][src.usecase.data_loader_usecase][INFO] - done loading 80000...
-[2024-02-09 03:02:26,168][src.usecase.data_loader_usecase][INFO] - done loading 90000...
-[2024-02-09 03:02:26,492][src.usecase.data_loader_usecase][INFO] - done loading 100000...
-[2024-02-09 03:02:26,765][src.usecase.data_loader_usecase][INFO] - done loading 110000...
-[2024-02-09 03:02:27,032][src.usecase.data_loader_usecase][INFO] - done loading 120000...
-[2024-02-09 03:02:27,295][src.usecase.data_loader_usecase][INFO] - done loading 130000...
-[2024-02-09 03:02:27,513][src.usecase.data_loader_usecase][INFO] - done loading 140000...
-[2024-02-09 03:02:27,760][src.usecase.data_loader_usecase][INFO] - done loading 150000...
-[2024-02-09 03:02:28,176][src.usecase.data_loader_usecase][INFO] - done loading 160000...
-[2024-02-09 03:02:28,408][src.usecase.data_loader_usecase][INFO] - done loading 170000...
-[2024-02-09 03:02:28,676][src.usecase.data_loader_usecase][INFO] - done loading 180000...
-[2024-02-09 03:02:28,903][src.usecase.data_loader_usecase][INFO] - done loading 190000...
-[2024-02-09 03:02:29,149][src.usecase.data_loader_usecase][INFO] - done loading 200000...
-[2024-02-09 03:02:29,473][src.usecase.data_loader_usecase][INFO] - done loading 210000...
-[2024-02-09 03:02:29,878][src.usecase.data_loader_usecase][INFO] - done loading 220000...
-[2024-02-09 03:02:30,143][src.usecase.data_loader_usecase][INFO] - done loading 230000...
-[2024-02-09 03:02:30,345][src.usecase.data_loader_usecase][INFO] - done loading 236880...
-[2024-02-09 03:02:32,840][src.usecase.data_loader_usecase][INFO] - loaded: (122800, 18)
-[2024-02-09 03:02:32,862][src.usecase.data_loader_usecase][INFO] - df:
+[2024-02-18 04:03:47,061][src.usecase.data_loader_usecase][INFO] - load data from: 1 to 100
+[2024-02-18 04:03:47,386][src.usecase.data_loader_usecase][INFO] - done loading 10000...
+[2024-02-18 04:03:47,774][src.usecase.data_loader_usecase][INFO] - done loading 20000...
+[2024-02-18 04:03:48,126][src.usecase.data_loader_usecase][INFO] - done loading 30000...
+[2024-02-18 04:03:48,510][src.usecase.data_loader_usecase][INFO] - done loading 40000...
+[2024-02-18 04:03:48,978][src.usecase.data_loader_usecase][INFO] - done loading 50000...
+[2024-02-18 04:03:49,351][src.usecase.data_loader_usecase][INFO] - done loading 60000...
+[2024-02-18 04:03:49,834][src.usecase.data_loader_usecase][INFO] - done loading 70000...
+[2024-02-18 04:03:50,241][src.usecase.data_loader_usecase][INFO] - done loading 80000...
+[2024-02-18 04:03:50,600][src.usecase.data_loader_usecase][INFO] - done loading 90000...
+[2024-02-18 04:03:51,041][src.usecase.data_loader_usecase][INFO] - done loading 100000...
+[2024-02-18 04:03:51,406][src.usecase.data_loader_usecase][INFO] - done loading 110000...
+[2024-02-18 04:03:51,817][src.usecase.data_loader_usecase][INFO] - done loading 120000...
+[2024-02-18 04:03:51,957][src.usecase.data_loader_usecase][INFO] - done loading 122800...
+[2024-02-18 04:03:53,874][src.usecase.data_loader_usecase][INFO] - done loading 10000...
+[2024-02-18 04:03:53,998][src.usecase.data_loader_usecase][INFO] - done loading 20000...
+[2024-02-18 04:03:54,178][src.usecase.data_loader_usecase][INFO] - done loading 30000...
+[2024-02-18 04:03:54,324][src.usecase.data_loader_usecase][INFO] - done loading 40000...
+[2024-02-18 04:03:54,478][src.usecase.data_loader_usecase][INFO] - done loading 50000...
+[2024-02-18 04:03:54,735][src.usecase.data_loader_usecase][INFO] - done loading 60000...
+[2024-02-18 04:03:54,887][src.usecase.data_loader_usecase][INFO] - done loading 70000...
+[2024-02-18 04:03:55,064][src.usecase.data_loader_usecase][INFO] - done loading 80000...
+[2024-02-18 04:03:55,241][src.usecase.data_loader_usecase][INFO] - done loading 90000...
+[2024-02-18 04:03:55,535][src.usecase.data_loader_usecase][INFO] - done loading 100000...
+[2024-02-18 04:03:55,675][src.usecase.data_loader_usecase][INFO] - done loading 110000...
+[2024-02-18 04:03:55,819][src.usecase.data_loader_usecase][INFO] - done loading 120000...
+[2024-02-18 04:03:55,981][src.usecase.data_loader_usecase][INFO] - done loading 130000...
+[2024-02-18 04:03:56,139][src.usecase.data_loader_usecase][INFO] - done loading 140000...
+[2024-02-18 04:03:56,336][src.usecase.data_loader_usecase][INFO] - done loading 150000...
+[2024-02-18 04:03:56,671][src.usecase.data_loader_usecase][INFO] - done loading 160000...
+[2024-02-18 04:03:56,835][src.usecase.data_loader_usecase][INFO] - done loading 170000...
+[2024-02-18 04:03:56,994][src.usecase.data_loader_usecase][INFO] - done loading 180000...
+[2024-02-18 04:03:57,161][src.usecase.data_loader_usecase][INFO] - done loading 190000...
+[2024-02-18 04:03:57,323][src.usecase.data_loader_usecase][INFO] - done loading 200000...
+[2024-02-18 04:03:57,498][src.usecase.data_loader_usecase][INFO] - done loading 210000...
+[2024-02-18 04:03:57,834][src.usecase.data_loader_usecase][INFO] - done loading 220000...
+[2024-02-18 04:03:57,986][src.usecase.data_loader_usecase][INFO] - done loading 230000...
+[2024-02-18 04:03:58,114][src.usecase.data_loader_usecase][INFO] - done loading 236880...
+[2024-02-18 04:04:00,230][src.usecase.data_loader_usecase][INFO] - loaded: (122800, 18)
+[2024-02-18 04:04:00,251][src.usecase.data_loader_usecase][INFO] - df:
                                  id      item_id  dept_id cat_id store_id  ... snap_ca  snap_tx  snap_wi  sell_price release
 0       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        0        0        2.00       0
 1       FOODS_1_002_CA_1_evaluation  FOODS_1_002  FOODS_1  FOODS     CA_1  ...       0        0        0        7.88       0
@@ -616,35 +632,35 @@ sell_price      float64
 release           int64
 dtype: object
 
-[2024-02-09 03:02:33,717][src.usecase.data_loader_usecase][INFO] - load data from: 101 to 107
-[2024-02-09 03:02:34,410][src.usecase.data_loader_usecase][INFO] - done loading 1000...
-[2024-02-09 03:02:34,443][src.usecase.data_loader_usecase][INFO] - done loading 1969...
-[2024-02-09 03:02:34,594][src.usecase.data_loader_usecase][INFO] - done loading 10000...
-[2024-02-09 03:02:34,733][src.usecase.data_loader_usecase][INFO] - done loading 20000...
-[2024-02-09 03:02:34,882][src.usecase.data_loader_usecase][INFO] - done loading 30000...
-[2024-02-09 03:02:35,021][src.usecase.data_loader_usecase][INFO] - done loading 40000...
-[2024-02-09 03:02:35,144][src.usecase.data_loader_usecase][INFO] - done loading 50000...
-[2024-02-09 03:02:35,344][src.usecase.data_loader_usecase][INFO] - done loading 60000...
-[2024-02-09 03:02:35,475][src.usecase.data_loader_usecase][INFO] - done loading 70000...
-[2024-02-09 03:02:35,684][src.usecase.data_loader_usecase][INFO] - done loading 80000...
-[2024-02-09 03:02:35,817][src.usecase.data_loader_usecase][INFO] - done loading 90000...
-[2024-02-09 03:02:36,004][src.usecase.data_loader_usecase][INFO] - done loading 100000...
-[2024-02-09 03:02:36,175][src.usecase.data_loader_usecase][INFO] - done loading 110000...
-[2024-02-09 03:02:36,416][src.usecase.data_loader_usecase][INFO] - done loading 120000...
-[2024-02-09 03:02:36,553][src.usecase.data_loader_usecase][INFO] - done loading 130000...
-[2024-02-09 03:02:36,692][src.usecase.data_loader_usecase][INFO] - done loading 140000...
-[2024-02-09 03:02:37,016][src.usecase.data_loader_usecase][INFO] - done loading 150000...
-[2024-02-09 03:02:37,209][src.usecase.data_loader_usecase][INFO] - done loading 160000...
-[2024-02-09 03:02:37,377][src.usecase.data_loader_usecase][INFO] - done loading 170000...
-[2024-02-09 03:02:37,518][src.usecase.data_loader_usecase][INFO] - done loading 180000...
-[2024-02-09 03:02:37,779][src.usecase.data_loader_usecase][INFO] - done loading 190000...
-[2024-02-09 03:02:37,926][src.usecase.data_loader_usecase][INFO] - done loading 200000...
-[2024-02-09 03:02:38,082][src.usecase.data_loader_usecase][INFO] - done loading 210000...
-[2024-02-09 03:02:38,346][src.usecase.data_loader_usecase][INFO] - done loading 220000...
-[2024-02-09 03:02:38,504][src.usecase.data_loader_usecase][INFO] - done loading 230000...
-[2024-02-09 03:02:38,616][src.usecase.data_loader_usecase][INFO] - done loading 236880...
-[2024-02-09 03:02:40,380][src.usecase.data_loader_usecase][INFO] - loaded: (8596, 18)
-[2024-02-09 03:02:40,406][src.usecase.data_loader_usecase][INFO] - df:
+[2024-02-18 04:04:01,150][src.usecase.data_loader_usecase][INFO] - load data from: 101 to 107
+[2024-02-18 04:04:01,876][src.usecase.data_loader_usecase][INFO] - done loading 1000...
+[2024-02-18 04:04:01,913][src.usecase.data_loader_usecase][INFO] - done loading 1969...
+[2024-02-18 04:04:02,072][src.usecase.data_loader_usecase][INFO] - done loading 10000...
+[2024-02-18 04:04:02,213][src.usecase.data_loader_usecase][INFO] - done loading 20000...
+[2024-02-18 04:04:02,335][src.usecase.data_loader_usecase][INFO] - done loading 30000...
+[2024-02-18 04:04:02,459][src.usecase.data_loader_usecase][INFO] - done loading 40000...
+[2024-02-18 04:04:02,604][src.usecase.data_loader_usecase][INFO] - done loading 50000...
+[2024-02-18 04:04:02,829][src.usecase.data_loader_usecase][INFO] - done loading 60000...
+[2024-02-18 04:04:02,979][src.usecase.data_loader_usecase][INFO] - done loading 70000...
+[2024-02-18 04:04:03,228][src.usecase.data_loader_usecase][INFO] - done loading 80000...
+[2024-02-18 04:04:03,378][src.usecase.data_loader_usecase][INFO] - done loading 90000...
+[2024-02-18 04:04:03,527][src.usecase.data_loader_usecase][INFO] - done loading 100000...
+[2024-02-18 04:04:03,679][src.usecase.data_loader_usecase][INFO] - done loading 110000...
+[2024-02-18 04:04:03,990][src.usecase.data_loader_usecase][INFO] - done loading 120000...
+[2024-02-18 04:04:04,190][src.usecase.data_loader_usecase][INFO] - done loading 130000...
+[2024-02-18 04:04:04,378][src.usecase.data_loader_usecase][INFO] - done loading 140000...
+[2024-02-18 04:04:04,699][src.usecase.data_loader_usecase][INFO] - done loading 150000...
+[2024-02-18 04:04:04,903][src.usecase.data_loader_usecase][INFO] - done loading 160000...
+[2024-02-18 04:04:05,071][src.usecase.data_loader_usecase][INFO] - done loading 170000...
+[2024-02-18 04:04:05,251][src.usecase.data_loader_usecase][INFO] - done loading 180000...
+[2024-02-18 04:04:05,545][src.usecase.data_loader_usecase][INFO] - done loading 190000...
+[2024-02-18 04:04:05,701][src.usecase.data_loader_usecase][INFO] - done loading 200000...
+[2024-02-18 04:04:05,859][src.usecase.data_loader_usecase][INFO] - done loading 210000...
+[2024-02-18 04:04:06,046][src.usecase.data_loader_usecase][INFO] - done loading 220000...
+[2024-02-18 04:04:06,215][src.usecase.data_loader_usecase][INFO] - done loading 230000...
+[2024-02-18 04:04:06,358][src.usecase.data_loader_usecase][INFO] - done loading 236880...
+[2024-02-18 04:04:08,364][src.usecase.data_loader_usecase][INFO] - loaded: (8596, 18)
+[2024-02-18 04:04:08,384][src.usecase.data_loader_usecase][INFO] - df:
                                id      item_id  dept_id cat_id store_id  ... snap_ca  snap_tx  snap_wi  sell_price release
 0     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       1        1        1        2.00       0
 1     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       1        0        0        2.00       0
@@ -686,7 +702,7 @@ sell_price      float64
 release           int64
 dtype: object
 
-[2024-02-09 03:02:40,975][src.algorithm.preprocess][INFO] - price data extracted:
+[2024-02-18 04:04:08,961][src.algorithm.preprocess][INFO] - price data extracted:
         price_max  price_min  price_std  price_mean  price_norm  price_nunique  item_nunique
 0            2.00       2.00        0.0        2.00         1.0              1          20.0
 1            7.88       7.88        0.0        7.88         1.0              1           1.0
@@ -715,7 +731,7 @@ price_nunique      int64
 item_nunique     float64
 dtype: object
 
-[2024-02-09 03:02:46,605][src.algorithm.preprocess][INFO] - sales lag data extracted:
+[2024-02-18 04:04:15,215][src.algorithm.preprocess][INFO] - sales lag data extracted:
         lag_21_7  lag_21_8  lag_21_9  lag_21_10  ...  rolling_mean_30  rolling_std_30  rolling_mean_60  rolling_std_60
 0            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
 1            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
@@ -764,8 +780,8 @@ rolling_mean_60    float64
 rolling_std_60     float64
 dtype: object
 
-[2024-02-09 03:02:46,690][src.usecase.preprocess_usecase][INFO] - transform training data...
-[2024-02-09 03:02:47,079][src.usecase.preprocess_usecase][INFO] - done preprocessing dataset:
+[2024-02-18 04:04:15,328][src.usecase.preprocess_usecase][INFO] - transform training data...
+[2024-02-18 04:04:15,722][src.usecase.preprocess_usecase][INFO] - done preprocessing dataset:
 x columns:
 Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'event_type_2', 'snap_ca', 'snap_tx', 'snap_wi', 'sell_price',
@@ -808,8 +824,8 @@ y:
 
 [114204 rows x 1 columns]
 
-[2024-02-09 03:02:47,099][src.usecase.preprocess_usecase][INFO] - transform validation data...
-[2024-02-09 03:02:47,209][src.usecase.preprocess_usecase][INFO] - done preprocessing dataset:
+[2024-02-18 04:04:15,740][src.usecase.preprocess_usecase][INFO] - transform validation data...
+[2024-02-18 04:04:15,847][src.usecase.preprocess_usecase][INFO] - done preprocessing dataset:
 x columns:
 Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'event_type_2', 'snap_ca', 'snap_tx', 'snap_wi', 'sell_price',
@@ -852,8 +868,8 @@ y:
 
 [8596 rows x 1 columns]
 
-[2024-02-09 03:02:47,211][src.usecase.preprocess_usecase][INFO] - transform prediction data...
-[2024-02-09 03:02:47,317][src.usecase.preprocess_usecase][INFO] - done preprocessing dataset:
+[2024-02-18 04:04:15,849][src.usecase.preprocess_usecase][INFO] - transform prediction data...
+[2024-02-18 04:04:15,933][src.usecase.preprocess_usecase][INFO] - done preprocessing dataset:
 x columns:
 Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'event_type_2', 'snap_ca', 'snap_tx', 'snap_wi', 'sell_price',
@@ -896,12 +912,12 @@ y:
 
 [8596 rows x 1 columns]
 
-[2024-02-09 03:02:49,863][__main__][INFO] - save files
-training data: ['/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_training_xy_keys.csv', '/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_training_xy_x.csv', '/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_training_xy_y.csv']
-validation data: ['/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_validation_xy_keys.csv', '/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_validation_xy_x.csv', '/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_validation_xy_y.csv']
-prediction data: ['/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_prediction_xy_keys.csv', '/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_prediction_xy_x.csv', '/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_prediction_xy_y.csv']
+[2024-02-18 04:04:18,484][__main__][INFO] - save files
+training data: ['/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_training_xy_keys.csv', '/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_training_xy_x.csv', '/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_training_xy_y.csv']
+validation data: ['/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_validation_xy_keys.csv', '/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_validation_xy_x.csv', '/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_validation_xy_y.csv']
+prediction data: ['/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_prediction_xy_keys.csv', '/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_prediction_xy_x.csv', '/opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_prediction_xy_y.csv']
 
-[2024-02-09 03:02:50,131][__main__][INFO] - loaded preprocessed dataset:
+[2024-02-18 04:04:18,776][__main__][INFO] - loaded preprocessed dataset:
     training:
     XY(keys=       store_id      item_id  date_id
 0          CA_1  FOODS_1_001        1
@@ -1026,25 +1042,25 @@ prediction data: ['/opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_predicti
 
 [8596 rows x 1 columns])
 
-[2024-02-09 03:02:50,132][src.algorithm.abstract_algorithm][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.05, 'num_leaves': 32, 'subsample': 0.7, 'subsample_freq': 1, 'feature_fraction': 0.8, 'min_data_in_leaf': 50, 'random_state': 123, 'importance_type': 'gain'}
-[2024-02-09 03:02:50,135][src.algorithm.abstract_algorithm][INFO] - initialized model: LGBMRegressor(feature_fraction=0.8, importance_type='gain', learning_rate=0.05,
+[2024-02-18 04:04:18,777][src.algorithm.abstract_algorithm][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.05, 'num_leaves': 32, 'subsample': 0.7, 'subsample_freq': 1, 'feature_fraction': 0.8, 'min_data_in_leaf': 50, 'random_state': 123, 'importance_type': 'gain'}
+[2024-02-18 04:04:18,778][src.algorithm.abstract_algorithm][INFO] - initialized model: LGBMRegressor(feature_fraction=0.8, importance_type='gain', learning_rate=0.05,
               metric='rmse', min_data_in_leaf=50, n_estimators=1000,
               num_leaves=32, objective='rmse', random_state=123, subsample=0.7,
               subsample_freq=1)
-[2024-02-09 03:02:50,135][src.algorithm.abstract_algorithm][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}
-[2024-02-09 03:02:50,136][src.algorithm.abstract_algorithm][INFO] - initialized model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
+[2024-02-18 04:04:18,779][src.algorithm.abstract_algorithm][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}
+[2024-02-18 04:04:18,780][src.algorithm.abstract_algorithm][INFO] - initialized model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
               min_data_in_leaf=20, n_estimators=1000, objective='rmse',
               random_state=42)
-[2024-02-09 03:02:50,165][__main__][INFO] - START machine learning task for CA_1
-[2024-02-09 03:02:50,181][src.usecase.training_usecase][INFO] - start training: lightgbm_regression...
-[2024-02-09 03:02:50,191][src.algorithm.abstract_algorithm][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
+[2024-02-18 04:04:18,813][__main__][INFO] - START machine learning task for CA_1
+[2024-02-18 04:04:18,831][src.usecase.training_usecase][INFO] - start training: lightgbm_regression...
+[2024-02-18 04:04:18,842][src.algorithm.abstract_algorithm][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
               min_data_in_leaf=20, n_estimators=1000, objective='rmse',
               random_state=42)
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
 [LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
 [LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.007623 seconds.
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.006379 seconds.
 You can set `force_row_wise=true` to remove the overhead.
 And if memory is not enough, you can set `force_col_wise=true`.
 [LightGBM] [Info] Total Bins 4042
@@ -1060,11 +1076,11 @@ Training until validation scores don't improve for 10 rounds
 [60]    train's rmse: 1.71871   valid's rmse: 1.92623
 Early stopping, best iteration is:
 [58]    train's rmse: 1.7303    valid's rmse: 1.92273
-[2024-02-09 03:02:50,719][src.usecase.training_usecase][INFO] - done training: lightgbm_regression
-[2024-02-09 03:02:50,720][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
+[2024-02-18 04:04:19,302][src.usecase.training_usecase][INFO] - done training: lightgbm_regression
+[2024-02-18 04:04:19,303][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-02-09 03:02:50,768][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
-[2024-02-09 03:02:50,775][src.usecase.prediction_usecase][INFO] - prediction:
+[2024-02-18 04:04:19,350][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
+[2024-02-18 04:04:19,358][src.usecase.prediction_usecase][INFO] - prediction:
      store_id      item_id  date_id  prediction
 0        CA_1  FOODS_1_001       94    0.892972
 1        CA_1  FOODS_1_001       95    0.833340
@@ -1080,9 +1096,9 @@ Early stopping, best iteration is:
 
 [4298 rows x 4 columns]
 
-[2024-02-09 03:02:50,777][src.usecase.evaluation_usecase][INFO] - start evaluation...
-[2024-02-09 03:02:50,789][src.usecase.evaluation_usecase][INFO] - done evaluation
-[2024-02-09 03:02:50,796][src.usecase.evaluation_usecase][INFO] - evaluation:
+[2024-02-18 04:04:19,360][src.usecase.evaluation_usecase][INFO] - start evaluation...
+[2024-02-18 04:04:19,384][src.usecase.evaluation_usecase][INFO] - done evaluation
+[2024-02-18 04:04:19,404][src.usecase.evaluation_usecase][INFO] - evaluation:
 data:
      store_id      item_id  date_id  y_true    y_pred
 0        CA_1  FOODS_1_001       94     7.0  0.892972
@@ -1101,7 +1117,7 @@ data:
 mean_absolute_error: 0.8846026878702851
 root_mean_squared_error: 1.9227268535062014
 
-[2024-02-09 03:02:50,831][src.usecase.evaluation_usecase][INFO] - feature importances
+[2024-02-18 04:04:19,450][src.usecase.evaluation_usecase][INFO] - feature importances
        feature_name    importance
 0           item_id  4.486927e+06
 1        sell_price  2.975108e+05
@@ -1145,10 +1161,10 @@ root_mean_squared_error: 1.9227268535062014
 39       price_mean  0.000000e+00
 40    price_nunique  0.000000e+00
 
-[2024-02-09 03:02:50,831][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
+[2024-02-18 04:04:19,450][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-02-09 03:02:50,873][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
-[2024-02-09 03:02:50,878][src.usecase.prediction_usecase][INFO] - prediction:
+[2024-02-18 04:04:19,488][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
+[2024-02-18 04:04:19,494][src.usecase.prediction_usecase][INFO] - prediction:
      store_id      item_id  date_id  prediction
 0        CA_1  FOODS_1_001      101    1.198667
 1        CA_1  FOODS_1_001      102    1.082044
@@ -1164,21 +1180,22 @@ root_mean_squared_error: 1.9227268535062014
 
 [4298 rows x 4 columns]
 
-[2024-02-09 03:02:50,879][src.usecase.prediction_register_usecase][INFO] - register prediction
-[2024-02-09 03:02:51,104][src.usecase.prediction_register_usecase][INFO] - done register prediction
-[2024-02-09 03:02:51,105][src.algorithm.abstract_algorithm][INFO] - save model: /opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_CA_1_model.txt
-[2024-02-09 03:02:51,155][__main__][INFO] - DONE machine learning task for CA_1
-[2024-02-09 03:02:51,155][__main__][INFO] - START machine learning task for CA_2
-[2024-02-09 03:02:51,169][src.usecase.training_usecase][INFO] - start training: lightgbm_regression...
-[2024-02-09 03:02:51,179][src.algorithm.abstract_algorithm][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
+[2024-02-18 04:04:19,495][src.usecase.prediction_register_usecase][INFO] - register prediction
+[2024-02-18 04:04:19,805][src.usecase.prediction_register_usecase][INFO] - done register prediction
+[2024-02-18 04:04:19,806][src.algorithm.abstract_algorithm][INFO] - save model: /opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_CA_1_model.txt
+[2024-02-18 04:04:19,881][__main__][INFO] - DONE machine learning task for CA_1
+[2024-02-18 04:04:19,882][__main__][INFO] - START machine learning task for CA_2
+[2024-02-18 04:04:19,903][src.usecase.training_usecase][INFO] - start training: lightgbm_regression...
+[2024-02-18 04:04:19,917][src.algorithm.abstract_algorithm][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
               min_data_in_leaf=20, n_estimators=1000, objective='rmse',
               random_state=42)
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
 [LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
 [LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.011084 seconds.
-You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.011280 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
 [LightGBM] [Info] Total Bins 3447
 [LightGBM] [Info] Number of data points in the train set: 57102, number of used features: 41
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
@@ -1194,11 +1211,11 @@ Training until validation scores don't improve for 10 rounds
 [80]    train's rmse: 1.44168   valid's rmse: 1.44804
 Early stopping, best iteration is:
 [75]    train's rmse: 1.45442   valid's rmse: 1.44756
-[2024-02-09 03:02:51,782][src.usecase.training_usecase][INFO] - done training: lightgbm_regression
-[2024-02-09 03:02:51,783][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
+[2024-02-18 04:04:20,440][src.usecase.training_usecase][INFO] - done training: lightgbm_regression
+[2024-02-18 04:04:20,441][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-02-09 03:02:51,867][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
-[2024-02-09 03:02:51,877][src.usecase.prediction_usecase][INFO] - prediction:
+[2024-02-18 04:04:20,484][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
+[2024-02-18 04:04:20,491][src.usecase.prediction_usecase][INFO] - prediction:
      store_id      item_id  date_id  prediction
 0        CA_2  FOODS_1_001       94    1.464649
 1        CA_2  FOODS_1_001       95    1.485242
@@ -1214,9 +1231,9 @@ Early stopping, best iteration is:
 
 [4298 rows x 4 columns]
 
-[2024-02-09 03:02:51,880][src.usecase.evaluation_usecase][INFO] - start evaluation...
-[2024-02-09 03:02:51,895][src.usecase.evaluation_usecase][INFO] - done evaluation
-[2024-02-09 03:02:51,905][src.usecase.evaluation_usecase][INFO] - evaluation:
+[2024-02-18 04:04:20,492][src.usecase.evaluation_usecase][INFO] - start evaluation...
+[2024-02-18 04:04:20,511][src.usecase.evaluation_usecase][INFO] - done evaluation
+[2024-02-18 04:04:20,528][src.usecase.evaluation_usecase][INFO] - evaluation:
 data:
      store_id      item_id  date_id  y_true    y_pred
 0        CA_2  FOODS_1_001       94     0.0  1.464649
@@ -1235,7 +1252,7 @@ data:
 mean_absolute_error: 0.5706511222125771
 root_mean_squared_error: 1.4475629905483116
 
-[2024-02-09 03:02:51,938][src.usecase.evaluation_usecase][INFO] - feature importances
+[2024-02-18 04:04:20,595][src.usecase.evaluation_usecase][INFO] - feature importances
        feature_name    importance
 0           item_id  2.143069e+06
 1        sell_price  5.177214e+05
@@ -1279,10 +1296,10 @@ root_mean_squared_error: 1.4475629905483116
 39       price_mean  0.000000e+00
 40    price_nunique  0.000000e+00
 
-[2024-02-09 03:02:51,939][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
+[2024-02-18 04:04:20,595][src.usecase.prediction_usecase][INFO] - start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-02-09 03:02:51,980][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
-[2024-02-09 03:02:51,986][src.usecase.prediction_usecase][INFO] - prediction:
+[2024-02-18 04:04:20,639][src.usecase.prediction_usecase][INFO] - done prediction: lightgbm_regression
+[2024-02-18 04:04:20,644][src.usecase.prediction_usecase][INFO] - prediction:
      store_id      item_id  date_id  prediction
 0        CA_2  FOODS_1_001      101    1.468277
 1        CA_2  FOODS_1_001      102    1.283893
@@ -1298,12 +1315,12 @@ root_mean_squared_error: 1.4475629905483116
 
 [4298 rows x 4 columns]
 
-[2024-02-09 03:02:51,987][src.usecase.prediction_register_usecase][INFO] - register prediction
-[2024-02-09 03:02:52,204][src.usecase.prediction_register_usecase][INFO] - done register prediction
-[2024-02-09 03:02:52,204][src.algorithm.abstract_algorithm][INFO] - save model: /opt/outputs/2024-02-09/03-02-16/2024-02-09-03-02-16_CA_2_model.txt
-[2024-02-09 03:02:52,250][__main__][INFO] - DONE machine learning task for CA_2
-[2024-02-09 03:02:52,251][__main__][INFO] - DONE machine learning task for lightgbm_regression: 2024-02-09-03-02-16
-[2024-02-09 03:02:52,259][__main__][INFO] - DONE machine_learning
+[2024-02-18 04:04:20,645][src.usecase.prediction_register_usecase][INFO] - register prediction
+[2024-02-18 04:04:20,877][src.usecase.prediction_register_usecase][INFO] - done register prediction
+[2024-02-18 04:04:20,877][src.algorithm.abstract_algorithm][INFO] - save model: /opt/outputs/2024-02-18/04-03-46/2024-02-18-04-03-46_CA_2_model.txt
+[2024-02-18 04:04:20,927][__main__][INFO] - DONE machine learning task for CA_2
+[2024-02-18 04:04:20,927][__main__][INFO] - DONE machine learning task for lightgbm_regression: 2024-02-18-04-03-46
+[2024-02-18 04:04:20,935][__main__][INFO] - DONE machine_learning
 ```
 </details>
 
@@ -1334,10 +1351,8 @@ root_mean_squared_error: 1.4475629905483116
 
 - BIはDockerコンテナを起動し、[makefile](./makefile)の`run_bi`で実行します。
 
-- URL: http://localhost:8501
-
 - 下記のコマンドはローカルの`src`を使用して実行します。Docker build時点の`src`を使用する場合、以下のマウントを削除して実行してください。
-  - -v /home/xxx/repository/demand-forecasting-m5/machine_learning/src:/opt/src
+  - -v /home/xxx/repository/demand-forecasting-m5/bi/src:/opt/src
 
 ```sh
 $ make run_bi
@@ -1355,6 +1370,8 @@ docker run \
         demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
         streamlit run src/main.py
 ```
+
+- URL: http://localhost:8501
 
 #### 過去実績
 ![img](images/bi_sales.png)
@@ -1438,7 +1455,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 使用するHydraのconfigファイルはmachine_learningを起動する`docker run`のコマンドに環境変数`TARGET_CONFIG`に指定します。
 
 ```sh
-$ make machine_learning
+$ make run_machine_learning
 docker run \
         -it \
         --name machine_learning \

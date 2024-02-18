@@ -179,6 +179,7 @@ req_all: req_data_registration \
 build_all: build_data_registration \
 	build_machine_learning \
 	build_mlflow \
+	build_bi \
 
 .PHONY: push_all
 push_all: push_data_registration \

@@ -7,8 +7,6 @@ class Prediction(AbstractSchema):
     item_id: str
     date_id: int
     prediction: float
-    mlflow_experiment_id: int
-    mlflow_run_id: str    
 
     class Config:
         allow_mutation = False
