@@ -195,12 +195,12 @@ pull_all: pull_data_registration \
 ############ DOCKER COMPOSE COMMANDS ############
 .PHONY: up
 up:
-	docker-compose \
+	docker compose \
 		-f $(DOCKER_COMPOSE) \
 		up -d
 
 .PHONY: down
 down:
-	docker-compose \
+	docker compose \
 		-f $(DOCKER_COMPOSE) \
 		down
