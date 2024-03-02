@@ -1,50 +1,52 @@
 version: "3"
 
 services:
-  postgres:
-    image: postgres:14.3
-    container_name: postgres
-    volumes:
-      - ./postgres/init:/docker-entrypoint-initdb.d
-    networks:
-      - default
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=demand_forecasting_m5
-      - POSTGRES_INITDB_ARGS="--encoding=UTF-8"
-    ports:
-      - 5432:5432
-    hostname: postgres
-    restart: always
-    stdin_open: true
+  # postgres:
+  #   image: postgres:14.3
+  #   container_name: postgres
+  #   volumes:
+  #     - ./postgres/init:/docker-entrypoint-initdb.d
+  #   networks:
+  #     - default
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=password
+  #     - POSTGRES_DB=demand_forecasting_m5
+  #     - POSTGRES_INITDB_ARGS="--encoding=UTF-8"
+  #   ports:
+  #     - 5432:5432
+  #   hostname: postgres
+  #   restart: always
+  #   stdin_open: true
 
-  data_registration:
-    container_name: data_registration
-    image: demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0    
-    restart: "no"
-    networks:
-      - default
-    environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DBNAME=demand_forecasting_m5
-      - LOG_LEVEL=DEBUG
-    command: >
-      /bin/sh -c "sleep 10s && python -m src.main --create_sql_filepath "/opt/data/create.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv""
-    volumes:
-      - ./data:/opt/data
-      - ./data_registration/src:/opt/src
-    depends_on:
-      - postgres
+  # data_registration:
+  #   container_name: data_registration
+  #   image: demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0    
+  #   restart: "no"
+  #   networks:
+  #     - default
+  #   environment:
+  #     - POSTGRES_HOST=postgres
+  #     - POSTGRES_PORT=5432
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=password
+  #     - POSTGRES_DBNAME=demand_forecasting_m5
+  #     - LOG_LEVEL=DEBUG
+  #   command: >
+  #     /bin/sh -c "sleep 10s && python -m src.main --create_sql_filepath "/opt/data/create.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv""
+  #   volumes:
+  #     - ./data:/opt/data
+  #     - ./data_registration/src:/opt/src
+  #   depends_on:
+  #     - postgres
 
   mlflow:
     container_name: mlflow
     image: demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0    
     volumes:
       - ./machine_learning/outputs/mlruns:/opt/outputs/mlruns
+    # networks:
+    #   - default
     command:
       - "mlflow"
       - "server"
@@ -58,8 +60,8 @@ services:
       - 15000:5000
     restart: always
     hostname: mlflow
-    depends_on:
-      - postgres
+    # depends_on:
+    #   - postgres
 
   # machine_learning:
   #   container_name: machine_learning

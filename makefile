@@ -10,6 +10,15 @@ TAG = demand_forecasting_m5
 PLATFORM := linux/amd64
 
 
+############ DEMAND FORECASTING NETWORK COMMANDS ############
+.PHONY: create_network
+create_network:
+	docker network create demand_forecasting_m5
+
+.PHONY: rm_network
+rm_network:
+	docker network rm demand_forecasting_m5
+
 ############ DEMAND FORECASTING DATA_REGISTRATION COMMANDS ############
 DATA_REGISTRATION_DIR := $(DIR)/data_registration
 DOCKERFILE_DATA_REGISTRATION = $(DATA_REGISTRATION_DIR)/$(DOCKERFILE)
@@ -32,6 +41,23 @@ build_data_registration:
 		-f $(DOCKERFILE_DATA_REGISTRATION) \
 		.
 
+.PHONY: run_data_registration
+run_data_registration:
+	docker run \
+		-it \
+		--name data_registration \
+		-e POSTGRES_HOST=dev-m5-postgres.postgres.database.azure.com \
+		-e POSTGRES_PORT=5432 \
+		-e POSTGRES_USER=postgres \
+		-e POSTGRES_PASSWORD=password1! \
+		-e POSTGRES_DBNAME=demand_forecasting_m5 \
+		-e MLFLOW_TRACKING_URI=http://mlflow:5000 \
+		-e TARGET_CONFIG=default \
+		-v $(DIR)/data:/opt/data \
+		-v $(DATA_REGISTRATION_DIR)/src:/opt/src \
+		$(DOCKER_DATA_REGISTRATION_IMAGE_NAME) \
+		python -m src.main --create_sql_filepath "/opt/data/create.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv"
+
 .PHONY: push_data_registration
 push_data_registration:
 	docker push $(DOCKER_DATA_REGISTRATION_IMAGE_NAME)
@@ -43,6 +69,7 @@ pull_data_registration:
 
 ############ DEMAND FORECASTING MLFLOW COMMANDS ############
 MLFLOW_DIR := $(DIR)/mlflow
+MACHINE_LEARNING_DIR := $(DIR)/machine_learning
 DOCKERFILE_MLFLOW = $(MLFLOW_DIR)/$(DOCKERFILE)
 DOCKER_MLFLOW_TAG = $(TAG)_mlflow
 DOCKER_MLFLOW_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_MLFLOW_TAG)_$(VERSION)
@@ -62,6 +89,17 @@ build_mlflow:
 		-t $(DOCKER_MLFLOW_IMAGE_NAME) \
 		-f $(DOCKERFILE_MLFLOW) \
 		.
+
+.PHONY: run_mlflow
+run_mlflow:
+	docker run \
+		-d \
+		--name mlflow \
+		-p 15000:5000 \
+		-v $(MACHINE_LEARNING_DIR)/outputs/mlruns:/opt/outputs/mlruns \
+		--net demand_forecasting_m5 \
+		$(DOCKER_MLFLOW_IMAGE_NAME) \
+		mlflow server --backend-store-uri "/opt/outputs/mlruns" --default-artifact-root "/opt/outputs/mlruns" --host "0.0.0.0"
 
 .PHONY: push_mlflow
 push_mlflow:
@@ -99,10 +137,10 @@ run_machine_learning:
 	docker run \
 		-it \
 		--name machine_learning \
-		-e POSTGRES_HOST=postgres \
+		-e POSTGRES_HOST=dev-m5-postgres.postgres.database.azure.com \
 		-e POSTGRES_PORT=5432 \
 		-e POSTGRES_USER=postgres \
-		-e POSTGRES_PASSWORD=password \
+		-e POSTGRES_PASSWORD=password1! \
 		-e POSTGRES_DBNAME=demand_forecasting_m5 \
 		-e MLFLOW_TRACKING_URI=http://mlflow:5000 \
 		-e TARGET_CONFIG=default \
@@ -149,10 +187,10 @@ run_bi:
 	docker run \
 		-it \
 		--name bi \
-		-e POSTGRES_HOST=postgres \
+		-e POSTGRES_HOST=dev-m5-postgres.postgres.database.azure.com \
 		-e POSTGRES_PORT=5432 \
 		-e POSTGRES_USER=postgres \
-		-e POSTGRES_PASSWORD=password \
+		-e POSTGRES_PASSWORD=password1! \
 		-e POSTGRES_DBNAME=demand_forecasting_m5 \
 		-p 8501:8501 \
 		-v $(BI_DIR)/src:/opt/src \
