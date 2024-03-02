@@ -13,7 +13,7 @@ class SalesCalendarRepository(AbstractSelectRepository):
     ):
         super().__init__(db_client=db_client)
         self.sales_table = TABLES.SALES.value
-        self.calendar_table = TABLES.CALENDAR.value        
+        self.calendar_table = TABLES.CALENDAR.value
 
     def select(
         self,
