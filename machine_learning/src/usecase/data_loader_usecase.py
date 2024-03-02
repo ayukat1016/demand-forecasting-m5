@@ -22,9 +22,9 @@ class DataLoaderUsecase(object):
         """Data loader usecase.
 
         Args:
-            calendar_repository (AbstractSelectRepository): Repository to retrieve data for calendar.
-            prices_repository (AbstractSelectRepository): Repository to retrieve data for prices.
-            sales_calendar_repository  (AbstractSelectRepository): Repository to retrieve data for training.
+            calendar_repository (AbstractSelectRepository): Repository to load data for calendar.
+            prices_repository (AbstractSelectRepository): Repository to load data for prices.
+            sales_calendar_repository  (AbstractSelectRepository): Repository to load data for training.
         """
 
         self.calendar_repository = calendar_repository
@@ -51,7 +51,7 @@ class DataLoaderUsecase(object):
             prediction_date_to (int): Last date for prediction data.
 
         Returns:
-            RawDataset: Data retrieved from database.
+            RawDataset: Data loaded from database.
         """
         training_data = self.make_training_data(
             date_from=training_date_from,
@@ -116,20 +116,20 @@ class DataLoaderUsecase(object):
             date_to=date_to,            
         )
         dataset_dict = [d.dict() for d in data]
-        df = pd.DataFrame(dataset_dict)
-        df.sort_values(by=["store_id", "item_id", "date_id"])
+        sales_df = pd.DataFrame(dataset_dict)
         
         prices_data = self.load_prices_data()
         prices_dataset_dict = [d.dict() for d in prices_data]
         prices_df = pd.DataFrame(prices_dataset_dict)
-        df = df.merge(prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]], on=["store_id", "item_id", "wm_yr_wk"], how="left")
+        sales_df = sales_df.merge(prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]], on=["store_id", "item_id", "wm_yr_wk"], how="left")
 
         release_df = prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"].agg(["min"]).reset_index()
         release_df.columns = ["store_id", "item_id", "release"]
         release_df["release"] = release_df["release"] - release_df["release"].min()
+        sales_df = sales_df.merge(release_df, on=["store_id", "item_id"], how="left")
 
-        df = df.merge(release_df, on=["store_id", "item_id"], how="left")
-
+        df = sales_df
+        df = df.sort_values(["store_id", "item_id", "date_id"]).reset_index(drop=True)
         logger.info(f"loaded: {df.shape}")
         logger.info(
             f"""df:

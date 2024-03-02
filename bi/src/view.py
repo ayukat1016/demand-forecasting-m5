@@ -163,8 +163,8 @@ def show_sales_daily(
             _df = (
                 df[(df.store_id == s) & (df.item_id == i)]
                 .drop(["store_id", "item_id"], axis=1)
-                .reset_index(drop=True)
                 .sort_values("date_id")
+                .set_index("date_id")
             )
             with st.expander(
                 label=f"STORE {s} ITEM {i}",
@@ -174,7 +174,7 @@ def show_sales_daily(
 
                 fig = go.Figure()
                 sales_trace = go.Bar(
-                    x=_df.date_id,
+                    x=_df.date,
                     y=_df.sales,
                 )
                 fig.add_trace(sales_trace)
@@ -193,8 +193,8 @@ def show_prediction_daily(
             _df = (
                 df[(df.store_id == s) & (df.item_id == i)]
                 .drop(["store_id", "item_id"], axis=1)
-                .reset_index(drop=True)
                 .sort_values("date_id")
+                .set_index("date_id")
             )
             with st.expander(
                 label=f"STORE {s} ITEM {i}",
@@ -204,7 +204,7 @@ def show_prediction_daily(
 
                 fig = go.Figure()
                 sales_trace = go.Bar(
-                    x=_df.date_id,
+                    x=_df.date,
                     y=_df.prediction,
                 )
                 fig.add_trace(sales_trace)

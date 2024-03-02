@@ -19,7 +19,8 @@ class SalesRepository(BaseRepository):
         db_client: AbstractDBClient,
     ):
         super().__init__(db_client=db_client)
-        self.table_name = TABLES.SALES.value
+        self.sales_table = TABLES.SALES.value
+        self.calendar_table = TABLES.CALENDAR.value
 
     def select(
         self,
@@ -31,12 +32,25 @@ class SalesRepository(BaseRepository):
         parameters: List[Union[int, str, bool, float]] = []
         query = f"""
         SELECT
-            {self.table_name}.store_id as store_id,
-            {self.table_name}.item_id as item_id,
-            {self.table_name}.date_id as date_id,
-            {self.table_name}.sales as sales
+            {self.sales_table}.store_id as store_id,
+            {self.sales_table}.item_id as item_id,
+            {self.sales_table}.date_id as date_id,
+            {self.calendar_table}.date as date,
+            {self.calendar_table}.wm_yr_wk as wm_yr_wk,
+            {self.calendar_table}.event_name_1 as event_name_1,
+            {self.calendar_table}.event_type_1 as event_type_1,
+            {self.calendar_table}.event_name_2 as event_name_2,
+            {self.calendar_table}.event_type_2 as event_type_2,
+            {self.calendar_table}.snap_ca as snap_ca,
+            {self.calendar_table}.snap_tx as snap_tx,
+            {self.calendar_table}.snap_wi as snap_wi,
+            {self.sales_table}.sales as sales
         FROM
-            {self.table_name}
+            {self.sales_table}
+        LEFT JOIN
+            {self.calendar_table}
+        ON
+            {self.calendar_table}.date_id = {self.sales_table}.date_id
         """
 
         where = "where"
@@ -44,7 +58,7 @@ class SalesRepository(BaseRepository):
         if store is not None:
             query += f"""
             {where}
-                {self.table_name}.store_id = %s
+                {self.sales_table}.store_id = %s
             """
             parameters.append(store)
             where = "AND"
@@ -52,7 +66,7 @@ class SalesRepository(BaseRepository):
         if item is not None:
             query += f"""
             {where}
-                {self.table_name}.item_id = %s
+                {self.sales_table}.item_id = %s
             """
             parameters.append(item)
             where = "AND"
@@ -78,7 +92,8 @@ class PredictionRepository(BaseRepository):
         db_client: AbstractDBClient,
     ):
         super().__init__(db_client=db_client)
-        self.table_name = TABLES.PREDICTION.value
+        self.prediction_table = TABLES.PREDICTION.value
+        self.calendar_table = TABLES.CALENDAR.value
 
     def select(
         self,
@@ -90,12 +105,17 @@ class PredictionRepository(BaseRepository):
         parameters: List[Union[int, str, bool, float]] = []
         query = f"""
         SELECT
-            {self.table_name}.store_id as store_id,
-            {self.table_name}.item_id as item_id,
-            {self.table_name}.date_id as date_id,
-            {self.table_name}.prediction as prediction
+            {self.prediction_table}.store_id as store_id,
+            {self.prediction_table}.item_id as item_id,
+            {self.prediction_table}.date_id as date_id,
+            {self.calendar_table}.date as date,
+            {self.prediction_table}.prediction as prediction
         FROM
-            {self.table_name}
+            {self.prediction_table}
+        LEFT JOIN
+            {self.calendar_table}
+        ON
+            {self.calendar_table}.date_id = {self.prediction_table}.date_id
         """
 
         where = "where"
@@ -103,7 +123,7 @@ class PredictionRepository(BaseRepository):
         if store is not None:
             query += f"""
             {where}
-                {self.table_name}.store_id = %s
+                {self.prediction_table}.store_id = %s
             """
             parameters.append(store)
             where = "AND"
@@ -111,7 +131,7 @@ class PredictionRepository(BaseRepository):
         if item is not None:
             query += f"""
             {where}
-                {self.table_name}.item_id = %s
+                {self.prediction_table}.item_id = %s
             """
             parameters.append(item)
             where = "AND"
