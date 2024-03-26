@@ -7,7 +7,7 @@
 
 データは[Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータセットを使用します。
 
-- テンプレートは1～100日の売上数量を学習、101日～107日の売上数量を予測します。
+- テンプレートは1日～100日の過去実績の売上数量を学習、101日～107日の売上数量を予測します。
 
 - データセットは店舗/品目/日付ごとの売上数量（sales）、週次の店舗/品目ごとの価格（prices）、日付ごとのイベントカレンダー（calendar）の3つです。
   - `sales`: 店舗ID`store_id`、品目ID`item_id`、日付ID`date_id`ごとの売上数量`sales`を格納したトランザクションデータ
@@ -50,7 +50,7 @@
 - [data_registration](./data_registration/): [Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータをPostgreSQLに登録するバッチ処理。
 - [machine_learning](./machine_learning/): 機械学習開発のためのテンプレートとして例示したプログラム。PostgreSQLからデータを取得し、前処理、学習、評価、予測を実行し、記録をMLflow tracking serverに記録する。
 - [notebook](./notebook/): 本リポジトリの実装前に[Google Colaboratory](https://colab.google/)で動作確認したnotebookを格納しています。本システムの実行結果はnotebookの予測値と一致します。
-- [bi](./bi/): 過去実績の売上数量と機械学習で得られた予測の売上数量を[Streamlit](https://streamlit.io/)で表示します。
+- [bi](./bi/): 過去実績の売上数量と機械学習で得られた予測の売上数量をデータベースから取得し、[Streamlit](https://streamlit.io/)で可視化します。
 
 ## machine_learningの構成
 
@@ -1374,9 +1374,13 @@ docker run \
 - URL: http://localhost:8501
 
 #### 過去実績の売上数量
+- 1日~100日の過去実績の売上数量を店舗/品目ごとに可視化します。
+
 ![img](images/bi_sales.png)
 
 #### 予測の売上数量
+- 101日～107日の予測の売上数量を店舗/品目ごとに可視化します。
+
 ![img](images/bi_prediction.png)
 
 
