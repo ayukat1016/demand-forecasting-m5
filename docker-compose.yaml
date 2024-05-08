@@ -45,8 +45,8 @@ services:
     image: demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0    
     volumes:
       - ./machine_learning/outputs/mlruns:/opt/outputs/mlruns
-    # networks:
-    #   - default
+    networks:
+      - default
     command:
       - "mlflow"
       - "server"
