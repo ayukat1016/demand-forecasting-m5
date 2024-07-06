@@ -191,39 +191,6 @@ pull_machine_learning:
 	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
 
 
-
-############ DEMAND FORECASTING BI COMMANDS ############
-BI_DIR := $(DIR)/bi
-DOCKERFILE_BI = $(BI_DIR)/$(DOCKERFILE)
-DOCKER_BI_TAG = $(TAG)_bi
-DOCKER_BI_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_BI_TAG)_$(VERSION)
-
-.PHONY: req_bi
-req_bi:
-	cd $(BI_DIR) && \
-	poetry export \
-		--without-hashes \
-		-f requirements.txt \
-		--output requirements.txt
-
-.PHONY: build_bi
-build_bi:
-	docker build \
-		--platform $(PLATFORM) \
-		-t $(DOCKER_BI_IMAGE_NAME) \
-		-f $(DOCKERFILE_BI) \
-		.
-
-.PHONY: push_bi
-push_bi:
-	docker push $(DOCKER_BI_IMAGE_NAME)
-
-.PHONY: pull_bi
-pull_bi:
-	docker pull $(DOCKER_BI_IMAGE_NAME)
-
-
-
 ############ ALL COMMANDS ############
 .PHONY: req_all
 req_all: req_data_registration \
