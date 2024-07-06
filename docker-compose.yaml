@@ -61,50 +61,27 @@ services:
     depends_on:
       - postgres
 
-  # machine_learning:
-  #   container_name: machine_learning
-  #   image: demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0
-  #   restart: "no"
-  #   volumes:
-  #     - ./machine_learning/hydra:/opt/hydra
-  #     - ./machine_learning/src:/opt/src
-  #     - ./machine_learning/outputs:/opt/outputs
-  #   networks:
-  #     - default
-  #   environment:
-  #     - POSTGRES_HOST=postgres
-  #     - POSTGRES_PORT=5432
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=password
-  #     - POSTGRES_DBNAME=demand_forecasting_m5
-  #     - MLFLOW_TRACKING_URI=http://mlflow:5000
-  #     - TARGET_CONFIG_NAME=default
-  #   command: /bin/sh -c "sleep 180s && python -m src.main"
-  #   depends_on:
-  #     - data_registration
-  #     - mlflow
-
-  # bi:
-  #   container_name: bi
-  #   image: demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0
-  #   restart: "no"
-  #   volumes:
-  #     - ./bi/src:/opt/src
-  #   networks:
-  #     - default
-  #   environment:
-  #     - POSTGRES_HOST=postgres
-  #     - POSTGRES_PORT=5432
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=password
-  #     - POSTGRES_DBNAME=demand_forecasting_m5
-  #   ports:
-  #     - 8501:8501
-  #   command: /bin/sh -c "sleep 240s && streamlit run src/main.py"
-  #   depends_on:
-  #     - data_registration
-  #     - mlflow
-  #     - machine_learning
+  bi:
+    container_name: bi
+    image: demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0
+    restart: "no"
+    volumes:
+      - ./bi/src:/opt/src
+    networks:
+      - default
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DBNAME=demand_forecasting_m5
+    ports:
+      - 8501:8501
+    command: /bin/sh -c "sleep 20s && streamlit run src/main.py"
+    depends_on:
+      - postgres
+      - data_registration
+      - mlflow
 
 networks:
   default:
