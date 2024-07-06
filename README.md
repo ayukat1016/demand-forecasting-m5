@@ -7,7 +7,7 @@
 
 データは[Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータセットを使用します。
 
-- テンプレートは1～100日の売上数量を学習、101日～107日の売上数量を予測します。
+- テンプレートは1日～100日の過去実績の売上数量を学習、101日～107日の売上数量を予測します。
 
 - データセットは店舗/品目/日付ごとの売上数量（sales）、週次の店舗/品目ごとの価格（prices）、日付ごとのイベントカレンダー（calendar）の3つです。
   - `sales`: 店舗ID`store_id`、品目ID`item_id`、日付ID`date_id`ごとの売上数量`sales`を格納したトランザクションデータ
@@ -49,8 +49,8 @@
 - [mlflow](./mlflow/): 機械学習の学習、評価、予測を記録し、webブラウザで結果を表示します。
 - [data_registration](./data_registration/): [Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータをPostgreSQLに登録するバッチ処理。
 - [machine_learning](./machine_learning/): 機械学習開発のためのテンプレートとして例示したプログラム。PostgreSQLからデータを取得し、前処理、学習、評価、予測を実行し、記録をMLflow tracking serverに記録する。
+- [bi](./bi/): 過去実績の売上数量と機械学習で得られた予測の売上数量をデータベースから取得し、[Streamlit](https://streamlit.io/)で可視化します。
 - [notebook](./notebook/): 本リポジトリの実装前に[Google Colaboratory](https://colab.google/)で動作確認したnotebookを格納しています。本システムの実行結果はnotebookの予測値と一致します。
-- [bi](./bi/): 過去実績の売上数量と機械学習で得られた予測の売上数量を[Streamlit](https://streamlit.io/)で表示します。
 
 ## machine_learningの構成
 
@@ -264,20 +264,21 @@ demand_forecasting_m5        demand_forecasting_m5_data_registration_1.0.0      
 ```
 ### 2. 事前準備
 
-- Docker composeでPosgreSQL database、MLflow、data registrationのコンテナを起動します。
+- Docker composeでPosgreSQL database、MLflow、data registration、BIのコンテナを起動します。
 - [makefile](./makefile)の`make up`は[docker-compose.yaml](docker-compose.yaml)の処理をまとめて実行します。
 
 ```sh
 # docker-composeの起動
 $ make up
-docker-compose \
+docker compose \
         -f docker-compose.yaml \
         up -d
-[+] Running 4/4
- ✔ Network demand_forecasting_m5  Created                                                                              0.1s
+[+] Running 5/5
+ ✔ Network demand_forecasting_m5  Created                                                                              0.0s
  ✔ Container postgres             Started                                                                              0.1s
  ✔ Container mlflow               Started                                                                              0.1s
- ✔ Container data_registration    Started
+ ✔ Container data_registration    Started                                                                              0.1s
+ ✔ Container bi                   Started                                                                              0.1s
 ```
 
 - data registrationが学習で使用するデータをPostgreSQL databaseに登録します。登録状況は実行ログをご確認ください。
@@ -286,10 +287,12 @@ docker-compose \
 ```sh
 # 起動したDocker containerの確認
 $ docker ps -a
-CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED         STATUS                     PORTS                     NAMES
-0f653a4a0ef3   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   5 minutes ago   Exited (0) 3 minutes ago                             data_registration
-97a6a652605a   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   5 minutes ago   Up 5 minutes               0.0.0.0:15000->5000/tcp   mlflow
-1f9668221e2a   postgres:14.3                                                         "docker-entrypoint.s…"   5 minutes ago   Up 5 minutes               0.0.0.0:5432->5432/tcp    postgres
+CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED         STATUS                          PORTS                     NAMES
+26bf000e4a65   demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0                  "/bin/sh -c 'sleep 2…"   4 minutes ago   Up 4 minutes                    0.0.0.0:8501->8501/tcp    bi
+c8a0b769145d   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   4 minutes ago   Exited (0) About a minute ago                             data_registration
+08b2fbc7bade   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   4 minutes ago   Up 4 minutes                    0.0.0.0:15000->5000/tcp   mlflow
+9cb98874e348   postgres:14.3                                                         "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes                    0.0.0.0:5432->5432/tcp    postgres
+
 
 # テーブル登録のログ
 $ docker logs -f data_registration
@@ -1349,34 +1352,16 @@ root_mean_squared_error: 1.4475629905483116
 
 - 過去実績はテーブル`sales`、予測はテーブル`prediction`から抽出します。
 
-- BIはDockerコンテナを起動し、[makefile](./makefile)の`run_bi`で実行します。
-
-- 下記のコマンドはローカルの`src`を使用して実行します。Docker build時点の`src`を使用する場合、以下のマウントを削除して実行してください。
-  - -v /home/xxx/repository/demand-forecasting-m5/bi/src:/opt/src
-
-```sh
-$ make run_bi
-docker run \
-        -it \
-        --name bi \
-        -e POSTGRES_HOST=postgres \
-        -e POSTGRES_PORT=5432 \
-        -e POSTGRES_USER=postgres \
-        -e POSTGRES_PASSWORD=password \
-        -e POSTGRES_DBNAME=demand_forecasting_m5 \
-        -p 8501:8501 \
-        -v /home/xxx/repository/demand-forecasting-m5/bi/src:/opt/src \
-        --net demand_forecasting_m5 \
-        demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
-        streamlit run src/main.py
-```
-
 - URL: http://localhost:8501
 
 #### 過去実績の売上数量
+- 1日~100日の過去実績の売上数量を店舗/品目ごとに可視化します。
+
 ![img](images/bi_sales.png)
 
 #### 予測の売上数量
+- 101日～107日の予測の売上数量を店舗/品目ごとに可視化します。
+
 ![img](images/bi_prediction.png)
 
 
@@ -1387,18 +1372,11 @@ docker run \
 # コンテナの一覧
 $ docker ps -a
 CONTAINER ID   IMAGE                                                                 COMMAND                  CREATED          STATUS                     PORTS                     NAMES
-fc7744d79fa6   demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0                  "streamlit run src/m…"   25 minutes ago   Exited (0) 9 seconds ago                             bi
-2e386ee1ffb4   demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0    "python -m src.main"     26 hours ago     Exited (0) 26 hours ago                              machine_learning
-4abe9d059318   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   27 hours ago     Up 27 hours                0.0.0.0:15000->5000/tcp   mlflow
-e57ab08b4cca   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   27 hours ago     Exited (0) 27 hours ago                              data_registration
-7ee8072faefc   postgres:14.3                                                         "docker-entrypoint.s…"   27 hours ago     Up 27 hours                0.0.0.0:5432->5432/tcp    postgres
-```
-
-- 「5. BIの確認」で作成したコンテナは`docker rm`で削除します。
-```sh
-# コンテナの削除
-$ docker rm bi
-bi
+33ce0d2c00cf   demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0    "python -m src.main"     43 seconds ago   Exited (0) 9 seconds ago                             machine_learning
+26bf000e4a65   demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0                  "/bin/sh -c 'sleep 2…"   11 minutes ago   Up 11 minutes              0.0.0.0:8501->8501/tcp    bi
+c8a0b769145d   demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0   "/bin/sh -c 'sleep 1…"   11 minutes ago   Exited (0) 8 minutes ago                             data_registration
+08b2fbc7bade   demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0              "mlflow server --bac…"   11 minutes ago   Up 11 minutes              0.0.0.0:15000->5000/tcp   mlflow
+9cb98874e348   postgres:14.3                                                         "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes              0.0.0.0:5432->5432/tcp    postgres
 ```
 
 - 「3. 機械学習パイプラインの実行」で作成したコンテナは`docker rm`で削除します。
@@ -1412,14 +1390,15 @@ machine_learning
 ```sh
 # docker-composeの停止
 $ make down
-docker-compose \
+docker compose \
         -f docker-compose.yaml \
         down
-[+] Running 4/4
+[+] Running 5/5
+ ✔ Container bi                   Removed                                                                             10.3s
+ ✔ Container mlflow               Removed                                                                             10.4s
  ✔ Container data_registration    Removed                                                                              0.0s
- ✔ Container mlflow               Removed                                                                             10.6s
- ✔ Container postgres             Removed                                                                              0.5s
- ✔ Network demand_forecasting_m5  Removed
+ ✔ Container postgres             Removed                                                                              0.4s
+ ✔ Network demand_forecasting_m5  Removed                                                                              0.2s
 ```
 
 - コンテナの削除を確認します。
