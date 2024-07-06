@@ -72,6 +72,37 @@ pull_mlflow:
 	docker pull $(DOCKER_MLFLOW_IMAGE_NAME)
 
 
+############ DEMAND FORECASTING BI COMMANDS ############
+BI_DIR := $(DIR)/bi
+DOCKERFILE_BI = $(BI_DIR)/$(DOCKERFILE)
+DOCKER_BI_TAG = $(TAG)_bi
+DOCKER_BI_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_BI_TAG)_$(VERSION)
+
+.PHONY: req_bi
+req_bi:
+	cd $(BI_DIR) && \
+	poetry export \
+		--without-hashes \
+		-f requirements.txt \
+		--output requirements.txt
+
+.PHONY: build_bi
+build_bi:
+	docker build \
+		--platform $(PLATFORM) \
+		-t $(DOCKER_BI_IMAGE_NAME) \
+		-f $(DOCKERFILE_BI) \
+		.
+
+.PHONY: push_bi
+push_bi:
+	docker push $(DOCKER_BI_IMAGE_NAME)
+
+.PHONY: pull_bi
+pull_bi:
+	docker pull $(DOCKER_BI_IMAGE_NAME)
+
+
 ############ DEMAND FORECASTING MACHINE_LEARNING COMMANDS ############
 MACHINE_LEARNING_DIR := $(DIR)/machine_learning
 DOCKERFILE_MACHINE_LEARNING = $(MACHINE_LEARNING_DIR)/$(DOCKERFILE)
@@ -122,58 +153,12 @@ pull_machine_learning:
 	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
 
 
-############ DEMAND FORECASTING BI COMMANDS ############
-BI_DIR := $(DIR)/bi
-DOCKERFILE_BI = $(BI_DIR)/$(DOCKERFILE)
-DOCKER_BI_TAG = $(TAG)_bi
-DOCKER_BI_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_BI_TAG)_$(VERSION)
-
-.PHONY: req_bi
-req_bi:
-	cd $(BI_DIR) && \
-	poetry export \
-		--without-hashes \
-		-f requirements.txt \
-		--output requirements.txt
-
-.PHONY: build_bi
-build_bi:
-	docker build \
-		--platform $(PLATFORM) \
-		-t $(DOCKER_BI_IMAGE_NAME) \
-		-f $(DOCKERFILE_BI) \
-		.
-
-.PHONY: run_bi
-run_bi:
-	docker run \
-		-it \
-		--name bi \
-		-e POSTGRES_HOST=postgres \
-		-e POSTGRES_PORT=5432 \
-		-e POSTGRES_USER=postgres \
-		-e POSTGRES_PASSWORD=password \
-		-e POSTGRES_DBNAME=demand_forecasting_m5 \
-		-p 8501:8501 \
-		-v $(BI_DIR)/src:/opt/src \
-		--net demand_forecasting_m5 \
-		$(DOCKER_BI_IMAGE_NAME) \
-		streamlit run src/main.py
-
-.PHONY: push_bi
-push_bi:
-	docker push $(DOCKER_BI_IMAGE_NAME)
-
-.PHONY: pull_bi
-pull_bi:
-	docker pull $(DOCKER_BI_IMAGE_NAME)
-
-
 ############ ALL COMMANDS ############
 .PHONY: req_all
 req_all: req_data_registration \
 	req_machine_learning \
 	req_mlflow \
+	req_bi \
 
 .PHONY: build_all
 build_all: build_data_registration \
@@ -185,11 +170,13 @@ build_all: build_data_registration \
 push_all: push_data_registration \
 	push_machine_learning \
 	push_mlflow \
+	push_bi \
 
 .PHONY: pull_all
 pull_all: pull_data_registration \
 	pull_machine_learning \
 	pull_mlflow \
+	pull_bi \
 
 
 ############ DOCKER COMPOSE COMMANDS ############
