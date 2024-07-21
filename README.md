@@ -85,10 +85,16 @@
 
 - Docker
 - Docker compose
+- Poetry（ライブラリ更新時に必要、処理実行するだけであれば不要）
 - makeコマンドの実行環境
-- Poetry（ライブラリ更新時に必要で処理実行するだけであれば不要）
-- 上記を満たしたWindows(WSL2)及びMAC(M2)の環境で動作確認済み
 
+```sh
+# makeのインストール(実行時にsudoパスワードを入力)
+$ sudo apt update
+$ sudo apt install make
+$ make --version
+GNU Make 4.3
+```
 
 ## Getting started
 
