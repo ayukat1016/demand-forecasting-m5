@@ -1,6 +1,19 @@
+from abc import ABC, abstractmethod
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractCreateTablesRepository
 
+class AbstractCreateTablesRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
+
+    @abstractmethod
+    def create_tables(
+        self,
+        query: str,        
+    ):
+        raise NotImplementedError
 
 class TableRepository(AbstractCreateTablesRepository):
     def __init__(

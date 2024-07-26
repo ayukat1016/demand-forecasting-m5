@@ -1,12 +1,28 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractSelectRepository
 from src.schema.prices_schema import Prices
 from src.schema.table_schema import TABLES
 
 
-class PricesRepository(AbstractSelectRepository):
+class AbstractPricesRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
+
+    @abstractmethod
+    def select(
+        self,
+        limit: int = 200,
+        offset: int = 0,
+    ) -> List[Prices]:
+        raise NotImplementedError
+
+
+class PricesRepository(AbstractPricesRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

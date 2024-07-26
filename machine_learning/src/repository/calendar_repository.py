@@ -1,12 +1,28 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractSelectRepository
 from src.schema.calendar_schema import Calendar
 from src.schema.table_schema import TABLES
 
 
-class CalendarRepository(AbstractSelectRepository):
+class AbstractCalendarRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
+
+    @abstractmethod
+    def select(
+        self,
+        limit: int = 200,
+        offset: int = 0,
+    ) -> List[Calendar]:
+        raise NotImplementedError
+
+
+class CalendarRepository(AbstractCalendarRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

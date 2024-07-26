@@ -1,12 +1,27 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.schema.prediction_schema import Prediction
 from src.schema.table_schema import TABLES
 
 
-class PredictionRepository(AbstractBulkInsertRepository):
+class AbstractPredictionRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
+
+    @abstractmethod
+    def bulk_insert(
+        self,
+        records: List[Prediction],
+    ):
+        raise NotImplementedError
+
+
+class PredictionRepository(AbstractPredictionRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

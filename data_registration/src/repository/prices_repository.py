@@ -1,12 +1,25 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.schema.prices_schema import Prices
 from src.schema.table_schema import TABLES
 
+class AbstractPricesRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
 
-class PricesRepository(AbstractBulkInsertRepository):
+    @abstractmethod
+    def bulk_insert(
+        self,
+        records: List[Prices],
+    ):
+        raise NotImplementedError
+
+class PricesRepository(AbstractPricesRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,
