@@ -1,12 +1,30 @@
+from abc import ABC, abstractmethod
 from typing import List, Optional, Union
 
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractSelectRepository
 from src.schema.sales_calendar_schema import SalesCalendar
 from src.schema.table_schema import TABLES
 
 
-class SalesCalendarRepository(AbstractSelectRepository):
+class AbstractSalesCalendarRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
+
+    @abstractmethod
+    def select(
+        self,
+        date_from: Optional[int] = None,
+        date_to: Optional[int] = None,
+        limit: int = 200,
+        offset: int = 0,
+    ) -> List[SalesCalendar]:
+        raise NotImplementedError
+
+
+class SalesCalendarRepository(AbstractSalesCalendarRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

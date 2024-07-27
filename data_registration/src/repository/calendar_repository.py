@@ -1,12 +1,26 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 from src.infrastructure.database import AbstractDBClient
-from src.repository.abstract_repository import AbstractBulkInsertRepository
 from src.schema.calendar_schema import Calendar
 from src.schema.table_schema import TABLES
 
+class AbstractCalendarRepository(ABC):
+    def __init__(
+        self,
+        db_client: AbstractDBClient,
+    ):
+        self.db_client = db_client
 
-class CalendarRepository(AbstractBulkInsertRepository):
+    @abstractmethod
+    def bulk_insert(
+        self,
+        records: List[Calendar],
+    ):
+        raise NotImplementedError
+
+
+class CalendarRepository(AbstractCalendarRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

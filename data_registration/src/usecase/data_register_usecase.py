@@ -2,8 +2,10 @@ from src.middleware.file_reader import read_csv_to_list
 from src.middleware.logger import configure_logger
 from src.middleware.file_reader import read_text_file
 from src.middleware.strings import get_uuid
-from src.repository.abstract_repository import AbstractBulkInsertRepository
-from src.repository.abstract_repository import AbstractCreateTablesRepository
+from src.repository.calendar_repository import AbstractCalendarRepository
+from src.repository.prices_repository import AbstractPricesRepository
+from src.repository.sales_repository import AbstractSalesRepository
+from src.repository.table_repository import AbstractCreateTablesRepository
 from src.schema.calendar_schema import Calendar
 from src.schema.prices_schema import Prices
 from src.schema.sales_schema import Sales
@@ -19,9 +21,9 @@ class DataRegisterUsecase(object):
         prices_filepath: str,
         sales_filepath: str,
         table_repository: AbstractCreateTablesRepository,
-        calendar_repository: AbstractBulkInsertRepository,
-        prices_repository: AbstractBulkInsertRepository,
-        sales_repository: AbstractBulkInsertRepository,
+        calendar_repository: AbstractCalendarRepository,
+        prices_repository: AbstractPricesRepository,
+        sales_repository: AbstractSalesRepository,
     ):
         self.create_sql_filepath = create_sql_filepath
         self.calendar_filepath = calendar_filepath

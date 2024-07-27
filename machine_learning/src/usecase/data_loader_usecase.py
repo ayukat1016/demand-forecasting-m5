@@ -4,7 +4,9 @@ import numpy as np
 import pandas as pd
 from src.entity.raw_data import RawDataset, RawDataWithTargetDates
 from src.middleware.logger import configure_logger
-from src.repository.abstract_repository import AbstractSelectRepository
+from src.repository.calendar_repository import AbstractCalendarRepository
+from src.repository.prices_repository import AbstractPricesRepository
+from src.repository.sales_calendar_repository import AbstractSalesCalendarRepository
 from src.schema.calendar_schema import Calendar
 from src.schema.prices_schema import Prices
 from src.schema.sales_calendar_schema import SalesCalendar
@@ -15,16 +17,16 @@ logger = configure_logger(__name__)
 class DataLoaderUsecase(object):
     def __init__(
         self,
-        calendar_repository: AbstractSelectRepository,
-        prices_repository: AbstractSelectRepository,
-        sales_calendar_repository: AbstractSelectRepository,
+        calendar_repository: AbstractCalendarRepository,
+        prices_repository: AbstractPricesRepository,
+        sales_calendar_repository: AbstractSalesCalendarRepository,
     ):
         """Data loader usecase.
 
         Args:
-            calendar_repository (AbstractSelectRepository): Repository to load data for calendar.
-            prices_repository (AbstractSelectRepository): Repository to load data for prices.
-            sales_calendar_repository  (AbstractSelectRepository): Repository to load data for training.
+            calendar_repository (AbstractCalendarRepository): Repository to load data for calendar.
+            prices_repository (AbstractPricesRepository): Repository to load data for prices.
+            sales_calendar_repository  (AbstractSalesCalendarRepository): Repository to load data for training.
         """
 
         self.calendar_repository = calendar_repository

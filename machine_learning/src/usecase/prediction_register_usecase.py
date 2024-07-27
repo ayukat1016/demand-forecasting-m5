@@ -3,7 +3,7 @@ from typing import List, Optional
 import pandas as pd
 from src.entity.prediction_data import PredictionDataSchema
 from src.middleware.logger import configure_logger
-from src.repository.abstract_repository import AbstractBulkInsertRepository
+from src.repository.prediction_repository import AbstractPredictionRepository
 from src.schema.prediction_schema import Prediction
 
 logger = configure_logger(__name__)
@@ -12,7 +12,7 @@ logger = configure_logger(__name__)
 class PredictionRegisterUsecase(object):
     def __init__(
         self,
-        prediction_repository: AbstractBulkInsertRepository
+        prediction_repository: AbstractPredictionRepository
     ):
         self.prediction_repository = prediction_repository
 
