@@ -40,6 +40,19 @@ def main(
     prices_filepath: Optional[str] = None,
     sales_filepath: Optional[str] = None,
 ):
+    
+    if create_sql_filepath is None:
+        raise ValueError("create_sql_filepath cannot be None")
+    
+    if calendar_filepath is None:
+        raise ValueError("calendar_filepath cannot be None")
+    
+    if prices_filepath is None:
+        raise ValueError("prices_filepath cannot be None")
+
+    if sales_filepath is None:
+        raise ValueError("sales_filepath cannot be None")
+
     logger.info("START data_registration")
     logger.info(
         f"""
