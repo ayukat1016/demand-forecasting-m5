@@ -1,4 +1,3 @@
-from pydantic import Extra
 from src.schema.abstract_schema import AbstractSchema
 
 
@@ -20,4 +19,4 @@ class Calendar(AbstractSchema):
 
     class Config:
         allow_mutation = False
-        extra = Extra.forbid
+        extra = "forbid"

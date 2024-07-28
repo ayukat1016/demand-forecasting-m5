@@ -2,7 +2,7 @@ import pandas as pd
 from src.algorithm.abstract_algorithm import AbstractExtractor
 from src.entity.common_data import XY
 from src.entity.preprocessed_data import PreprocessedDataset
-from src.entity.raw_data import RawDataset, RawDataWithTargetDates
+from src.entity.raw_data import RawDataset
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)
@@ -71,12 +71,12 @@ class PreprocessUsecase(object):
 
     def split_dataset(
         self,
-        raw_data: RawDataWithTargetDates,
+        raw_data: pd.DataFrame,
     ) -> XY:
         """Transform DataFrame.
 
         Args:
-            raw_data (RawDataWithTargetDates): input data. Refer src/entity/raw_data/RawDataSchemafor the data format.
+            raw_data (pd.DataFrame): input data. Refer src/entity/raw_data/RawDataSchemafor the data format.
 
         Returns:
             XY: dataset to be used for model training, evaluation and prediction.

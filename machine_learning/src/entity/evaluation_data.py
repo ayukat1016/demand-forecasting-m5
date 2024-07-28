@@ -10,8 +10,8 @@ from pydantic import BaseModel
 @dataclass(frozen=True)
 class Evaluation:
     data: pd.DataFrame
-    mean_absolute_error: float
     root_mean_squared_error: float
+    mean_absolute_error: float
 
     def __post_init__(self):
         EvaluationDataSchema.validate(self.data)

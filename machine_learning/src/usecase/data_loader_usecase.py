@@ -126,7 +126,7 @@ class DataLoaderUsecase(object):
         sales_df = sales_df.merge(prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]], on=["store_id", "item_id", "wm_yr_wk"], how="left")
 
         release_df = prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"].agg(["min"]).reset_index()
-        release_df.columns = ["store_id", "item_id", "release"]
+        release_df.columns = pd.Index(["store_id", "item_id", "release"])
         release_df["release"] = release_df["release"] - release_df["release"].min()
         sales_df = sales_df.merge(release_df, on=["store_id", "item_id"], how="left")
 
@@ -184,7 +184,7 @@ type:
         prices_df = pd.DataFrame(prices_dataset_dict)
 
         release_df = prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"].agg(["min"]).reset_index()
-        release_df.columns = ["store_id", "item_id", "release"]
+        release_df.columns = pd.Index(["store_id", "item_id", "release"])
         release_df["release"] = release_df["release"] - release_df["release"].min()
 
         pred_df = pred_df.merge(calendar_df[["wm_yr_wk", "date_id", "event_name_1", "event_type_1" ,"event_name_2", "event_type_2", "snap_ca", "snap_tx", "snap_wi" ]], on="date_id", how="left")
@@ -239,11 +239,11 @@ type:
         return data
 
 
-    def load_calendar_data(self) -> pd.DataFrame:
+    def load_calendar_data(self) -> List[Calendar]:
         """Load data from calendar table.
 
         Returns:
-            pd.DataFrame: calendar data.
+            List[Calendar]: calendar data.
         """
 
         data: List[Calendar] = []
@@ -262,11 +262,11 @@ type:
         return data
 
 
-    def load_prices_data(self) -> pd.DataFrame:
+    def load_prices_data(self) -> List[Prices]:
         """Load data from prices table.
 
         Returns:
-            pd.DataFrame: prices data.
+            List[Prices]: prices data.
         """
 
         data: List[Prices] = []
