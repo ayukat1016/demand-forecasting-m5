@@ -195,13 +195,13 @@ prediction data: {prediction_data_paths}
             feature_importance = evaluation_usecase.export_feature_importance(model=model)
 
             prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.prediction_data)
-            prediction = prediction_usecase.predict(
+            prediction_output = prediction_usecase.predict(
                 model=model,
                 data=prediction_dataset,
                 mask=preds_store_mask,
             )
 
-            predictions = prediction.prediction
+            predictions = prediction_output.prediction
 
             prediction_register_usecase.register_prediction(
                 predictions=predictions,
@@ -215,7 +215,7 @@ prediction data: {prediction_data_paths}
             feature_importance_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_feature_importance.csv")
             feature_importance_file_path = feature_importance.save(file_path=feature_importance_file_path)
             prediction_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_prediction.csv")
-            prediction_file_path = prediction.save(file_path=prediction_file_path)
+            prediction_file_path = prediction_output.save(file_path=prediction_file_path)
 
             mlflow.log_artifact(model_file_path, "model")
             mlflow.log_artifact(evaluation_file_path, "evaluation")

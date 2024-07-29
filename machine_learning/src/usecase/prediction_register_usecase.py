@@ -1,7 +1,6 @@
 from typing import List
 
 import pandas as pd
-from src.entity.prediction_data import PredictionDataSchema
 from src.middleware.logger import configure_logger
 from src.repository.prediction_repository import AbstractPredictionRepository
 from src.schema.prediction_schema import Prediction
@@ -30,18 +29,17 @@ class PredictionRegisterUsecase(object):
         self,
         predictions: pd.DataFrame,
     ):
-        predictions = PredictionDataSchema.validate(predictions)
-        records = predictions.to_dict(orient="records")
-        predictions: List[Prediction] = []
-        for r in records:
-            predictions.append(
+        data: List[dict] = predictions.to_dict(orient="records")
+        records: List[Prediction] = []
+        for d in data:
+            records.append(
                 Prediction(
-                    store_id=r["store_id"],
-                    item_id=r["item_id"],
-                    date_id=r["date_id"],
-                    prediction=float(r["prediction"]),
+                    store_id=d["store_id"],
+                    item_id=d["item_id"],
+                    date_id=d["date_id"],
+                    prediction=float(d["prediction"]),
                 ),
             )
         self.prediction_repository.bulk_insert(
-            records=predictions,
+            records=records,
         )
