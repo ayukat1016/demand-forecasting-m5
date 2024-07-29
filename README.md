@@ -68,7 +68,7 @@
 - リポジトリのライブラリ管理
   - [poetry](https://python-poetry.org/): Pythonのライブラリを管理する。
 
-[machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用。抽象クラスを実装し、コンポーネントの依存を一方向（下位→上位）になるように整理しています。
+[machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用。抽象クラスを実装し、コンポーネントの依存が下位→上位になるように整理しています。
 プログラムは以下のコンポーネントで構成されています。
 
 - [main.py](machine_learning/src/main.py): クラスを初期化し、usecaseのメソッドを実行
