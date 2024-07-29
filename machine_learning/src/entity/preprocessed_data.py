@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from pandera import Check, Column, DataFrameSchema, Field, Index, SchemaModel
+from pandera import Field, SchemaModel
 from pandera.typing import Series
 from src.entity.common_data import XY
 

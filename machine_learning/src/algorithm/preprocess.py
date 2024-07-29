@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from src.algorithm.abstract_algorithm import AbstractExtractor
 from src.entity.preprocessed_data import ExtractedLagSalesSchema

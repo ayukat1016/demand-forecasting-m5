@@ -21,6 +21,7 @@ pandera = "^0.18.0"
 pyyaml = "^6.0.1"
 types-psycopg2 = "^2.9.21.20240417"
 pandas-stubs = "^2.2.2.240603"
+types-pyyaml = "^6.0.12.20240724"
 
 
 [tool.poetry.group.dev.dependencies]
