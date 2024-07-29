@@ -1,8 +1,8 @@
 from typing import List, Optional
 
 import pandas as pd
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import root_mean_squared_error
+from sklearn.metrics import mean_squared_error  # type: ignore 
+from sklearn.metrics import mean_absolute_error  # type: ignore
 from src.algorithm.abstract_algorithm import AbstractModel
 from src.entity.evaluation_data import Evaluation, FeatureImportances
 from src.middleware.logger import configure_logger
@@ -23,10 +23,10 @@ class EvaluationUsecase(object):
         y_pred: List[float],
     ) -> Evaluation:
         logger.info(f"start evaluation...")
-        rmse = root_mean_squared_error(
+        rmse = mean_squared_error(
             y_true=y_true,
             y_pred=y_pred,
-        )        
+        ) ** 0.5
         mae = mean_absolute_error(
             y_true=y_true,
             y_pred=y_pred,
@@ -53,8 +53,8 @@ root_mean_squared_error: {rmse}
         )
         return Evaluation(
             data=data,
-            mean_absolute_error=mae,
             root_mean_squared_error=rmse,
+            mean_absolute_error=mae,
         )
 
     def export_feature_importance(

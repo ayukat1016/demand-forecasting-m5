@@ -38,7 +38,7 @@
  - 学習データはsalesにcalendar、pricesの順で結合して作成する。（pricesの結合時にcalendarが持つ週次ID`wm_yr_wk`をキーに使用するため先にcalendarを結合する。）
 
 
- - 学習はcsvファイルを直接利用するのではなく、データベースに登録します。スキーマは[create.sql](./data/create.sql)で定義しています。
+ - 学習はcsvファイルを直接利用するのではなく、データベース(DB)に登録します。スキーマは[create.sql](./data/create.sql)で定義しています。
 
 
 ## Components
@@ -54,7 +54,8 @@
 
 ## machine_learningの構成
 
-[machine_learning](./machine_learning/)は主に以下のツールを使用しています。他にも補助的なライブラリは使用していますが、件数が増えるため省略しています。
+[machine_learning](./machine_learning/)は主に以下のツールを使用しています。他にも補助的なライブラリは使用していますが、件数が増えるため省略しています。機械学習で用いる各種パラメータは[hydra](machine_learning/hydra/)で管理します。
+
 
 - 機械学習
   - [pandas](https://pandas.pydata.org/): データフレームのライブラリ。本テンプレートで使用するデータは基本的にPandas DataFrame形式で管理される。
@@ -76,9 +77,9 @@
 - [entity](machine_learning/src/entity/): usecase間でやり取りするデータ
 - [repository](machine_learning/src/repository/): データベースへのリクエスト
 - [schema](machine_learning/src/schema/): データベースから取得するデータ型
-- [infrastructure](machine_learning/src/infrastructure/): 外部インフラへのアクセス
+- [infrastructure](machine_learning/src/infrastructure/): 外部データベースへのアクセス
 
-機械学習で用いる各種パラメータは[hydra](machine_learning/hydra/)で管理します。
+![img](images/architecture.png)
 
 
 ## Requirements

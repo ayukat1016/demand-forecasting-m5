@@ -34,13 +34,13 @@ class PredictionUsecase(object):
                 prediction,
             )
         ]
-        data = pd.DataFrame(d).sort_values(["store_id", "item_id", "date_id"]).reset_index(drop=True)
-        prediction_data = Prediction(prediction=data)
+        df = pd.DataFrame(d).sort_values(["store_id", "item_id", "date_id"]).reset_index(drop=True)
+        prediction_output = Prediction(prediction=df)
 
         logger.info(f"done prediction: {model.name}")
         logger.info(
             f"""prediction:
-{prediction_data.prediction}
+{prediction_output.prediction}
         """
         )
-        return prediction_data
+        return prediction_output
