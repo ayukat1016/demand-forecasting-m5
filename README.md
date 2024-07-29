@@ -68,13 +68,13 @@
 - リポジトリのライブラリ管理
   - [poetry](https://python-poetry.org/): Pythonのライブラリを管理する。
 
-[machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用し、コンポーネントの依存を一方向になるように整理しています。
+[machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用。抽象クラスを実装し、コンポーネントの依存を一方向（下位→上位）になるように整理しています。
 プログラムは以下のコンポーネントで構成されています。
 
 - [main.py](machine_learning/src/main.py): クラスを初期化し、usecaseのメソッドを実行
-- [usecase](machine_learning/src/usecase/): データ取得、前処理、学習、評価、予測の機械学習パイプラインの各処理
+- [usecase](machine_learning/src/usecase/): 機械学習パイプラインの各処理（データ取得、前処理、学習、評価、予測）
 - [algorithm](machine_learning/src/algorithm/): 機械学習の各種アルゴリズム
-- [entity](machine_learning/src/entity/): usecase間でやり取りするデータ
+- [entity](machine_learning/src/entity/): usecase間で受け渡すドメインデータ型（エンティティや値オブジェクト）
 - [repository](machine_learning/src/repository/): データベースへのリクエスト
 - [schema](machine_learning/src/schema/): データベースから取得するデータ型
 - [infrastructure](machine_learning/src/infrastructure/): 外部データベースへのアクセス
