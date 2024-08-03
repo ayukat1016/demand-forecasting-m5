@@ -25,6 +25,7 @@ class AbstractDBClient(ABC):
     ) -> List[Dict[str, Any]]:
         raise NotImplementedError
 
+
 class PostgreSQLClient(AbstractDBClient):
     def __init__(self):
         self.__postgres_user = os.getenv("POSTGRES_USER")
@@ -36,7 +37,7 @@ class PostgreSQLClient(AbstractDBClient):
 
     def get_connection(self):
         return psycopg2.connect(self.__connection_string)
-    
+
     def execute_select(
         self,
         query: str,

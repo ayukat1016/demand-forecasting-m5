@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel
 
 
 class Sales(BaseModel):
@@ -18,11 +18,11 @@ class Sales(BaseModel):
 
     class Config:
         allow_mutation = False
-        extra = Extra.forbid
+        extra = "forbid"
 
 
 class Prediction(BaseModel):
-    store_id: str    
+    store_id: str
     item_id: str
     date_id: int
     date: str
@@ -30,4 +30,4 @@ class Prediction(BaseModel):
 
     class Config:
         allow_mutation = False
-        extra = Extra.forbid
+        extra = "forbid"

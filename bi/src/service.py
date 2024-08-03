@@ -37,7 +37,9 @@ class SalesService(BaseService):
             item=item,
         )
         df = pd.DataFrame([d.dict() for d in dataset])
-        df = df.sort_values(by=["store_id", "item_id", "date_id"]).reset_index(drop=True)
+        df = df.sort_values(by=["store_id", "item_id", "date_id"]).reset_index(
+            drop=True
+        )
         return df
 
     def list_sales(
@@ -45,7 +47,7 @@ class SalesService(BaseService):
         store: Optional[str] = None,
         item: Optional[str] = None,
     ) -> List[Sales]:
-        data: List[Sales] = []        
+        data: List[Sales] = []
         limit = 10000
         offset = 0
         while True:
@@ -83,7 +85,9 @@ class PredictionService(BaseService):
             item=item,
         )
         df = pd.DataFrame([d.dict() for d in dataset])
-        df = df.sort_values(by=["store_id", "item_id", "date_id"]).reset_index(drop=True)
+        df = df.sort_values(by=["store_id", "item_id", "date_id"]).reset_index(
+            drop=True
+        )
         return df
 
     def list_prediction(
@@ -91,7 +95,7 @@ class PredictionService(BaseService):
         store: Optional[str] = None,
         item: Optional[str] = None,
     ) -> List[Prediction]:
-        data: List[Prediction] = []        
+        data: List[Prediction] = []
         limit = 10000
         offset = 0
         while True:
@@ -108,4 +112,3 @@ class PredictionService(BaseService):
             offset += limit
             logger.info(f"found {len(prediction_data)} records...")
         return data
-

@@ -2,7 +2,7 @@ from enum import Enum
 from typing import List, Optional, Tuple
 
 import pandas as pd
-import plotly.graph_objects as go
+import plotly.graph_objects as go  # type: ignore
 import streamlit as st
 from logger import configure_logger
 from service import PredictionService
@@ -16,7 +16,7 @@ class BI(Enum):
     PREDICTION = "prediction"
 
 
-def build_bi_selectbox() -> str:
+def build_bi_selectbox() -> Optional[str]:
     options = [None, BI.SALES.value, BI.PREDICTION.value]
     selected = st.sidebar.selectbox(
         label="BI",
@@ -45,7 +45,9 @@ def build_item_sales_selectbox(sales_service: SalesService) -> Optional[str]:
     return selected
 
 
-def build_store_prediction_selectbox(prediction_service: PredictionService) -> Optional[str]:
+def build_store_prediction_selectbox(
+    prediction_service: PredictionService,
+) -> Optional[str]:
     prediction_df = prediction_service.retrieve_prediction()
     options = prediction_df.store_id.unique()
     selected = st.sidebar.selectbox(
@@ -55,7 +57,9 @@ def build_store_prediction_selectbox(prediction_service: PredictionService) -> O
     return selected
 
 
-def build_item_prediction_selectbox(prediction_service: PredictionService) -> Optional[str]:
+def build_item_prediction_selectbox(
+    prediction_service: PredictionService,
+) -> Optional[str]:
     prediction_df = prediction_service.retrieve_prediction()
     options = prediction_df.item_id.unique()
     selected = st.sidebar.selectbox(
@@ -86,36 +90,44 @@ def build(
 
     else:
         raise ValueError()
-    
+
 
 def build_sales(
     sales_service: SalesService,
-    ):
+):
     logger.info("build sales BI...")
-    _, _, stores, items, sales_df = build_sales_base(    
+    _, _, stores, items, sales_df = build_sales_base(
         sales_service=sales_service,
     )
 
-    show_sales_daily(
-        df=sales_df,
-        stores=stores,
-        items=items,
-    )
+    if sales_df.empty:
+        st.error("No sales data available.")
+        logger.error("No sales data available.")
+    else:
+        show_sales_daily(
+            df=sales_df,
+            stores=stores,
+            items=items,
+        )
 
 
 def build_prediction(
     prediction_service: PredictionService,
-    ):
+):
     logger.info("build prediction BI...")
-    _, _, stores, items, prediction_df = build_prediction_base(    
+    _, _, stores, items, prediction_df = build_prediction_base(
         prediction_service=prediction_service,
     )
 
-    show_prediction_daily(
-        df=prediction_df,
-        stores=stores,
-        items=items,
-    )
+    if prediction_df.empty:
+        st.error("No prediction data available.")
+        logger.error("No prediction data available.")
+    else:
+        show_prediction_daily(
+            df=prediction_df,
+            stores=stores,
+            items=items,
+        )
 
 
 def build_sales_base(
@@ -123,14 +135,14 @@ def build_sales_base(
 ) -> Tuple[Optional[str], Optional[str], List[str], List[str], pd.DataFrame]:
 
     store = build_store_sales_selectbox(sales_service=sales_service)
-    item = build_item_sales_selectbox(sales_service=sales_service)    
+    item = build_item_sales_selectbox(sales_service=sales_service)
 
     sales_df = sales_service.retrieve_sales(
         store=store,
         item=item,
     )
-    stores = sales_df.store_id.unique()
-    items = sales_df.item_id.unique()
+    stores = sales_df.store_id.unique().tolist()
+    items = sales_df.item_id.unique().tolist()
 
     return store, item, stores, items, sales_df
 
@@ -140,14 +152,14 @@ def build_prediction_base(
 ) -> Tuple[Optional[str], Optional[str], List[str], List[str], pd.DataFrame]:
 
     store = build_store_prediction_selectbox(prediction_service=prediction_service)
-    item = build_item_prediction_selectbox(prediction_service=prediction_service)    
+    item = build_item_prediction_selectbox(prediction_service=prediction_service)
 
     prediction_df = prediction_service.retrieve_prediction(
         store=store,
         item=item,
     )
-    stores = prediction_df.store_id.unique()
-    items = prediction_df.item_id.unique()
+    stores = prediction_df.store_id.unique().tolist()
+    items = prediction_df.item_id.unique().tolist()
 
     return store, item, stores, items, prediction_df
 
