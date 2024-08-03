@@ -3,7 +3,7 @@ from src.schema.abstract_schema import AbstractSchema
 
 class Sales(AbstractSchema):
     key: str
-    id: str    
+    id: str
     item_id: str
     dept_id: str
     cat_id: str

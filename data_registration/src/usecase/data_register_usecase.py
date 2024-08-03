@@ -64,7 +64,7 @@ class DataRegisterUsecase(object):
                     event_type_2=d["event_type_2"],
                     snap_ca=d["snap_CA"],
                     snap_tx=d["snap_TX"],
-                    snap_wi=d["snap_WI"], 
+                    snap_wi=d["snap_WI"],
                 )
             )
             i += 1
@@ -116,7 +116,7 @@ class DataRegisterUsecase(object):
             d = data[i]
             records.append(
                 Sales(
-                    key=get_uuid(),                    
+                    key=get_uuid(),
                     id=d["id"],
                     item_id=d["item_id"],
                     dept_id=d["dept_id"],
@@ -127,7 +127,7 @@ class DataRegisterUsecase(object):
                     sales=d["sales"],
                 )
             )
-            i += 1            
+            i += 1
             if i % limit == 0:
                 self.sales_repository.bulk_insert(records=records)
                 logger.info(f"sales: {i} ...")

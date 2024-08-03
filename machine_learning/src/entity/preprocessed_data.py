@@ -49,12 +49,10 @@ class ExtractedPriceSchema(SchemaModel):
         coerce=True,
     )
 
-
     class Config:
         name = "ExtractedPriceSchema"
         strict = True
         coerce = True
-
 
 
 class ExtractedLagSalesSchema(SchemaModel):
@@ -196,6 +194,7 @@ class ExtractedLagSalesSchema(SchemaModel):
         nullable=True,
         coerce=True,
     )
+
     class Config:
         name = "ExtractedLagSalesSchema"
         strict = True

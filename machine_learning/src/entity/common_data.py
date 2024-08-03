@@ -25,14 +25,15 @@ class XY:
             directory,
             exist_ok=True,
         )
-        keys_file, x_file, y_file = XY.make_file_paths(            
+        keys_file, x_file, y_file = XY.make_file_paths(
             directory=directory,
             prefix=prefix,
         )
-        self.keys.to_csv(keys_file, index=False)        
+        self.keys.to_csv(keys_file, index=False)
         self.x.to_csv(x_file, index=False)
         self.y.to_csv(y_file, index=False)
-        return [keys_file, x_file, y_file]    
+        return [keys_file, x_file, y_file]
+
     @staticmethod
     def make_file_paths(
         directory: str,
@@ -41,7 +42,8 @@ class XY:
         keys_file = os.path.join(directory, f"{prefix}xy_keys.csv")
         x_file = os.path.join(directory, f"{prefix}xy_x.csv")
         y_file = os.path.join(directory, f"{prefix}xy_y.csv")
-        return [keys_file, x_file, y_file] 
+        return [keys_file, x_file, y_file]
+
 
 def load_xy_from_files(
     keys_file: str,
@@ -69,7 +71,7 @@ class KeyDataSchema(SchemaModel):
         nullable=False,
         coerce=True,
     )
-    
+
     class Config:
         name = "KeyDataSchema"
         strict = True

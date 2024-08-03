@@ -5,6 +5,7 @@ from src.infrastructure.database import AbstractDBClient
 from src.schema.calendar_schema import Calendar
 from src.schema.table_schema import TABLES
 
+
 class AbstractCalendarRepository(ABC):
     def __init__(
         self,

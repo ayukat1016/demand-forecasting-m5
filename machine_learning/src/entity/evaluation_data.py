@@ -40,7 +40,7 @@ class EvaluationDataSchema(SchemaModel):
         ge=0,
         nullable=False,
         coerce=True,
-    )    
+    )
     y_true: Series[float] = Field(
         ge=0.0,
         le=100.0,
@@ -49,7 +49,7 @@ class EvaluationDataSchema(SchemaModel):
     )
     y_pred: Series[float] = Field(
         ge=0.0,
-        le=1000.0,        
+        le=1000.0,
         nullable=False,
         coerce=True,
     )

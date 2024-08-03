@@ -18,8 +18,10 @@ class PredictionUsecase(object):
     ) -> Prediction:
         logger.info(f"start prediction: {model.name}...")
 
-        prediction = model.predict(x=data.prediction_data.x[mask].reset_index(drop=True))
-        
+        prediction = model.predict(
+            x=data.prediction_data.x[mask].reset_index(drop=True)
+        )
+
         d = [
             dict(
                 store_id=s,
@@ -30,11 +32,15 @@ class PredictionUsecase(object):
             for s, i, d, p in zip(
                 data.prediction_data.keys[mask]["store_id"].tolist(),
                 data.prediction_data.keys[mask]["item_id"].tolist(),
-                data.prediction_data.keys[mask]["date_id"].tolist(),                
+                data.prediction_data.keys[mask]["date_id"].tolist(),
                 prediction,
             )
         ]
-        df = pd.DataFrame(d).sort_values(["store_id", "item_id", "date_id"]).reset_index(drop=True)
+        df = (
+            pd.DataFrame(d)
+            .sort_values(["store_id", "item_id", "date_id"])
+            .reset_index(drop=True)
+        )
         prediction_output = Prediction(prediction=df)
 
         logger.info(f"done prediction: {model.name}")

@@ -33,7 +33,7 @@ class AbstractDBClient(ABC):
         parameters: Optional[List[Tuple]] = None,
     ):
         raise NotImplementedError
-    
+
     @abstractmethod
     def execute_select(
         self,
@@ -41,6 +41,7 @@ class AbstractDBClient(ABC):
         parameters: Optional[Tuple] = None,
     ) -> List[Dict[str, Any]]:
         raise NotImplementedError
+
 
 class PostgreSQLClient(AbstractDBClient):
     def __init__(self):
@@ -53,7 +54,7 @@ class PostgreSQLClient(AbstractDBClient):
 
     def get_connection(self):
         return psycopg2.connect(self.__connection_string)
-    
+
     def execute_create_query(
         self,
         query: str,
