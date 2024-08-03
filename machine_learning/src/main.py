@@ -1,7 +1,7 @@
 import os
 
 import hydra
-import mlflow
+import mlflow  # type: ignore
 from omegaconf import DictConfig
 from src.algorithm.abstract_algorithm import AbstractModel
 from src.algorithm.lightgbm_regressor import LightGBMRegression

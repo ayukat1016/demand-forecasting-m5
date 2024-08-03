@@ -67,7 +67,7 @@ root_mean_squared_error: {rmse}
     def export_feature_importance(
         self,
         model: AbstractModel,
-    ) -> Optional[FeatureImportances]:
+    ) -> FeatureImportances:
         feature_importances = model.get_feature_importance()
         d = [f.dict() for f in feature_importances]
         data = (
