@@ -5,6 +5,7 @@ from src.infrastructure.database import AbstractDBClient
 from src.schema.prices_schema import Prices
 from src.schema.table_schema import TABLES
 
+
 class AbstractPricesRepository(ABC):
     def __init__(
         self,
@@ -18,6 +19,7 @@ class AbstractPricesRepository(ABC):
         records: List[Prices],
     ):
         raise NotImplementedError
+
 
 class PricesRepository(AbstractPricesRepository):
     def __init__(

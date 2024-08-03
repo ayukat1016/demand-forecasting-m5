@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 import pandas as pd
-from sklearn.metrics import mean_squared_error  # type: ignore 
+from sklearn.metrics import mean_squared_error  # type: ignore
 from sklearn.metrics import mean_absolute_error  # type: ignore
 from src.algorithm.abstract_algorithm import AbstractModel
 from src.entity.evaluation_data import Evaluation, FeatureImportances
@@ -23,10 +23,13 @@ class EvaluationUsecase(object):
         y_pred: List[float],
     ) -> Evaluation:
         logger.info(f"start evaluation...")
-        rmse = mean_squared_error(
-            y_true=y_true,
-            y_pred=y_pred,
-        ) ** 0.5
+        rmse = (
+            mean_squared_error(
+                y_true=y_true,
+                y_pred=y_pred,
+            )
+            ** 0.5
+        )
         mae = mean_absolute_error(
             y_true=y_true,
             y_pred=y_pred,
@@ -41,7 +44,11 @@ class EvaluationUsecase(object):
             )
             for s, i, d, t, p in zip(store_id, item_id, date_id, y_true, y_pred)
         ]
-        data = pd.DataFrame(d).sort_values(["store_id", "item_id", "date_id"]).reset_index(drop=True)
+        data = (
+            pd.DataFrame(d)
+            .sort_values(["store_id", "item_id", "date_id"])
+            .reset_index(drop=True)
+        )
         logger.info(f"done evaluation")
         logger.info(
             f"""evaluation:
@@ -60,10 +67,14 @@ root_mean_squared_error: {rmse}
     def export_feature_importance(
         self,
         model: AbstractModel,
-    ) -> Optional[FeatureImportances]:
+    ) -> FeatureImportances:
         feature_importances = model.get_feature_importance()
         d = [f.dict() for f in feature_importances]
-        data = pd.DataFrame(d).sort_values("importance", ascending=False).reset_index(drop=True)
+        data = (
+            pd.DataFrame(d)
+            .sort_values("importance", ascending=False)
+            .reset_index(drop=True)
+        )
         logger.info(
             f"""feature importances
 {data}

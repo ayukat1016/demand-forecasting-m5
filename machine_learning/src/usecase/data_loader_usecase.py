@@ -61,7 +61,9 @@ class DataLoaderUsecase(object):
         )
 
         train_mask = training_data["date_id"] <= training_date_to
-        valid_mask = (validation_date_from <= training_data["date_id"]) & (training_data["date_id"] <= validation_date_to)
+        valid_mask = (validation_date_from <= training_data["date_id"]) & (
+            training_data["date_id"] <= validation_date_to
+        )
 
         training_data_with_target_dates = RawDataWithTargetDates(
             data=training_data[train_mask],
@@ -93,12 +95,10 @@ class DataLoaderUsecase(object):
             prediction_data=prediction_data_with_target_dates,
         )
 
-
     def make_training_data(
         self,
         date_from: int,
         date_to: int,
-
     ) -> pd.DataFrame:
         """Load data.
 
@@ -110,22 +110,28 @@ class DataLoaderUsecase(object):
             pd.DataFrame: Training and validation data.
         """
 
-        logger.info(
-            f"load data from: {date_from} to {date_to}"
-        )
+        logger.info(f"load data from: {date_from} to {date_to}")
         data = self.load_sales_calendar_data(
             date_from=date_from,
-            date_to=date_to,            
+            date_to=date_to,
         )
         dataset_dict = [d.dict() for d in data]
         sales_df = pd.DataFrame(dataset_dict)
-        
+
         prices_data = self.load_prices_data()
         prices_dataset_dict = [d.dict() for d in prices_data]
         prices_df = pd.DataFrame(prices_dataset_dict)
-        sales_df = sales_df.merge(prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]], on=["store_id", "item_id", "wm_yr_wk"], how="left")
+        sales_df = sales_df.merge(
+            prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]],
+            on=["store_id", "item_id", "wm_yr_wk"],
+            how="left",
+        )
 
-        release_df = prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"].agg(["min"]).reset_index()
+        release_df = (
+            prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"]
+            .agg(["min"])
+            .reset_index()
+        )
         release_df.columns = pd.Index(["store_id", "item_id", "release"])
         release_df["release"] = release_df["release"] - release_df["release"].min()
         sales_df = sales_df.merge(release_df, on=["store_id", "item_id"], how="left")
@@ -144,7 +150,6 @@ type:
         )
         return df
 
-
     def make_prediction_data(
         self,
         training_data: pd.DataFrame,
@@ -161,13 +166,13 @@ type:
             pd.DataFrame: Prediction data.
         """
 
-        logger.info(
-            f"load data from: {date_from} to {date_to} "
-        )
+        logger.info(f"load data from: {date_from} to {date_to} ")
 
         pred_df = pd.DataFrame()
-        for i in range(date_from, date_to+1):
-            temp_df = training_data[["id", "item_id", "dept_id", "cat_id", "store_id", "state_id"]]
+        for i in range(date_from, date_to + 1):
+            temp_df = training_data[
+                ["id", "item_id", "dept_id", "cat_id", "store_id", "state_id"]
+            ]
             temp_df = temp_df.drop_duplicates()
             temp_df["date_id"] = i
             temp_df["sales"] = np.nan
@@ -183,12 +188,36 @@ type:
         prices_dataset_dict = [d.dict() for d in prices_data]
         prices_df = pd.DataFrame(prices_dataset_dict)
 
-        release_df = prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"].agg(["min"]).reset_index()
+        release_df = (
+            prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"]
+            .agg(["min"])
+            .reset_index()
+        )
         release_df.columns = pd.Index(["store_id", "item_id", "release"])
         release_df["release"] = release_df["release"] - release_df["release"].min()
 
-        pred_df = pred_df.merge(calendar_df[["wm_yr_wk", "date_id", "event_name_1", "event_type_1" ,"event_name_2", "event_type_2", "snap_ca", "snap_tx", "snap_wi" ]], on="date_id", how="left")
-        pred_df = pred_df.merge(prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]], on=["store_id", "item_id", "wm_yr_wk"], how="left")
+        pred_df = pred_df.merge(
+            calendar_df[
+                [
+                    "wm_yr_wk",
+                    "date_id",
+                    "event_name_1",
+                    "event_type_1",
+                    "event_name_2",
+                    "event_type_2",
+                    "snap_ca",
+                    "snap_tx",
+                    "snap_wi",
+                ]
+            ],
+            on="date_id",
+            how="left",
+        )
+        pred_df = pred_df.merge(
+            prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]],
+            on=["store_id", "item_id", "wm_yr_wk"],
+            how="left",
+        )
         pred_df = pred_df.merge(release_df, on=["store_id", "item_id"], how="left")
 
         df = pred_df
@@ -205,11 +234,10 @@ type:
         )
         return df
 
-
     def load_sales_calendar_data(
         self,
         date_from: int,
-        date_to: int,        
+        date_to: int,
     ) -> List[SalesCalendar]:
         """Load data from sales and calendar table as training and validation data.
 
@@ -227,7 +255,7 @@ type:
         while True:
             sales_calendar_data = self.sales_calendar_repository.select(
                 date_from=date_from,
-                date_to=date_to,                
+                date_to=date_to,
                 limit=limit,
                 offset=position,
             )
@@ -237,7 +265,6 @@ type:
             position += len(sales_calendar_data)
             logger.info(f"done loading {position}...")
         return data
-
 
     def load_calendar_data(self) -> List[Calendar]:
         """Load data from calendar table.
@@ -260,7 +287,6 @@ type:
             position += len(calendar_data)
             logger.info(f"done loading {position}...")
         return data
-
 
     def load_prices_data(self) -> List[Prices]:
         """Load data from prices table.

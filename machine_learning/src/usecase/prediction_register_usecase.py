@@ -9,10 +9,7 @@ logger = configure_logger(__name__)
 
 
 class PredictionRegisterUsecase(object):
-    def __init__(
-        self,
-        prediction_repository: AbstractPredictionRepository
-    ):
+    def __init__(self, prediction_repository: AbstractPredictionRepository):
         self.prediction_repository = prediction_repository
 
     def register_prediction(

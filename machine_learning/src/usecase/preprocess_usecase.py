@@ -20,8 +20,8 @@ class PreprocessUsecase(object):
             prices_extractor (AbstractExtractor): Algorithm to extract prices statitics.
             lag_sales_extractor (AbstractExtractor): Algorithm to extract lag sales data.
         """
-        self.prices_extractor=prices_extractor
-        self.lag_sales_extractor=lag_sales_extractor
+        self.prices_extractor = prices_extractor
+        self.lag_sales_extractor = lag_sales_extractor
 
     def preprocess_dataset(
         self,
@@ -39,19 +39,23 @@ class PreprocessUsecase(object):
         df_training = dataset.training_data.data
         df_validation = dataset.validation_data.data
         df_prediction = dataset.prediction_data.data
-        df_all = pd.concat([df_training, df_validation, df_prediction], axis=0, ignore_index=True)
- 
+        df_all = pd.concat(
+            [df_training, df_validation, df_prediction], axis=0, ignore_index=True
+        )
+
         df_price = self.prices_extractor.run(df=df_all)
         df_lag = self.lag_sales_extractor.run(df=df_all)
         df = pd.concat([df_all, df_price, df_lag], axis=1)
 
         train_mask = df["date_id"] <= dataset.training_data.date_to
-        valid_mask = (dataset.validation_data.date_from <= df["date_id"]) & (df["date_id"] <= dataset.validation_data.date_to)
+        valid_mask = (dataset.validation_data.date_from <= df["date_id"]) & (
+            df["date_id"] <= dataset.validation_data.date_to
+        )
         preds_mask = dataset.prediction_data.date_from <= df["date_id"]
 
         logger.info(f"transform training data...")
         training_data = self.split_dataset(
-            raw_data=df[train_mask],            
+            raw_data=df[train_mask],
         )
 
         logger.info(f"transform validation data...")
@@ -61,7 +65,7 @@ class PreprocessUsecase(object):
 
         logger.info(f"transform prediction data...")
         prediction_data = self.split_dataset(
-           raw_data=df[preds_mask],            
+            raw_data=df[preds_mask],
         )
         return PreprocessedDataset(
             training_data=training_data,
@@ -88,7 +92,7 @@ class PreprocessUsecase(object):
         data = self.split_data_target(
             keys=keys,
             data=df,
-        )        
+        )
 
         logger.info(
             f"""done preprocessing dataset:
@@ -117,7 +121,10 @@ y:
             XY: training data x and target data y.
         """
         y = data[["sales"]]
-        x = data.drop(["id", "cat_id", "store_id", "state_id", "date_id", "sales", "wm_yr_wk"], axis=1)
+        x = data.drop(
+            ["id", "cat_id", "store_id", "state_id", "date_id", "sales", "wm_yr_wk"],
+            axis=1,
+        )
         return XY(
             keys=keys,
             x=x,

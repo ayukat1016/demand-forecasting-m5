@@ -33,20 +33,19 @@ logger = configure_logger(__name__)
     type=str,
     required=False,
 )
-
 def main(
     create_sql_filepath: Optional[str] = None,
     calendar_filepath: Optional[str] = None,
     prices_filepath: Optional[str] = None,
     sales_filepath: Optional[str] = None,
 ):
-    
+
     if create_sql_filepath is None:
         raise ValueError("create_sql_filepath cannot be None")
-    
+
     if calendar_filepath is None:
         raise ValueError("calendar_filepath cannot be None")
-    
+
     if prices_filepath is None:
         raise ValueError("prices_filepath cannot be None")
 
@@ -65,7 +64,7 @@ sales_filepath: {sales_filepath}
     )
     db_client = PostgreSQLClient()
     table_repository = TableRepository(db_client=db_client)
-    calendar_repository = CalendarRepository(db_client=db_client)    
+    calendar_repository = CalendarRepository(db_client=db_client)
     prices_repository = PricesRepository(db_client=db_client)
     sales_repository = SalesRepository(db_client=db_client)
 
@@ -77,9 +76,9 @@ sales_filepath: {sales_filepath}
         table_repository=table_repository,
         calendar_repository=calendar_repository,
         prices_repository=prices_repository,
-        sales_repository=sales_repository,        
+        sales_repository=sales_repository,
     )
-    
+
     logger.info("create table")
     data_register_usecase.create_table()
     logger.info("done create table")
@@ -88,14 +87,13 @@ sales_filepath: {sales_filepath}
     data_register_usecase.register_calendar()
     logger.info("done register calendar")
 
-    logger.info("register prices")    
+    logger.info("register prices")
     data_register_usecase.register_prices()
     logger.info("done register prices")
 
     logger.info("register sales")
-    data_register_usecase.register_sales()  
+    data_register_usecase.register_sales()
     logger.info("done register sales")
-
 
     logger.info("DONE data_registration")
 

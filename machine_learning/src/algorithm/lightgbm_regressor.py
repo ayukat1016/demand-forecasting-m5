@@ -74,8 +74,12 @@ class LightGBMRegression(AbstractModel):
             y=y_train,
             eval_set=eval_set,
             eval_names=eval_names,
-            callbacks=[lgb.early_stopping(self.train_params["early_stopping_rounds"], verbose=True), 
-                       lgb.log_evaluation(self.train_params["log_evaluation"])],
+            callbacks=[
+                lgb.early_stopping(
+                    self.train_params["early_stopping_rounds"], verbose=True
+                ),
+                lgb.log_evaluation(self.train_params["log_evaluation"]),
+            ],
         )
 
     def predict(

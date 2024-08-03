@@ -1,7 +1,7 @@
 import os
 
 import hydra
-import mlflow
+import mlflow  # type: ignore
 from omegaconf import DictConfig
 from src.algorithm.abstract_algorithm import AbstractModel
 from src.algorithm.lightgbm_regressor import LightGBMRegression
@@ -62,17 +62,17 @@ prediction_date_to: {cfg.period.prediction_date_to}
         mlflow.log_param("validation_date_from", cfg.period.validation_date_from)
         mlflow.log_param("validation_date_to", cfg.period.validation_date_to)
         mlflow.log_param("prediction_date_from", cfg.period.prediction_date_from)
-        mlflow.log_param("prediction_date_to", cfg.period.prediction_date_to)        
+        mlflow.log_param("prediction_date_to", cfg.period.prediction_date_to)
 
         db_client = PostgreSQLClient()
         calendar_repository = CalendarRepository(db_client=db_client)
         prices_repository = PricesRepository(db_client=db_client)
         sales_calendar_repository = SalesCalendarRepository(db_client=db_client)
 
-        data_loader_usecase = DataLoaderUsecase(        
-            calendar_repository = calendar_repository,
-            prices_repository = prices_repository,
-            sales_calendar_repository = sales_calendar_repository,        
+        data_loader_usecase = DataLoaderUsecase(
+            calendar_repository=calendar_repository,
+            prices_repository=prices_repository,
+            sales_calendar_repository=sales_calendar_repository,
         )
 
         raw_dataset = data_loader_usecase.load_dataset(
@@ -86,9 +86,9 @@ prediction_date_to: {cfg.period.prediction_date_to}
 
         prices_extractor = PricesExtractor()
         lag_sales_extractor = LagSalesExtractor()
-        preprocess_usecase = PreprocessUsecase(        
+        preprocess_usecase = PreprocessUsecase(
             prices_extractor=prices_extractor,
-            lag_sales_extractor=lag_sales_extractor,        
+            lag_sales_extractor=lag_sales_extractor,
         )
 
         preprocessed_dataset = preprocess_usecase.preprocess_dataset(
@@ -122,10 +122,23 @@ prediction data: {prediction_data_paths}
         mlflow.log_artifact(prediction_data_paths[1], "prediction_xy_x")
         mlflow.log_artifact(prediction_data_paths[2], "prediction_xy_y")
 
-        for col in ["item_id", "dept_id", "event_name_1", "event_type_1", "event_name_2", "event_type_2"]:
-            preprocessed_dataset.training_data.x[col] = preprocessed_dataset.training_data.x[col].astype("category")
-            preprocessed_dataset.validation_data.x[col] = preprocessed_dataset.validation_data.x[col].astype("category")
-            preprocessed_dataset.prediction_data.x[col] = preprocessed_dataset.prediction_data.x[col].astype("category")
+        for col in [
+            "item_id",
+            "dept_id",
+            "event_name_1",
+            "event_type_1",
+            "event_name_2",
+            "event_type_2",
+        ]:
+            preprocessed_dataset.training_data.x[col] = (
+                preprocessed_dataset.training_data.x[col].astype("category")
+            )
+            preprocessed_dataset.validation_data.x[col] = (
+                preprocessed_dataset.validation_data.x[col].astype("category")
+            )
+            preprocessed_dataset.prediction_data.x[col] = (
+                preprocessed_dataset.prediction_data.x[col].astype("category")
+            )
 
         logger.info(
             f"""loaded preprocessed dataset:
@@ -144,7 +157,7 @@ prediction data: {prediction_data_paths}
             model.reset_model(
                 params=cfg.model.params,
                 train_params=cfg.model.train_params,
-                )
+            )
         mlflow.log_param("model", cfg.model.name)
         mlflow.log_params(model.params)
 
@@ -157,13 +170,21 @@ prediction data: {prediction_data_paths}
             prediction_repository=prediction_repository,
         )
 
-        for store_id in sorted(list(preprocessed_dataset.training_data.keys["store_id"].unique())):
+        for store_id in sorted(
+            list(preprocessed_dataset.training_data.keys["store_id"].unique())
+        ):
 
             logger.info(f"START machine learning task for {store_id}")
 
-            train_store_mask = preprocessed_dataset.training_data.keys["store_id"] == store_id
-            valid_store_mask = preprocessed_dataset.validation_data.keys["store_id"] == store_id
-            preds_store_mask = preprocessed_dataset.prediction_data.keys["store_id"] == store_id
+            train_store_mask = (
+                preprocessed_dataset.training_data.keys["store_id"] == store_id
+            )
+            valid_store_mask = (
+                preprocessed_dataset.validation_data.keys["store_id"] == store_id
+            )
+            preds_store_mask = (
+                preprocessed_dataset.prediction_data.keys["store_id"] == store_id
+            )
 
             training_dataset = TrainingDataset(
                 training_data=preprocessed_dataset.training_data,
@@ -175,26 +196,34 @@ prediction data: {prediction_data_paths}
                 training_data=training_dataset,
                 train_mask=train_store_mask,
                 valid_mask=valid_store_mask,
-            )    
+            )
 
-            validation_prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.validation_data)
+            validation_prediction_dataset = PredictionDataset(
+                prediction_data=preprocessed_dataset.validation_data
+            )
             validation_prediction = prediction_usecase.predict(
                 model=model,
                 data=validation_prediction_dataset,
-                mask=valid_store_mask,                    
+                mask=valid_store_mask,
             )
 
             evaluation = evaluation_usecase.evaluate(
                 date_id=validation_prediction.prediction.date_id.tolist(),
                 store_id=validation_prediction.prediction.store_id.tolist(),
                 item_id=validation_prediction.prediction.item_id.tolist(),
-                y_true=preprocessed_dataset.validation_data.y[valid_store_mask].sales.tolist(),
+                y_true=preprocessed_dataset.validation_data.y[
+                    valid_store_mask
+                ].sales.tolist(),
                 y_pred=validation_prediction.prediction.prediction.tolist(),
             )
 
-            feature_importance = evaluation_usecase.export_feature_importance(model=model)
+            feature_importance = evaluation_usecase.export_feature_importance(
+                model=model
+            )
 
-            prediction_dataset = PredictionDataset(prediction_data=preprocessed_dataset.prediction_data)
+            prediction_dataset = PredictionDataset(
+                prediction_data=preprocessed_dataset.prediction_data
+            )
             prediction_output = prediction_usecase.predict(
                 model=model,
                 data=prediction_dataset,
@@ -208,27 +237,45 @@ prediction data: {prediction_data_paths}
             )
 
             base_file_name = f"{run_name}"
-            model_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_model.txt")
+            model_file_path = os.path.join(
+                cwd, f"{base_file_name}_{store_id}_model.txt"
+            )
             model_file_path = model.save(file_path=model_file_path)
-            evaluation_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_evaluation.csv")
+            evaluation_file_path = os.path.join(
+                cwd, f"{base_file_name}_{store_id}_evaluation.csv"
+            )
             evaluation_file_path = evaluation.save_data(file_path=evaluation_file_path)
-            feature_importance_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_feature_importance.csv")
-            feature_importance_file_path = feature_importance.save(file_path=feature_importance_file_path)
-            prediction_file_path = os.path.join(cwd, f"{base_file_name}_{store_id}_prediction.csv")
-            prediction_file_path = prediction_output.save(file_path=prediction_file_path)
+            feature_importance_file_path = os.path.join(
+                cwd, f"{base_file_name}_{store_id}_feature_importance.csv"
+            )
+            feature_importance_file_path = feature_importance.save(
+                file_path=feature_importance_file_path
+            )
+            prediction_file_path = os.path.join(
+                cwd, f"{base_file_name}_{store_id}_prediction.csv"
+            )
+            prediction_file_path = prediction_output.save(
+                file_path=prediction_file_path
+            )
 
             mlflow.log_artifact(model_file_path, "model")
             mlflow.log_artifact(evaluation_file_path, "evaluation")
             mlflow.log_artifact(feature_importance_file_path, "feature_importance")
             mlflow.log_artifact(prediction_file_path, "prediction")
-            mlflow.log_metric(f"{store_id}_mean_absolute_error", evaluation.mean_absolute_error)
-            mlflow.log_metric(f"{store_id}_root_mean_squared_error", evaluation.root_mean_squared_error)
+            mlflow.log_metric(
+                f"{store_id}_mean_absolute_error", evaluation.mean_absolute_error
+            )
+            mlflow.log_metric(
+                f"{store_id}_root_mean_squared_error",
+                evaluation.root_mean_squared_error,
+            )
 
             logger.info(f"DONE machine learning task for {store_id}")
 
         logger.info(f"DONE machine learning task for {cfg.model.name}: {run_name}")
 
     logger.info("DONE machine_learning")
+
 
 if __name__ == "__main__":
     main()

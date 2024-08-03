@@ -62,4 +62,3 @@ class SalesRepository(AbstractSalesRepository):
         )
         data = [Sales(**r) for r in records]
         return data
-    

@@ -5,6 +5,7 @@ from schema import Prediction
 from schema import Sales
 from table import TABLES
 
+
 class BaseRepository(object):
     def __init__(
         self,

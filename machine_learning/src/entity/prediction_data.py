@@ -43,10 +43,10 @@ class PredictionDataSchema(SchemaModel):
         ge=1,
         nullable=False,
         coerce=True,
-    )    
+    )
     prediction: Series[float] = Field(
         ge=0.0,
-        le=1000.0,        
+        le=1000.0,
         nullable=False,
         coerce=True,
     )

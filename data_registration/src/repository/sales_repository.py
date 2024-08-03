@@ -5,6 +5,7 @@ from src.infrastructure.database import AbstractDBClient
 from src.schema.sales_schema import Sales
 from src.schema.table_schema import TABLES
 
+
 class AbstractSalesRepository(ABC):
     def __init__(
         self,
