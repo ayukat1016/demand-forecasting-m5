@@ -21,8 +21,12 @@ class TrainingUsecase(object):
 
         model.train(
             x_train=training_data.training_data.x[train_mask].reset_index(drop=True),
-            y_train=training_data.training_data.y[train_mask].reset_index(drop=True),
+            y_train=training_data.training_data.y[train_mask]
+            .squeeze()
+            .reset_index(drop=True),
             x_test=training_data.validation_data.x[valid_mask].reset_index(drop=True),
-            y_test=training_data.validation_data.y[valid_mask].reset_index(drop=True),
+            y_test=training_data.validation_data.y[valid_mask]
+            .squeeze()
+            .reset_index(drop=True),
         )
         logger.info(f"done training: {model.name}")
