@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from src.entity.common_data import XY
+from src.domain.common_data import XY
 
 
 @dataclass(frozen=True)

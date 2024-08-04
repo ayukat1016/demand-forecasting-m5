@@ -1,8 +1,8 @@
 import pandas as pd
 from src.algorithm.preprocess import AbstractExtractor
-from src.entity.common_data import XY
-from src.entity.preprocessed_data import PreprocessedDataset
-from src.entity.raw_data import RawDataset
+from src.domain.common_data import XY
+from src.domain.preprocessed_data import PreprocessedDataset
+from src.domain.raw_data import RawDataset
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)

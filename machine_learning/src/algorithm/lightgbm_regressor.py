@@ -8,7 +8,7 @@ import yaml
 from lightgbm import Booster, LGBMRegressor
 import lightgbm as lgb
 
-from src.entity.evaluation_data import FeatureImportance
+from src.domain.evaluation_data import FeatureImportance
 
 LGB_REGRESSION_DEFAULT_PARAMS = {
     "boosting_type": "gbdt",

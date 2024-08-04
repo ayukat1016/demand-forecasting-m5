@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 import pandas as pd
-from src.entity.raw_data import RawDataset, RawDataWithTargetDates
+from src.domain.raw_data import RawDataset, RawDataWithTargetDates
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import AbstractCalendarRepository
 from src.repository.prices_repository import AbstractPricesRepository

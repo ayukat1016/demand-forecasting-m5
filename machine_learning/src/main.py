@@ -7,8 +7,8 @@ from src.algorithm.lightgbm_regressor import LightGBMRegression
 from src.algorithm.models import get_model
 from src.algorithm.preprocess import LagSalesExtractor
 from src.algorithm.preprocess import PricesExtractor
-from src.entity.prediction_data import PredictionDataset
-from src.entity.training_data import TrainingDataset
+from src.domain.prediction_data import PredictionDataset
+from src.domain.training_data import TrainingDataset
 from src.infrastructure.database import PostgreSQLClient
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import CalendarRepository

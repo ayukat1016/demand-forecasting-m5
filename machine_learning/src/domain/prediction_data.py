@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import pandas as pd
 from pandera import Field, SchemaModel
 from pandera.typing import Series
-from src.entity.common_data import XY
+from src.domain.common_data import XY
 
 
 @dataclass(frozen=True)
