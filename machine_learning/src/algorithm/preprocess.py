@@ -99,9 +99,9 @@ class LagSalesExtractor(AbstractExtractor):
 
         num_rolling_day_list = [7, 14, 30, 60]
         num_shift_rolling_day_list = []
-        for num_shift_day in [1, 7, 14]:
+        for shift_day in [1, 7, 14]:
             for num_rolling_day in [7, 14, 30]:
-                num_shift_rolling_day_list.append([num_shift_day, num_rolling_day])
+                num_shift_rolling_day_list.append([shift_day, num_rolling_day])
 
         df_lag = df_lag.assign(
             **{
@@ -112,8 +112,8 @@ class LagSalesExtractor(AbstractExtractor):
             }
         )
 
-        for col in list(df_lag):
-            if "lag" in col:
+        for col in range(len(df_lag.columns)):
+            if "lag" in str(col):
                 df_lag[col] = df_lag[col]
 
         for num_rolling_day in num_rolling_day_list:

@@ -54,7 +54,7 @@
 
 ## machine_learningの構成
 
-[machine_learning](./machine_learning/)は主に以下のツールを使用しています。他にも補助的なライブラリは使用していますが、件数が増えるため省略しています。機械学習で用いる各種パラメータは[hydra](machine_learning/hydra/)で管理します。
+[machine_learning](./machine_learning/)は主に以下のツールを使用しています。他にも補助的なライブラリは使用していますが、煩雑になるため省略しています。機械学習で用いる各種パラメータは[hydra](machine_learning/hydra/)で管理します。
 
 
 - 機械学習
@@ -68,19 +68,19 @@
 - リポジトリのライブラリ管理
   - [poetry](https://python-poetry.org/): Pythonのライブラリを管理する。
 
-[machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用。抽象クラスを実装し、コンポーネントの依存が下位→上位になるように整理しています。
+[machine_learning](./machine_learning/)のプログラムはレイヤードアーキテクチャを採用。クラスを抽象クラスと具象クラスに分けて、コンポーネントの依存が一方向になるように整理しています。
 プログラムは以下のコンポーネントで構成されています。
 
 - [main.py](machine_learning/src/main.py): クラスを初期化し、usecaseのメソッドを実行
 - [usecase](machine_learning/src/usecase/): 機械学習パイプラインの各処理（データ取得、前処理、学習、評価、予測）
-- [algorithm](machine_learning/src/algorithm/): 機械学習の各種アルゴリズム
 - [domain](machine_learning/src/domain/): usecase間で受け渡すドメインオブジェクトのデータ型
+- [algorithm](machine_learning/src/algorithm/): 機械学習の各種アルゴリズム
 - [repository](machine_learning/src/repository/): データベースへのリクエスト
 - [schema](machine_learning/src/schema/): データベースから取得するデータ型
 - [infrastructure](machine_learning/src/infrastructure/): 外部データベースへのアクセス
 
 ![img](images/architecture.png)
-
+（注）図はrepositoryだけ具象と抽象を分けて記載してますが、infrastructureとalgorithmも具象クラスと抽象クラスに分けています。
 
 ## Requirements
 

@@ -10,7 +10,7 @@ import lightgbm as lgb
 
 from src.domain.evaluation_data import FeatureImportance
 
-LGB_REGRESSION_DEFAULT_PARAMS = {
+LGB_REGRESSION_DEFAULT_PARAMS: Dict[str, Any] = {
     "boosting_type": "gbdt",
     "n_estimators": 1000,
     "objective": "rmse",
@@ -25,18 +25,18 @@ LGB_REGRESSION_DEFAULT_PARAMS = {
     "importance_type": "gain",
 }
 
-LGB_REGRESSION_TRAIN_PARAMS = {
+LGB_REGRESSION_TRAIN_PARAMS: Dict[str, Any] = {
     "early_stopping_rounds": 10,
     "log_evaluation": 10,
 }
 
 
 class AbstractModel(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.name: str = "base_model"
-        self.params: Dict = {}
-        self.train_params: Dict = {}
-        self.model = None
+        self.params: Dict[str, Any] = {}
+        self.train_params: Dict[str, Any] = {}
+        self.model: Optional[Any] = None
         self.logger = getLogger(__name__)
 
     @abstractmethod
@@ -50,9 +50,9 @@ class AbstractModel(ABC):
     def train(
         self,
         x_train: pd.DataFrame,
-        y_train: pd.DataFrame,
+        y_train: pd.Series,
         x_test: Optional[pd.DataFrame] = None,
-        y_test: Optional[pd.DataFrame] = None,
+        y_test: Optional[pd.Series] = None,
     ):
         raise NotImplementedError
 
@@ -87,20 +87,20 @@ class LightGBMRegression(AbstractModel):
         self,
         params: Dict[str, Any] = LGB_REGRESSION_DEFAULT_PARAMS,
         train_params: Dict[str, Any] = LGB_REGRESSION_TRAIN_PARAMS,
-    ):
+    ) -> None:
         super().__init__()
         self.name = "lightgbm_regression"
         self.params = params
         self.train_params = train_params
 
-        self.model: LGBMRegressor = None
+        self.model: LGBMRegressor
         self.reset_model(params=self.params)
 
     def reset_model(
         self,
-        params: Optional[Dict] = None,
-        train_params: Optional[Dict] = None,
-    ):
+        params: Optional[Dict[str, Any]] = None,
+        train_params: Optional[Dict[str, Any]] = None,
+    ) -> None:
         if params is not None:
             self.params = params
         if train_params is not None:
@@ -112,12 +112,12 @@ class LightGBMRegression(AbstractModel):
     def train(
         self,
         x_train: pd.DataFrame,
-        y_train: pd.DataFrame,
+        y_train: pd.Series,
         x_test: Optional[pd.DataFrame] = None,
-        y_test: Optional[pd.DataFrame] = None,
-    ):
+        y_test: Optional[pd.Series] = None,
+    ) -> None:
         self.logger.info(f"start train for model: {self.model}")
-        eval_set = [(x_train, y_train)]
+        eval_set: List[tuple] = [(x_train, y_train)]
         eval_names = ["train"]
         if x_test is not None and y_test is not None:
             eval_set.append((x_test, y_test))
@@ -168,9 +168,10 @@ class LightGBMRegression(AbstractModel):
     def load(
         self,
         file_path: str,
-    ):
+    ) -> None:
         self.logger.info(f"load model: {file_path}")
-        self.model = Booster(model_file=file_path)
+        booster = Booster(model_file=file_path)
+        self.model = LGBMRegressor(model=booster)
 
     def get_feature_importance(self) -> List[FeatureImportance]:
         feature_importances = [
