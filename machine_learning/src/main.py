@@ -3,7 +3,6 @@ import os
 import hydra
 import mlflow  # type: ignore
 from omegaconf import DictConfig
-from src.algorithm.abstract_algorithm import AbstractModel
 from src.algorithm.lightgbm_regressor import LightGBMRegression
 from src.algorithm.models import get_model
 from src.algorithm.preprocess import LagSalesExtractor
@@ -152,7 +151,7 @@ prediction data: {prediction_data_paths}
         )
 
         model_class = get_model(model=cfg.model.name)
-        model: AbstractModel = model_class()
+        model = model_class()
         if isinstance(model, LightGBMRegression):
             model.reset_model(
                 params=cfg.model.params,

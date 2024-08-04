@@ -1,5 +1,5 @@
 import pandas as pd
-from src.algorithm.abstract_algorithm import AbstractModel
+from src.algorithm.lightgbm_regressor import AbstractModel
 from src.entity.prediction_data import Prediction, PredictionDataset
 from src.middleware.logger import configure_logger
 
