@@ -3,8 +3,8 @@ from typing import List, Optional
 import pandas as pd
 from sklearn.metrics import mean_squared_error  # type: ignore
 from sklearn.metrics import mean_absolute_error  # type: ignore
-from src.algorithm.abstract_algorithm import AbstractModel
-from src.entity.evaluation_data import Evaluation, FeatureImportances
+from src.algorithm.lightgbm_regressor import AbstractModel
+from src.domain.evaluation_data import Evaluation, FeatureImportances
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)

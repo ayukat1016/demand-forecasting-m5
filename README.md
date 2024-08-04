@@ -59,7 +59,7 @@
 
 - 機械学習
   - [pandas](https://pandas.pydata.org/): データフレームのライブラリ。本テンプレートで使用するデータは基本的にPandas DataFrame形式で管理される。
-  - [pandera](https://pandera.readthedocs.io/en/stable/): Pandas DataFrameのデータを検査するライブラリ
+  - [pandera](https://pandera.readthedocs.io/en/stable/): pandas DataFrameのデータを検査するライブラリ
   - [scikit-learn](https://scikit-learn.org/stable/): テーブルデータの機械学習の前処理及びアルゴリズムを提供するライブラリ
   - [LightGBM](https://lightgbm.readthedocs.io/en/latest/index.html): 勾配ブースティングのアルゴリズムを提供するライブラリ、実装はscikit-learn APIを使用する。
 - 機械学習の管理
@@ -74,7 +74,7 @@
 - [main.py](machine_learning/src/main.py): クラスを初期化し、usecaseのメソッドを実行
 - [usecase](machine_learning/src/usecase/): 機械学習パイプラインの各処理（データ取得、前処理、学習、評価、予測）
 - [algorithm](machine_learning/src/algorithm/): 機械学習の各種アルゴリズム
-- [entity](machine_learning/src/entity/): usecase間で受け渡すドメインデータ型（エンティティや値オブジェクト）
+- [domain](machine_learning/src/domain/): usecase間で受け渡すドメインオブジェクトのデータ型
 - [repository](machine_learning/src/repository/): データベースへのリクエスト
 - [schema](machine_learning/src/schema/): データベースから取得するデータ型
 - [infrastructure](machine_learning/src/infrastructure/): 外部データベースへのアクセス

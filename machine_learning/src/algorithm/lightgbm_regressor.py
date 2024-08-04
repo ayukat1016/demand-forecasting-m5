@@ -1,12 +1,14 @@
 import os
 from typing import Any, Dict, List, Optional
 
+from abc import ABC, abstractmethod
+from logging import getLogger
 import pandas as pd
 import yaml
 from lightgbm import Booster, LGBMRegressor
 import lightgbm as lgb
-from src.algorithm.abstract_algorithm import AbstractModel
-from src.entity.evaluation_data import FeatureImportance
+
+from src.domain.evaluation_data import FeatureImportance
 
 LGB_REGRESSION_DEFAULT_PARAMS = {
     "boosting_type": "gbdt",
@@ -27,6 +29,57 @@ LGB_REGRESSION_TRAIN_PARAMS = {
     "early_stopping_rounds": 10,
     "log_evaluation": 10,
 }
+
+
+class AbstractModel(ABC):
+    def __init__(self):
+        self.name: str = "base_model"
+        self.params: Dict = {}
+        self.train_params: Dict = {}
+        self.model = None
+        self.logger = getLogger(__name__)
+
+    @abstractmethod
+    def reset_model(
+        self,
+        params: Optional[Dict] = None,
+    ):
+        raise NotImplementedError
+
+    @abstractmethod
+    def train(
+        self,
+        x_train: pd.DataFrame,
+        y_train: pd.DataFrame,
+        x_test: Optional[pd.DataFrame] = None,
+        y_test: Optional[pd.DataFrame] = None,
+    ):
+        raise NotImplementedError
+
+    @abstractmethod
+    def predict(
+        self,
+        x: pd.DataFrame,
+    ) -> List[float]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def save(
+        self,
+        file_path: str,
+    ) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def load(
+        self,
+        file_path: str,
+    ):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_feature_importance(self) -> List[FeatureImportance]:
+        raise NotImplementedError
 
 
 class LightGBMRegression(AbstractModel):
