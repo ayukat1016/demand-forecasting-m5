@@ -1,4 +1,5 @@
 import pandas as pd
+
 from src.algorithm.preprocess import AbstractExtractor
 from src.domain.common_data import XY
 from src.domain.preprocessed_data import PreprocessedDataset

@@ -1,6 +1,5 @@
-from src.middleware.file_reader import read_csv_to_list
+from src.middleware.file_reader import read_csv_to_list, read_text_file
 from src.middleware.logger import configure_logger
-from src.middleware.file_reader import read_text_file
 from src.middleware.strings import get_uuid
 from src.repository.calendar_repository import AbstractCalendarRepository
 from src.repository.prices_repository import AbstractPricesRepository
