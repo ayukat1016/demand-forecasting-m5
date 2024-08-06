@@ -80,7 +80,7 @@
 - [infrastructure](machine_learning/src/infrastructure/): 外部データベースへのアクセス
 
 ![img](images/architecture.png)
-（注）図はrepositoryだけ具象と抽象を分けて記載してますが、infrastructureとalgorithmも具象クラスと抽象クラスに分けて実装しています。
+（注）図はrepositoryだけ具象と抽象を分けて記載してますが、infrastructureとml_algosも具象クラスと抽象クラスに分けて実装しています。
 
 ## Requirements
 
