@@ -106,9 +106,9 @@ class LagSalesExtractor(AbstractExtractor):
 
         df_lag = df_lag.assign(
             **{
-                "lag_{}_{}".format(col, lag_day): df_lag.groupby(["id"])["sales"].transform(
-                    lambda x: x.shift(lag_day)
-                )
+                "lag_{}_{}".format(col, lag_day): df_lag.groupby(["id"])[
+                    "sales"
+                ].transform(lambda x: x.shift(lag_day))
                 for lag_day in num_lag_day_list
             }
         )
