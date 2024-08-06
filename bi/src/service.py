@@ -1,12 +1,11 @@
 from typing import List, Optional
 
 import pandas as pd
+
 from database import AbstractDBClient
 from logger import configure_logger
-from repository import PredictionRepository
-from repository import SalesRepository
-from schema import Prediction
-from schema import Sales
+from repository import PredictionRepository, SalesRepository
+from schema import Prediction, Sales
 
 logger = configure_logger(__name__)
 

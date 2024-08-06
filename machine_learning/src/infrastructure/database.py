@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import psycopg2
 from psycopg2 import extras
 from psycopg2.extras import DictCursor
+
 from src.exceptions.exceptions import DatabaseException
 from src.middleware.logger import configure_logger
 

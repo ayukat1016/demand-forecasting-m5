@@ -1,6 +1,7 @@
 from typing import Optional
 
 import click
+
 from src.infrastructure.database import PostgreSQLClient
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import CalendarRepository

@@ -1,12 +1,12 @@
 import os
 
-import hydra
 import mlflow  # type: ignore
 from omegaconf import DictConfig
+
+import hydra
 from src.algorithm.lightgbm_regressor import LightGBMRegression
 from src.algorithm.models import get_model
-from src.algorithm.preprocess import LagSalesExtractor
-from src.algorithm.preprocess import PricesExtractor
+from src.algorithm.preprocess import LagSalesExtractor, PricesExtractor
 from src.domain.prediction_data import PredictionDataset
 from src.domain.training_data import TrainingDataset
 from src.infrastructure.database import PostgreSQLClient
@@ -50,7 +50,7 @@ prediction_date_to: {cfg.period.prediction_date_to}
 
     mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000"))
     mlflow.set_experiment(cfg.name)
-    with mlflow.start_run(run_name=run_name) as run:
+    with mlflow.start_run(run_name=run_name):
 
         mlflow.log_artifact(os.path.join(cwd, ".hydra/config.yaml"))
         mlflow.log_artifact(os.path.join(cwd, ".hydra/hydra.yaml"))

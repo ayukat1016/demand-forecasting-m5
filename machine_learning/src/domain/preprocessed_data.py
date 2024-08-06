@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from pandera import Field, SchemaModel
 from pandera.typing import Series
+
 from src.domain.common_data import XY
 
 

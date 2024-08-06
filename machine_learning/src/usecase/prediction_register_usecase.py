@@ -1,6 +1,7 @@
 from typing import List
 
 import pandas as pd
+
 from src.middleware.logger import configure_logger
 from src.repository.prediction_repository import AbstractPredictionRepository
 from src.schema.prediction_schema import Prediction

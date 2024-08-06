@@ -86,7 +86,7 @@ class SalesCalendarRepository(AbstractSalesCalendarRepository):
             parameters.append(date_to)
             where = "AND"
 
-        query += f"""        
+        query += f"""
         LIMIT
             {limit}
         OFFSET

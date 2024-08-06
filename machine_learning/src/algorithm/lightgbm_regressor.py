@@ -1,12 +1,12 @@
 import os
-from typing import Any, Dict, List, Optional
-
 from abc import ABC, abstractmethod
 from logging import getLogger
+from typing import Any, Dict, List, Optional
+
+import lightgbm as lgb
 import pandas as pd
 import yaml
 from lightgbm import Booster, LGBMRegressor
-import lightgbm as lgb
 
 from src.domain.evaluation_data import FeatureImportance
 

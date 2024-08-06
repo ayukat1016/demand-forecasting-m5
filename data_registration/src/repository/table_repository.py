@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from src.infrastructure.database import AbstractDBClient
 
 

@@ -4,9 +4,9 @@ from typing import List, Optional, Tuple
 import pandas as pd
 import plotly.graph_objects as go  # type: ignore
 import streamlit as st
+
 from logger import configure_logger
-from service import PredictionService
-from service import SalesService
+from service import PredictionService, SalesService
 
 logger = configure_logger(__name__)
 

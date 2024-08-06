@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
+
 import pandas as pd
 
-from src.domain.preprocessed_data import ExtractedLagSalesSchema
-from src.domain.preprocessed_data import ExtractedPriceSchema
+from src.domain.preprocessed_data import (ExtractedLagSalesSchema,
+                                          ExtractedPriceSchema)
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)
@@ -105,10 +106,10 @@ class LagSalesExtractor(AbstractExtractor):
 
         df_lag = df_lag.assign(
             **{
-                "lag_{}_{}".format(col, l): df_lag.groupby(["id"])["sales"].transform(
-                    lambda x: x.shift(l)
+                "lag_{}_{}".format(col, lag_day): df_lag.groupby(["id"])["sales"].transform(
+                    lambda x: x.shift(lag_day)
                 )
-                for l in num_lag_day_list
+                for lag_day in num_lag_day_list
             }
         )
 

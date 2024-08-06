@@ -1,8 +1,7 @@
 from typing import List, Optional, Union
 
 from database import AbstractDBClient
-from schema import Prediction
-from schema import Sales
+from schema import Prediction, Sales
 from table import TABLES
 
 
