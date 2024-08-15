@@ -2,7 +2,7 @@ from typing import List, Optional, Union
 
 from database import AbstractDBClient
 from schema import Prediction, Sales
-from table import TABLES
+from tables import TABLES
 
 
 class BaseRepository(object):

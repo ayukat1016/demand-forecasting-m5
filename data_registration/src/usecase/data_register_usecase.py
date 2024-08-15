@@ -15,14 +15,14 @@ logger = configure_logger(__name__)
 class DataRegisterUsecase(object):
     def __init__(
         self,
+        tables_filepath: str,
         calendar_filepath: str,
         prices_filepath: str,
         sales_filepath: str,
-        tables_filepath: str,
+        tables_repository: AbstractTablesRepository,
         calendar_repository: AbstractCalendarRepository,
         prices_repository: AbstractPricesRepository,
         sales_repository: AbstractSalesRepository,
-        tables_repository: AbstractTablesRepository,
     ):
         self.tables_filepath = tables_filepath
         self.calendar_filepath = calendar_filepath

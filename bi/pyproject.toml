@@ -8,13 +8,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "3.10.6"
-pandas = "^2.2.0"
-plotly = "^5.18.0"
-psycopg2-binary = "^2.9.9"
-pydantic = "^2.6.1"
-streamlit = "^1.31.0"
-types-psycopg2 = "^2.9.21.20240417"
-pandas-stubs = "^2.2.2.240603"
+pandas = "2.2.0"
+plotly = "5.23.0"
+psycopg2-binary = "2.9.9"
+pydantic = "2.8.2"
+streamlit = "1.37.1"
+types-psycopg2 = "2.9.21.20240417"
+pandas-stubs = "2.2.2.240603"
 
 
 [tool.poetry.group.dev.dependencies]

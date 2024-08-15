@@ -73,7 +73,7 @@ def build(
     sales_service: SalesService,
     prediction_service: PredictionService,
 ):
-    st.markdown("# demanf-forecasting-m5")
+    st.markdown("# demand-forecasting-m5")
 
     bi = build_bi_selectbox()
 
