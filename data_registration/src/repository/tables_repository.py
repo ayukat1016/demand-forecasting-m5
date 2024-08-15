@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from src.infrastructure.database import AbstractDBClient
 
 
-class AbstractCreateTablesRepository(ABC):
+class AbstractTablesRepository(ABC):
     def __init__(
         self,
         db_client: AbstractDBClient,
@@ -18,7 +18,7 @@ class AbstractCreateTablesRepository(ABC):
         raise NotImplementedError
 
 
-class TableRepository(AbstractCreateTablesRepository):
+class TablesRepository(AbstractTablesRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,

@@ -3,7 +3,7 @@ from typing import List, Optional, Union
 
 from src.infrastructure.database import AbstractDBClient
 from src.schema.sales_calendar_schema import SalesCalendar
-from src.schema.table_schema import TABLES
+from src.schema.tables_schema import TABLES
 
 
 class AbstractSalesCalendarRepository(ABC):

@@ -4,7 +4,7 @@ from src.middleware.strings import get_uuid
 from src.repository.calendar_repository import AbstractCalendarRepository
 from src.repository.prices_repository import AbstractPricesRepository
 from src.repository.sales_repository import AbstractSalesRepository
-from src.repository.table_repository import AbstractCreateTablesRepository
+from src.repository.tables_repository import AbstractTablesRepository
 from src.schema.calendar_schema import Calendar
 from src.schema.prices_schema import Prices
 from src.schema.sales_schema import Sales
@@ -15,27 +15,27 @@ logger = configure_logger(__name__)
 class DataRegisterUsecase(object):
     def __init__(
         self,
-        create_sql_filepath: str,
         calendar_filepath: str,
         prices_filepath: str,
         sales_filepath: str,
-        table_repository: AbstractCreateTablesRepository,
+        tables_filepath: str,
         calendar_repository: AbstractCalendarRepository,
         prices_repository: AbstractPricesRepository,
         sales_repository: AbstractSalesRepository,
+        tables_repository: AbstractTablesRepository,
     ):
-        self.create_sql_filepath = create_sql_filepath
+        self.tables_filepath = tables_filepath
         self.calendar_filepath = calendar_filepath
         self.prices_filepath = prices_filepath
         self.sales_filepath = sales_filepath
-        self.table_repository = table_repository
+        self.tables_repository = tables_repository
         self.calendar_repository = calendar_repository
         self.prices_repository = prices_repository
         self.sales_repository = sales_repository
 
     def create_table(self):
-        query = read_text_file(file_path=self.create_sql_filepath)
-        self.table_repository.create_tables(query=query)
+        query = read_text_file(file_path=self.tables_filepath)
+        self.tables_repository.create_tables(query=query)
 
     def register_calendar(self):
         data = read_csv_to_list(

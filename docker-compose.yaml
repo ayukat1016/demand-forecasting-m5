@@ -33,7 +33,7 @@ services:
       - POSTGRES_DBNAME=demand_forecasting_m5
       - LOG_LEVEL=DEBUG
     command: >
-      /bin/sh -c "sleep 10s && python -m src.main --create_sql_filepath "/opt/data/create.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv""
+      /bin/sh -c "sleep 10s && python -m src.main --tables_filepath "/opt/data/tables.sql" --calendar_filepath "/opt/data/calendar_demo.csv" --prices_filepath "/opt/data/prices_demo.csv" --sales_filepath "/opt/data/sales_demo.csv""
     volumes:
       - ./data:/opt/data
       - ./data_registration/src:/opt/src

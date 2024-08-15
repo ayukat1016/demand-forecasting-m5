@@ -3,7 +3,7 @@ from typing import List
 
 from src.infrastructure.database import AbstractDBClient
 from src.schema.prediction_schema import Prediction
-from src.schema.table_schema import TABLES
+from src.schema.tables_schema import TABLES
 
 
 class AbstractPredictionRepository(ABC):
