@@ -3,7 +3,7 @@ from typing import List
 
 from src.infrastructure.database import AbstractDBClient
 from src.schema.sales_schema import Sales
-from src.schema.table_schema import TABLES
+from src.schema.tables_schema import TABLES
 
 
 class AbstractSalesRepository(ABC):

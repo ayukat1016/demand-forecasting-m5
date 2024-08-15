@@ -7,8 +7,7 @@ from src.domain.raw_data import RawDataset, RawDataWithTargetDates
 from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import AbstractCalendarRepository
 from src.repository.prices_repository import AbstractPricesRepository
-from src.repository.sales_calendar_repository import \
-    AbstractSalesCalendarRepository
+from src.repository.sales_calendar_repository import AbstractSalesCalendarRepository
 from src.schema.calendar_schema import Calendar
 from src.schema.prices_schema import Prices
 from src.schema.sales_calendar_schema import SalesCalendar

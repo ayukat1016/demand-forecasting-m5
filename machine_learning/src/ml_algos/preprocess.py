@@ -2,8 +2,7 @@ from abc import ABC, abstractmethod
 
 import pandas as pd
 
-from src.domain.preprocessed_data import (ExtractedLagSalesSchema,
-                                          ExtractedPriceSchema)
+from src.domain.preprocessed_data import ExtractedLagSalesSchema, ExtractedPriceSchema
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)

@@ -7,7 +7,7 @@ from src.middleware.logger import configure_logger
 from src.repository.calendar_repository import CalendarRepository
 from src.repository.prices_repository import PricesRepository
 from src.repository.sales_repository import SalesRepository
-from src.repository.table_repository import TableRepository
+from src.repository.tables_repository import TablesRepository
 from src.usecase.data_register_usecase import DataRegisterUsecase
 
 logger = configure_logger(__name__)
@@ -15,7 +15,7 @@ logger = configure_logger(__name__)
 
 @click.command()
 @click.option(
-    "--create_sql_filepath",
+    "--tables_filepath",
     type=str,
     required=False,
 )
@@ -35,14 +35,14 @@ logger = configure_logger(__name__)
     required=False,
 )
 def main(
-    create_sql_filepath: Optional[str] = None,
+    tables_filepath: Optional[str] = None,
     calendar_filepath: Optional[str] = None,
     prices_filepath: Optional[str] = None,
     sales_filepath: Optional[str] = None,
 ):
 
-    if create_sql_filepath is None:
-        raise ValueError("create_sql_filepath cannot be None")
+    if tables_filepath is None:
+        raise ValueError("tables_filepath cannot be None")
 
     if calendar_filepath is None:
         raise ValueError("calendar_filepath cannot be None")
@@ -57,27 +57,27 @@ def main(
     logger.info(
         f"""
 options:
-create_sql_filepath: {create_sql_filepath}
+tables_filepath: {tables_filepath}
 calendar_filepath: {calendar_filepath}
 prices_filepath: {prices_filepath}
 sales_filepath: {sales_filepath}
     """
     )
     db_client = PostgreSQLClient()
-    table_repository = TableRepository(db_client=db_client)
+    tables_repository = TablesRepository(db_client=db_client)
     calendar_repository = CalendarRepository(db_client=db_client)
     prices_repository = PricesRepository(db_client=db_client)
     sales_repository = SalesRepository(db_client=db_client)
 
     data_register_usecase = DataRegisterUsecase(
-        create_sql_filepath=create_sql_filepath,
         calendar_filepath=calendar_filepath,
         prices_filepath=prices_filepath,
         sales_filepath=sales_filepath,
-        table_repository=table_repository,
+        tables_filepath=tables_filepath,
         calendar_repository=calendar_repository,
         prices_repository=prices_repository,
         sales_repository=sales_repository,
+        tables_repository=tables_repository,
     )
 
     logger.info("create table")
