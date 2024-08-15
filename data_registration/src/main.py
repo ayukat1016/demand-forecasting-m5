@@ -70,14 +70,14 @@ sales_filepath: {sales_filepath}
     sales_repository = SalesRepository(db_client=db_client)
 
     data_register_usecase = DataRegisterUsecase(
+        tables_filepath=tables_filepath,
         calendar_filepath=calendar_filepath,
         prices_filepath=prices_filepath,
         sales_filepath=sales_filepath,
-        tables_filepath=tables_filepath,
+        tables_repository=tables_repository,
         calendar_repository=calendar_repository,
         prices_repository=prices_repository,
         sales_repository=sales_repository,
-        tables_repository=tables_repository,
     )
 
     logger.info("create table")
