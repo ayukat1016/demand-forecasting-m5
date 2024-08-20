@@ -20,5 +20,5 @@ class SalesCalendar(AbstractSchema):
     snap_wi: int
 
     class Config:
-        allow_mutation = False
+        frozen = True
         extra = "forbid"

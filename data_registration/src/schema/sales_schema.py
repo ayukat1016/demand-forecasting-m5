@@ -13,5 +13,5 @@ class Sales(AbstractSchema):
     sales: float
 
     class Config:
-        allow_mutation = False
+        frozen = True
         extra = "forbid"

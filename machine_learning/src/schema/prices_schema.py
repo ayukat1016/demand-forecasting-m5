@@ -9,5 +9,5 @@ class Prices(AbstractSchema):
     sell_price: float
 
     class Config:
-        allow_mutation = False
+        frozen = True
         extra = "forbid"
