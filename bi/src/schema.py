@@ -17,7 +17,7 @@ class Sales(BaseModel):
     sales: float
 
     class Config:
-        allow_mutation = False
+        frozen = True
         extra = "forbid"
 
 
@@ -29,5 +29,5 @@ class Prediction(BaseModel):
     prediction: float
 
     class Config:
-        allow_mutation = False
+        frozen = True
         extra = "forbid"

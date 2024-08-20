@@ -8,5 +8,5 @@ class Prediction(AbstractSchema):
     prediction: float
 
     class Config:
-        allow_mutation = False
+        frozen = True
         extra = "forbid"

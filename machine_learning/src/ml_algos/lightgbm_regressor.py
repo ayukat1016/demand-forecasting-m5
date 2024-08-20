@@ -125,7 +125,7 @@ class LightGBMRegression(AbstractModel):
         self.model.fit(
             X=x_train,
             y=y_train,
-            eval_set=eval_set,
+            eval_set=[(x, y) for x, y in eval_set],
             eval_names=eval_names,
             callbacks=[
                 lgb.early_stopping(
