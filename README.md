@@ -1,7 +1,22 @@
 # demand-forecasting-m5
 
-本リポジトリは機械学習パイプライン（データ取得、前処理、学習、評価、予測）を実行する機械学習システムの需要予測テンプレートです。テンプレートは時系列データを用いて、店舗ごとに予測モデルを作成、店舗/品目/日付の粒度で売上数量を需要予測します。
+本リポジトリは機械学習パイプライン（データ取得、前処理、学習、評価、予測）を実行する機械学習システムの需要予測テンプレートです。テンプレートは時系列データを用いて、店舗ごとに予測モデルを作成、店舗/品目/日付の粒度で7日間の売上数量を需要予測します。
 
+```sh
+# 店舗ID/品目ID/日付IDごとに売上数量を予測
+     store_id      item_id  date_id  prediction
+0        CA_1  FOODS_1_001      101    1.198667
+1        CA_1  FOODS_1_001      102    1.082044
+2        CA_1  FOODS_1_001      103    0.980577
+3        CA_1  FOODS_1_001      104    0.968390
+4        CA_1  FOODS_1_001      105    1.279285
+...       ...          ...      ...         ...
+4293     CA_1  FOODS_2_399      103    1.274207
+4294     CA_1  FOODS_2_399      104    1.106050
+4295     CA_1  FOODS_2_399      105    1.183366
+4296     CA_1  FOODS_2_399      106    1.061302
+4297     CA_1  FOODS_2_399      107    1.081436
+```
 
 ## データ
 
@@ -60,6 +75,7 @@
 - 機械学習
   - [pandas](https://pandas.pydata.org/): データフレームのライブラリ。本テンプレートで使用するデータは基本的にpandas DataFrame形式で管理される。
   - [pandera](https://pandera.readthedocs.io/en/stable/): pandas DataFrameのデータを検査するライブラリ
+  - [pydantic](https://docs.pydantic.dev/latest/): 外部データ（データベース）の読み込み時にデータ型チェックするライブラリ
   - [scikit-learn](https://scikit-learn.org/stable/): テーブルデータの機械学習の前処理及びアルゴリズムを提供するライブラリ
   - [LightGBM](https://lightgbm.readthedocs.io/en/latest/index.html): 勾配ブースティングのアルゴリズムを提供するライブラリ、実装はscikit-learn APIを使用する。
 - 機械学習の管理
@@ -509,9 +525,9 @@ docker run \
         -e POSTGRES_DBNAME=demand_forecasting_m5 \
         -e MLFLOW_TRACKING_URI=http://mlflow:5000 \
         -e TARGET_CONFIG=default \
-        -v /home/takuya/repository/demand-forecasting-m5/machine_learning/hydra:/opt/hydra \
-        -v /home/takuya/repository/demand-forecasting-m5/machine_learning/src:/opt/src \
-        -v /home/takuya/repository/demand-forecasting-m5/machine_learning/outputs:/opt/outputs \
+        -v /home/xxx/repository/demand-forecasting-m5/machine_learning/hydra:/opt/hydra \
+        -v /home/xxx/repository/demand-forecasting-m5/machine_learning/src:/opt/src \
+        -v /home/xxx/repository/demand-forecasting-m5/machine_learning/outputs:/opt/outputs \
         --net demand_forecasting_m5 \
         demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
         python -m src.main
