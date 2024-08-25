@@ -208,13 +208,13 @@ prediction data: {prediction_data_paths}
             )
 
             evaluation = evaluation_usecase.evaluate(
-                date_id=validation_prediction.prediction.date_id.tolist(),
-                store_id=validation_prediction.prediction.store_id.tolist(),
-                item_id=validation_prediction.prediction.item_id.tolist(),
+                date_id=validation_prediction.data.date_id.tolist(),
+                store_id=validation_prediction.data.store_id.tolist(),
+                item_id=validation_prediction.data.item_id.tolist(),
                 y_true=preprocessed_dataset.validation_data.y[
                     valid_store_mask
                 ].sales.tolist(),
-                y_pred=validation_prediction.prediction.prediction.tolist(),
+                y_pred=validation_prediction.data.prediction.tolist(),
             )
 
             feature_importance = evaluation_usecase.export_feature_importance(
@@ -230,7 +230,7 @@ prediction data: {prediction_data_paths}
                 mask=preds_store_mask,
             )
 
-            predictions = prediction_output.prediction
+            predictions = prediction_output.data
 
             prediction_register_usecase.register_prediction(
                 predictions=predictions,

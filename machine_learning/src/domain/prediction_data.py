@@ -15,10 +15,10 @@ class PredictionDataset:
 
 @dataclass(frozen=True)
 class Prediction:
-    prediction: pd.DataFrame
+    data: pd.DataFrame
 
     def __post_init__(self):
-        PredictionDataSchema.validate(self.prediction)
+        PredictionDataSchema.validate(self.data)
 
     def save(
         self,
@@ -27,7 +27,7 @@ class Prediction:
         _, ext = os.path.splitext(file_path)
         if ext != ".csv":
             file_path += ".csv"
-        self.prediction.to_csv(file_path, index=False)
+        self.data.to_csv(file_path, index=False)
         return file_path
 
 

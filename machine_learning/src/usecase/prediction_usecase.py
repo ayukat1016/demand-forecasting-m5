@@ -42,12 +42,12 @@ class PredictionUsecase(object):
             .sort_values(["store_id", "item_id", "date_id"])
             .reset_index(drop=True)
         )
-        prediction_output = Prediction(prediction=df)
+        prediction_output = Prediction(data=df)
 
         logger.info(f"done prediction: {model.name}")
         logger.info(
             f"""prediction:
-{prediction_output.prediction}
+{prediction_output.data}
         """
         )
         return prediction_output
