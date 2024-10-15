@@ -2,9 +2,9 @@ from typing import List
 
 import pandas as pd
 
+from src.domain.repository.prediction_repository import AbstractPredictionRepository
+from src.infrastructure.schema.prediction_schema import Prediction
 from src.middleware.logger import configure_logger
-from src.repository.prediction_repository import AbstractPredictionRepository
-from src.schema.prediction_schema import Prediction
 
 logger = configure_logger(__name__)
 

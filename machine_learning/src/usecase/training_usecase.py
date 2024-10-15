@@ -1,8 +1,8 @@
 import pandas as pd
 
-from src.domain.training_data import TrainingDataset
+from src.domain.algorithm.lightgbm_regressor import AbstractModel
+from src.domain.model.training_data import TrainingDataset
 from src.middleware.logger import configure_logger
-from src.ml_algos.lightgbm_regressor import AbstractModel
 
 logger = configure_logger(__name__)
 

@@ -4,9 +4,9 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error  # type: ignore
 from sklearn.metrics import mean_squared_error  # type: ignore
 
-from src.domain.evaluation_data import Evaluation, FeatureImportances
+from src.domain.algorithm.lightgbm_regressor import AbstractModel
+from src.domain.model.evaluation_data import Evaluation, FeatureImportances
 from src.middleware.logger import configure_logger
-from src.ml_algos.lightgbm_regressor import AbstractModel
 
 logger = configure_logger(__name__)
 
@@ -70,7 +70,7 @@ root_mean_squared_error: {rmse}
         model: AbstractModel,
     ) -> FeatureImportances:
         feature_importances = model.get_feature_importance()
-        d = [f.dict() for f in feature_importances]
+        d = [f.model_dump() for f in feature_importances]
         data = (
             pd.DataFrame(d)
             .sort_values("importance", ascending=False)

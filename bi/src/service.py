@@ -35,7 +35,7 @@ class SalesService(BaseService):
             store=store,
             item=item,
         )
-        df = pd.DataFrame([d.dict() for d in dataset])
+        df = pd.DataFrame([d.model_dump() for d in dataset])
         df = df.sort_values(by=["store_id", "item_id", "date_id"]).reset_index(
             drop=True
         )
@@ -83,7 +83,7 @@ class PredictionService(BaseService):
             store=store,
             item=item,
         )
-        df = pd.DataFrame([d.dict() for d in dataset])
+        df = pd.DataFrame([d.model_dump() for d in dataset])
         df = df.sort_values(by=["store_id", "item_id", "date_id"]).reset_index(
             drop=True
         )

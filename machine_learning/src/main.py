@@ -4,17 +4,19 @@ import mlflow  # type: ignore
 from omegaconf import DictConfig
 
 import hydra
-from src.domain.prediction_data import PredictionDataset
-from src.domain.training_data import TrainingDataset
-from src.infrastructure.database import PostgreSQLClient
+from src.domain.algorithm.lightgbm_regressor import LightGBMRegression
+from src.domain.algorithm.models import get_model
+from src.domain.algorithm.preprocess import LagSalesExtractor, PricesExtractor
+from src.domain.model.prediction_data import PredictionDataset
+from src.domain.model.training_data import TrainingDataset
+from src.infrastructure.database.db_client import PostgreSQLClient
+from src.infrastructure.repository.calendar_repository import CalendarRepository
+from src.infrastructure.repository.prediction_repository import PredictionRepository
+from src.infrastructure.repository.prices_repository import PricesRepository
+from src.infrastructure.repository.sales_calendar_repository import (
+    SalesCalendarRepository,
+)
 from src.middleware.logger import configure_logger
-from src.ml_algos.lightgbm_regressor import LightGBMRegression
-from src.ml_algos.models import get_model
-from src.ml_algos.preprocess import LagSalesExtractor, PricesExtractor
-from src.repository.calendar_repository import CalendarRepository
-from src.repository.prediction_repository import PredictionRepository
-from src.repository.prices_repository import PricesRepository
-from src.repository.sales_calendar_repository import SalesCalendarRepository
 from src.usecase.data_loader_usecase import DataLoaderUsecase
 from src.usecase.evaluation_usecase import EvaluationUsecase
 from src.usecase.prediction_register_usecase import PredictionRegisterUsecase
