@@ -2,12 +2,12 @@ from typing import Optional
 
 import click
 
-from src.infrastructure.database import PostgreSQLClient
+from src.infrastructure.database.db_client import PostgreSQLClient
+from src.infrastructure.repository.calendar_repository import CalendarRepository
+from src.infrastructure.repository.prices_repository import PricesRepository
+from src.infrastructure.repository.sales_repository import SalesRepository
+from src.infrastructure.repository.tables_repository import TablesRepository
 from src.middleware.logger import configure_logger
-from src.repository.calendar_repository import CalendarRepository
-from src.repository.prices_repository import PricesRepository
-from src.repository.sales_repository import SalesRepository
-from src.repository.tables_repository import TablesRepository
 from src.usecase.data_register_usecase import DataRegisterUsecase
 
 logger = configure_logger(__name__)

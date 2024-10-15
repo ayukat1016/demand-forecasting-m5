@@ -1,13 +1,13 @@
+from src.domain.repository.calendar_repository import AbstractCalendarRepository
+from src.domain.repository.prices_repository import AbstractPricesRepository
+from src.domain.repository.sales_repository import AbstractSalesRepository
+from src.domain.repository.tables_repository import AbstractTablesRepository
+from src.infrastructure.schema.calendar_schema import Calendar
+from src.infrastructure.schema.prices_schema import Prices
+from src.infrastructure.schema.sales_schema import Sales
 from src.middleware.file_reader import read_csv_to_list, read_text_file
 from src.middleware.logger import configure_logger
 from src.middleware.strings import get_uuid
-from src.repository.calendar_repository import AbstractCalendarRepository
-from src.repository.prices_repository import AbstractPricesRepository
-from src.repository.sales_repository import AbstractSalesRepository
-from src.repository.tables_repository import AbstractTablesRepository
-from src.schema.calendar_schema import Calendar
-from src.schema.prices_schema import Prices
-from src.schema.sales_schema import Sales
 
 logger = configure_logger(__name__)
 

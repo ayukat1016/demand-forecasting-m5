@@ -1,10 +1,10 @@
 import pandas as pd
 
-from src.domain.common_data import XY
-from src.domain.preprocessed_data import PreprocessedDataset
-from src.domain.raw_data import RawDataset
+from src.domain.algorithm.preprocess import AbstractExtractor
+from src.domain.model.common_data import XY
+from src.domain.model.preprocessed_data import PreprocessedDataset
+from src.domain.model.raw_data import RawDataset
 from src.middleware.logger import configure_logger
-from src.ml_algos.preprocess import AbstractExtractor
 
 logger = configure_logger(__name__)
 

@@ -3,14 +3,16 @@ from typing import List
 import numpy as np
 import pandas as pd
 
-from src.domain.raw_data import RawDataset, RawDataWithTargetDates
+from src.domain.model.raw_data import RawDataset, RawDataWithTargetDates
+from src.domain.repository.calendar_repository import AbstractCalendarRepository
+from src.domain.repository.prices_repository import AbstractPricesRepository
+from src.domain.repository.sales_calendar_repository import (
+    AbstractSalesCalendarRepository,
+)
+from src.infrastructure.schema.calendar_schema import Calendar
+from src.infrastructure.schema.prices_schema import Prices
+from src.infrastructure.schema.sales_calendar_schema import SalesCalendar
 from src.middleware.logger import configure_logger
-from src.repository.calendar_repository import AbstractCalendarRepository
-from src.repository.prices_repository import AbstractPricesRepository
-from src.repository.sales_calendar_repository import AbstractSalesCalendarRepository
-from src.schema.calendar_schema import Calendar
-from src.schema.prices_schema import Prices
-from src.schema.sales_calendar_schema import SalesCalendar
 
 logger = configure_logger(__name__)
 
@@ -116,11 +118,11 @@ class DataLoaderUsecase(object):
             date_from=date_from,
             date_to=date_to,
         )
-        dataset_dict = [d.dict() for d in data]
+        dataset_dict = [d.model_dump() for d in data]
         sales_df = pd.DataFrame(dataset_dict)
 
         prices_data = self.load_prices_data()
-        prices_dataset_dict = [d.dict() for d in prices_data]
+        prices_dataset_dict = [d.model_dump() for d in prices_data]
         prices_df = pd.DataFrame(prices_dataset_dict)
         sales_df = sales_df.merge(
             prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]],
@@ -182,11 +184,11 @@ type:
         pred_df = pred_df.reset_index(drop=True)
 
         calendar_data = self.load_calendar_data()
-        calendar_dataset_dict = [d.dict() for d in calendar_data]
+        calendar_dataset_dict = [d.model_dump() for d in calendar_data]
         calendar_df = pd.DataFrame(calendar_dataset_dict)
 
         prices_data = self.load_prices_data()
-        prices_dataset_dict = [d.dict() for d in prices_data]
+        prices_dataset_dict = [d.model_dump() for d in prices_data]
         prices_df = pd.DataFrame(prices_dataset_dict)
 
         release_df = (
