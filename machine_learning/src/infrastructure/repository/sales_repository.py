@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 from typing import List
 
 from src.domain.repository.sales_repository import AbstractSalesRepository
