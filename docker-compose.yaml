@@ -75,7 +75,7 @@ services:
       - POSTGRES_DBNAME=demand_forecasting_m5
     ports:
       - 8501:8501
-    command: /bin/sh -c "sleep 20s && streamlit run src/main.py"
+    command: /bin/sh -c "sleep 20s && streamlit run src/main.py --server.address=0.0.0.0"
     depends_on:
       - postgres
       - data_registration

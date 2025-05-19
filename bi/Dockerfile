@@ -17,4 +17,4 @@ RUN apt-get -y update && \
 
 COPY ${LOCAL_DIR}/src/ /${PROJECT_DIR}/src/
 
-CMD [ "streamlit", "run", "src/main.py" ]
+CMD [ "streamlit", "run", "src/main.py", "--server.address=0.0.0.0" ]
