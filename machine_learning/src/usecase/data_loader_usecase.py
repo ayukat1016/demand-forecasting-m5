@@ -114,12 +114,12 @@ class DataLoaderUsecase(object):
         """
 
         logger.info(f"load data from: {date_from} to {date_to}")
-        data = self.load_sales_calendar_data(
+        sales_data = self.load_sales_calendar_data(
             date_from=date_from,
             date_to=date_to,
         )
-        dataset_dict = [d.model_dump() for d in data]
-        sales_df = pd.DataFrame(dataset_dict)
+        sales_dataset_dict = [d.model_dump() for d in sales_data]
+        sales_df = pd.DataFrame(sales_dataset_dict)
 
         prices_data = self.load_prices_data()
         prices_dataset_dict = [d.model_dump() for d in prices_data]
