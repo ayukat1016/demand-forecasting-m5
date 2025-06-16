@@ -1,5 +1,6 @@
 from src.domain.repository.tables_repository import AbstractTablesRepository
 from src.infrastructure.database.db_client import AbstractDBClient
+from src.infrastructure.schema.models import Base
 
 
 class TablesRepository(AbstractTablesRepository):
@@ -13,4 +14,4 @@ class TablesRepository(AbstractTablesRepository):
         self,
         query: str,
     ):
-        self.db_client.execute_create_query(query=query)
+        Base.metadata.create_all(self.db_client.engine)

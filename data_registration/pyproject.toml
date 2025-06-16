@@ -12,6 +12,7 @@ pydantic = "2.8.2"
 psycopg2-binary = "2.9.9"
 click = "8.1.7"
 types-psycopg2 = "2.9.21.20240417"
+sqlalchemy = "2.0.41"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -1,8 +1,11 @@
 from typing import List
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 
 from src.domain.repository.sales_repository import AbstractSalesRepository
 from src.infrastructure.database.db_client import AbstractDBClient
 from src.infrastructure.schema.sales_schema import Sales
+from src.infrastructure.schema.models import Sales as SalesModel
 from src.infrastructure.schema.tables_schema import TABLES
 
 
@@ -18,26 +21,12 @@ class SalesRepository(AbstractSalesRepository):
         self,
         records: List[Sales],
     ):
-        data = records[0].model_dump()
-        _columns = list(data.keys())
-        columns = ",".join(_columns)
-        query = f"""
-        INSERT INTO
-            {self.table_name}
-            ({columns})
-        VALUES
-            %s
-        ON CONFLICT
-            (key)
-        DO NOTHING
-        ;
-        """
-
-        parameters = []
-        for d in records:
-            values = tuple(d.model_dump().values())
-            parameters.append(values)
-        self.db_client.execute_bulk_insert_or_update_query(
-            query=query,
-            parameters=parameters,
-        )
+        with self.db_client.get_session() as session:
+            values = [
+                {k: v for k, v in record.model_dump().items() if k in SalesModel.__table__.columns.keys()}
+                for record in records
+            ]
+            stmt = insert(SalesModel).values(values)
+            stmt = stmt.on_conflict_do_nothing(index_elements=['key'])
+            session.execute(stmt)
+            session.commit()

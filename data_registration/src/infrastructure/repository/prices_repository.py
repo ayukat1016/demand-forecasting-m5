@@ -1,8 +1,11 @@
 from typing import List
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 
 from src.domain.repository.prices_repository import AbstractPricesRepository
 from src.infrastructure.database.db_client import AbstractDBClient
 from src.infrastructure.schema.prices_schema import Prices
+from src.infrastructure.schema.models import Prices as PricesModel
 from src.infrastructure.schema.tables_schema import TABLES
 
 
@@ -18,26 +21,12 @@ class PricesRepository(AbstractPricesRepository):
         self,
         records: List[Prices],
     ):
-        data = records[0].model_dump()
-        _columns = list(data.keys())
-        columns = ",".join(_columns)
-        query = f"""
-        INSERT INTO
-            {self.table_name}
-            ({columns})
-        VALUES
-            %s
-        ON CONFLICT
-            (key)
-        DO NOTHING
-        ;
-        """
-
-        parameters = []
-        for d in records:
-            values = tuple(d.model_dump().values())
-            parameters.append(values)
-        self.db_client.execute_bulk_insert_or_update_query(
-            query=query,
-            parameters=parameters,
-        )
+        with self.db_client.get_session() as session:
+            values = [
+                {k: v for k, v in record.model_dump().items() if k in PricesModel.__table__.columns.keys()}
+                for record in records
+            ]
+            stmt = insert(PricesModel).values(values)
+            stmt = stmt.on_conflict_do_nothing(index_elements=['store_id', 'item_id', 'wm_yr_wk'])
+            session.execute(stmt)
+            session.commit()

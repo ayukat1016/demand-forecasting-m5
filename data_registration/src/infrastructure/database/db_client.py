@@ -2,23 +2,22 @@ import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Tuple
 
-import psycopg2
-from psycopg2 import extras
-from psycopg2.extras import DictCursor
-
 from src.exceptions.exceptions import DatabaseException
 from src.middleware.logger import configure_logger
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.exc import SQLAlchemyError
+
 logger = configure_logger(__name__)
+
+Base = declarative_base()
 
 
 class AbstractDBClient(ABC):
     def __init__(self):
         pass
-
-    @abstractmethod
-    def get_connection(self):
-        raise NotImplementedError
 
     @abstractmethod
     def execute_create_query(
@@ -47,15 +46,18 @@ class AbstractDBClient(ABC):
 
 class PostgreSQLClient(AbstractDBClient):
     def __init__(self):
-        self.__postgres_user = os.getenv("POSTGRES_USER")
-        self.__postgres_password = os.getenv("POSTGRES_PASSWORD")
-        self.__postgres_port = int(os.getenv("POSTGRES_PORT", 5432))
-        self.__postgres_dbname = os.getenv("POSTGRES_DBNAME")
-        self.__postgres_host = os.getenv("POSTGRES_HOST")
-        self.__connection_string = f"host={self.__postgres_host} port={self.__postgres_port} dbname={self.__postgres_dbname} user={self.__postgres_user} password={self.__postgres_password}"
+        user = os.getenv("POSTGRES_USER", "postgres")
+        password = os.getenv("POSTGRES_PASSWORD", "password")
+        host = os.getenv("POSTGRES_HOST", "postgres")
+        port = os.getenv("POSTGRES_PORT", "5432")
+        dbname = os.getenv("POSTGRES_DBNAME", "demand_forecasting_m5")
+        url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
+        self.engine = create_engine(url)
+        self.Session = sessionmaker(bind=self.engine)
+        Base.metadata.create_all(self.engine)
 
-    def get_connection(self):
-        return psycopg2.connect(self.__connection_string)
+    def get_session(self) -> Session:
+        return self.Session()
 
     def execute_create_query(
         self,
@@ -63,15 +65,14 @@ class PostgreSQLClient(AbstractDBClient):
         parameters: Optional[Tuple] = None,
     ):
         logger.debug(f"create query: {query}, parameters: {parameters}")
-        with self.get_connection() as conn:
+        with self.get_session() as session:
             try:
-                with conn.cursor(cursor_factory=DictCursor) as cursor:
-                    cursor.execute(query, parameters)
-                conn.commit()
-            except psycopg2.Error as e:
-                conn.rollback()
+                session.execute(query, parameters)
+                session.commit()
+            except SQLAlchemyError as e:
+                session.rollback()
                 raise DatabaseException(
-                    message=f"failed to insert or update query: {e}",
+                    message=f"failed to execute create query: {e}",
                     detail=f"{query} {parameters}: {e}",
                 )
 
@@ -81,14 +82,13 @@ class PostgreSQLClient(AbstractDBClient):
         parameters: Optional[List[Tuple]] = None,
     ) -> bool:
         logger.debug(f"bulk insert or update query: {query}, parameters: {parameters}")
-        with self.get_connection() as conn:
+        with self.get_session() as session:
             try:
-                with conn.cursor(cursor_factory=DictCursor) as cursor:
-                    extras.execute_values(cursor, query, parameters)
-                conn.commit()
+                session.execute(query, parameters)
+                session.commit()
                 return True
-            except psycopg2.Error as e:
-                conn.rollback()
+            except SQLAlchemyError as e:
+                session.rollback()
                 raise DatabaseException(
                     message=f"failed to bulk insert or update query: {e}",
                     detail=f"{query} {parameters}: {e}",
@@ -100,10 +100,9 @@ class PostgreSQLClient(AbstractDBClient):
         parameters: Optional[Tuple] = None,
     ) -> List[Dict[str, Any]]:
         logger.debug(f"select query: {query}, parameters: {parameters}")
-        with self.get_connection() as conn:
-            with conn.cursor(cursor_factory=DictCursor) as cursor:
-                cursor.execute(query, parameters)
-                columns = [desc[0] for desc in cursor.description]
-                rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        with self.get_session() as session:
+            cursor = session.execute(query, parameters)
+            columns = [desc[0] for desc in cursor.keys()]
+            rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
         logger.debug(f"rows: {rows}")
         return rows
