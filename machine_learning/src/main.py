@@ -13,9 +13,7 @@ from src.infrastructure.database.db_client import PostgreSQLClient
 from src.infrastructure.repository.calendar_repository import CalendarRepository
 from src.infrastructure.repository.prediction_repository import PredictionRepository
 from src.infrastructure.repository.prices_repository import PricesRepository
-from src.infrastructure.repository.sales_calendar_repository import (
-    SalesCalendarRepository,
-)
+from src.infrastructure.repository.sales_calendar_prices_repository import SalesCalendarPricesRepository
 from src.middleware.logger import configure_logger
 from src.usecase.data_loader_usecase import DataLoaderUsecase
 from src.usecase.evaluation_usecase import EvaluationUsecase
@@ -69,12 +67,12 @@ prediction_date_to: {cfg.period.prediction_date_to}
         db_client = PostgreSQLClient()
         calendar_repository = CalendarRepository(db_client=db_client)
         prices_repository = PricesRepository(db_client=db_client)
-        sales_calendar_repository = SalesCalendarRepository(db_client=db_client)
+        sales_calendar_prices_repository = SalesCalendarPricesRepository(db_client=db_client)
 
         data_loader_usecase = DataLoaderUsecase(
             calendar_repository=calendar_repository,
             prices_repository=prices_repository,
-            sales_calendar_repository=sales_calendar_repository,
+            sales_calendar_prices_repository=sales_calendar_prices_repository,
         )
 
         raw_dataset = data_loader_usecase.load_dataset(

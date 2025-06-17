@@ -49,23 +49,3 @@ class Prediction(Base):
     item_id = Column(String, primary_key=True)
     date_id = Column(Integer, primary_key=True)
     prediction = Column(Float)
-
-class SalesCalendar(Base):
-    __tablename__ = 'sales_calendar'
-    # 実際のテーブルが存在しない場合はViewやJOIN用のダミーモデルとして定義
-    id = Column(String, primary_key=True)
-    item_id = Column(String)
-    dept_id = Column(String)
-    cat_id = Column(String)
-    store_id = Column(String)
-    state_id = Column(String)
-    date_id = Column(Integer)
-    sales = Column(Float)
-    wm_yr_wk = Column(Integer)
-    event_name_1 = Column(String)
-    event_type_1 = Column(String)
-    event_name_2 = Column(String)
-    event_type_2 = Column(String)
-    snap_ca = Column(Integer)
-    snap_tx = Column(Integer)
-    snap_wi = Column(Integer) 

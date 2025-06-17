@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 from src.infrastructure.database.db_client import AbstractDBClient
-from src.infrastructure.schema.sales_calendar_schema import SalesCalendar
+from src.infrastructure.schema.sales_calendar_prices_schema import SalesCalendarPrices
 
 
-class AbstractSalesCalendarRepository(ABC):
+class AbstractSalesCalendarPricesRepository(ABC):
     def __init__(
         self,
         db_client: AbstractDBClient,
@@ -19,5 +19,5 @@ class AbstractSalesCalendarRepository(ABC):
         date_to: Optional[int] = None,
         limit: int = 200,
         offset: int = 0,
-    ) -> List[SalesCalendar]:
+    ) -> List[SalesCalendarPrices]:
         raise NotImplementedError
