@@ -22,6 +22,7 @@ pyyaml = "6.0.1"
 types-psycopg2 = "2.9.21.20240417"
 pandas-stubs = "2.2.2.240603"
 types-pyyaml = "6.0.12.20240724"
+sqlalchemy = "2.0.41"
 
 
 [tool.poetry.group.dev.dependencies]
