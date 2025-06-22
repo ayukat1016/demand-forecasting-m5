@@ -13,7 +13,7 @@ class Evaluation:
     root_mean_squared_error: float
     mean_absolute_error: float
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         EvaluationDataSchema.validate(self.data)
 
     def save_data(

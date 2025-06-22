@@ -6,7 +6,9 @@ import pandas as pd
 from src.domain.model.raw_data import RawDataset, RawDataWithTargetDates
 from src.domain.repository.calendar_repository import AbstractCalendarRepository
 from src.domain.repository.prices_repository import AbstractPricesRepository
-from src.domain.repository.sales_calendar_prices_repository import AbstractSalesCalendarPricesRepository
+from src.domain.repository.sales_calendar_prices_repository import (
+    AbstractSalesCalendarPricesRepository,
+)
 from src.infrastructure.schema.calendar_schema import Calendar
 from src.infrastructure.schema.prices_schema import Prices
 from src.infrastructure.schema.sales_calendar_prices_schema import SalesCalendarPrices

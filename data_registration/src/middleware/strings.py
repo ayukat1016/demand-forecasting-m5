@@ -5,7 +5,7 @@ def get_uuid() -> str:
     return str(uuid.uuid4()).replace("-", "")
 
 
-def parse_query(query) -> str:
+def parse_query(query: str) -> str:
     while True:
         query = query.replace("\n", " ").strip()
         if "\n" not in query:

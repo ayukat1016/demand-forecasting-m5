@@ -1,19 +1,24 @@
 from typing import List, Optional
 
 from sqlalchemy import select
-from src.domain.repository.sales_calendar_prices_repository import AbstractSalesCalendarPricesRepository
+from sqlalchemy.orm import aliased
+
+from src.domain.repository.sales_calendar_prices_repository import (
+    AbstractSalesCalendarPricesRepository,
+)
 from src.infrastructure.database.db_client import AbstractDBClient
+from src.infrastructure.schema.models import Calendar as CalendarModel
+from src.infrastructure.schema.models import Prices as PricesModel
+from src.infrastructure.schema.models import Sales as SalesModel
 from src.infrastructure.schema.sales_calendar_prices_schema import SalesCalendarPrices
 from src.infrastructure.schema.tables_schema import TABLES
-from src.infrastructure.schema.models import Sales as SalesModel, Calendar as CalendarModel, Prices as PricesModel
-from sqlalchemy.orm import aliased
 
 
 class SalesCalendarPricesRepository(AbstractSalesCalendarPricesRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,
-    ):
+    ) -> None:
         super().__init__(db_client=db_client)
         self.sales_table = TABLES.SALES.value
         self.calendar_table = TABLES.CALENDAR.value
@@ -58,11 +63,15 @@ class SalesCalendarPricesRepository(AbstractSalesCalendarPricesRepository):
             )
 
             if date_from is not None:
-                sales_calendar_subq = sales_calendar_subq.where(sales.date_id >= date_from)
+                sales_calendar_subq = sales_calendar_subq.where(
+                    sales.date_id >= date_from
+                )
             if date_to is not None:
-                sales_calendar_subq = sales_calendar_subq.where(sales.date_id <= date_to)
+                sales_calendar_subq = sales_calendar_subq.where(
+                    sales.date_id <= date_to
+                )
 
-            sales_calendar_subq = sales_calendar_subq.alias()
+            sales_calendar_subq = sales_calendar_subq.alias()  # type: ignore[assignment]
 
             # メインクエリで prices を結合
             query = (
@@ -85,18 +94,18 @@ class SalesCalendarPricesRepository(AbstractSalesCalendarPricesRepository):
                     sales_calendar_subq.c.snap_wi,
                     prices.sell_price,
                 )
-                .select_from(sales_calendar_subq)
+                .select_from(sales_calendar_subq)  # type: ignore[arg-type]
                 .join(
                     prices,
-                    (prices.store_id == sales_calendar_subq.c.store_id) &
-                    (prices.item_id == sales_calendar_subq.c.item_id) &
-                    (prices.wm_yr_wk == sales_calendar_subq.c.wm_yr_wk),
-                    isouter=True
+                    (prices.store_id == sales_calendar_subq.c.store_id)
+                    & (prices.item_id == sales_calendar_subq.c.item_id)
+                    & (prices.wm_yr_wk == sales_calendar_subq.c.wm_yr_wk),
+                    isouter=True,
                 )
                 .order_by(
                     sales_calendar_subq.c.store_id,
                     sales_calendar_subq.c.item_id,
-                    sales_calendar_subq.c.date_id
+                    sales_calendar_subq.c.date_id,
                 )
             )
 

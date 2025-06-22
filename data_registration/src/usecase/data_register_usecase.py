@@ -23,7 +23,7 @@ class DataRegisterUsecase(object):
         calendar_repository: AbstractCalendarRepository,
         prices_repository: AbstractPricesRepository,
         sales_repository: AbstractSalesRepository,
-    ):
+    ) -> None:
         self.tables_filepath = tables_filepath
         self.calendar_filepath = calendar_filepath
         self.prices_filepath = prices_filepath
@@ -33,11 +33,11 @@ class DataRegisterUsecase(object):
         self.prices_repository = prices_repository
         self.sales_repository = sales_repository
 
-    def create_table(self):
+    def create_table(self) -> None:
         query = read_text_file(file_path=self.tables_filepath)
         self.tables_repository.create_tables(query=query)
 
-    def register_calendar(self):
+    def register_calendar(self) -> None:
         data = read_csv_to_list(
             csv_file=self.calendar_filepath,
             header=None,
@@ -74,7 +74,7 @@ class DataRegisterUsecase(object):
             self.calendar_repository.bulk_insert(records=records)
             logger.info(f"calendar: {i} ...")
 
-    def register_prices(self):
+    def register_prices(self) -> None:
         data = read_csv_to_list(
             csv_file=self.prices_filepath,
             header=None,
@@ -102,7 +102,7 @@ class DataRegisterUsecase(object):
             self.prices_repository.bulk_insert(records=records)
             logger.info(f"prices: {i} ...")
 
-    def register_sales(self):
+    def register_sales(self) -> None:
         data = read_csv_to_list(
             csv_file=self.sales_filepath,
             header=None,

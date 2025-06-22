@@ -7,11 +7,11 @@ class TablesRepository(AbstractTablesRepository):
     def __init__(
         self,
         db_client: AbstractDBClient,
-    ):
+    ) -> None:
         super().__init__(db_client=db_client)
 
     def create_tables(
         self,
         query: str,
-    ):
+    ) -> None:
         Base.metadata.create_all(self.db_client.engine)

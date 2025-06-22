@@ -9,12 +9,12 @@ class AbstractPredictionRepository(ABC):
     def __init__(
         self,
         db_client: AbstractDBClient,
-    ):
+    ) -> None:
         self.db_client = db_client
 
     @abstractmethod
     def bulk_insert(
         self,
         records: List[Prediction],
-    ):
+    ) -> None:
         raise NotImplementedError

@@ -42,8 +42,8 @@ class AbstractModel(ABC):
     @abstractmethod
     def reset_model(
         self,
-        params: Optional[Dict] = None,
-    ):
+        params: Optional[Dict[str, Any]] = None,
+    ) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -53,7 +53,7 @@ class AbstractModel(ABC):
         y_train: pd.Series,
         x_test: Optional[pd.DataFrame] = None,
         y_test: Optional[pd.Series] = None,
-    ):
+    ) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -74,7 +74,7 @@ class AbstractModel(ABC):
     def load(
         self,
         file_path: str,
-    ):
+    ) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -139,7 +139,7 @@ class LightGBMRegression(AbstractModel):
         self,
         x: pd.DataFrame,
     ) -> List[float]:
-        prediction = self.model.predict(x).tolist()
+        prediction: List[float] = self.model.predict(x).tolist()
         return prediction
 
     def save_model_params(

@@ -1,10 +1,18 @@
-from sqlalchemy import Column, Integer, String, Float, UniqueConstraint
+from typing import TYPE_CHECKING
+
+from sqlalchemy import Column, Float, Integer, String, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Calendar(Base):
-    __tablename__ = 'calendar'
+if TYPE_CHECKING:
+    from sqlalchemy.orm import DeclarativeBase
+
+    Base = DeclarativeBase
+
+
+class Calendar(Base):  # type: ignore[valid-type,misc]
+    __tablename__ = "calendar"
 
     date = Column(String, primary_key=True)
     wm_yr_wk = Column(Integer)
@@ -21,8 +29,9 @@ class Calendar(Base):
     snap_tx = Column(Integer)
     snap_wi = Column(Integer)
 
-class Prices(Base):
-    __tablename__ = 'prices'
+
+class Prices(Base):  # type: ignore[valid-type,misc]
+    __tablename__ = "prices"
 
     key = Column(String, primary_key=True)
     store_id = Column(String)
@@ -30,11 +39,14 @@ class Prices(Base):
     wm_yr_wk = Column(Integer)
     sell_price = Column(Float)
     __table_args__ = (
-        UniqueConstraint('store_id', 'item_id', 'wm_yr_wk', name='uix_prices_store_item_week'),
+        UniqueConstraint(
+            "store_id", "item_id", "wm_yr_wk", name="uix_prices_store_item_week"
+        ),
     )
 
-class Sales(Base):
-    __tablename__ = 'sales'
+
+class Sales(Base):  # type: ignore[valid-type,misc]
+    __tablename__ = "sales"
 
     key = Column(String, primary_key=True)
     id = Column(String)
@@ -46,10 +58,11 @@ class Sales(Base):
     date_id = Column(Integer)
     sales = Column(Float)
 
-class Prediction(Base):
-    __tablename__ = 'prediction'
+
+class Prediction(Base):  # type: ignore[valid-type,misc]
+    __tablename__ = "prediction"
 
     store_id = Column(String, primary_key=True)
     item_id = Column(String, primary_key=True)
     date_id = Column(Integer, primary_key=True)
-    prediction = Column(Float) 
+    prediction = Column(Float)

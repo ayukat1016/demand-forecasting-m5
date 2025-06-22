@@ -13,7 +13,7 @@ class XY:
     x: pd.DataFrame
     y: pd.DataFrame
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         KeyDataSchema.validate(self.keys)
 
     def save(

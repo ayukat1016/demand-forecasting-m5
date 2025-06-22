@@ -22,4 +22,4 @@ class SalesCalendarPrices(AbstractSchema):
 
     class Config:
         frozen = True
-        extra = "forbid" 
+        extra = "forbid"

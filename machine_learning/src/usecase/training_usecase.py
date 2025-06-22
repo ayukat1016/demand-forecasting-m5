@@ -8,7 +8,7 @@ logger = configure_logger(__name__)
 
 
 class TrainingUsecase(object):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def train(
@@ -17,7 +17,7 @@ class TrainingUsecase(object):
         training_data: TrainingDataset,
         train_mask: pd.DataFrame,
         valid_mask: pd.DataFrame,
-    ):
+    ) -> None:
         logger.info(f"start training: {model.name}...")
 
         model.train(

@@ -17,7 +17,7 @@ class PredictionDataset:
 class Prediction:
     data: pd.DataFrame
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         PredictionDataSchema.validate(self.data)
 
     def save(

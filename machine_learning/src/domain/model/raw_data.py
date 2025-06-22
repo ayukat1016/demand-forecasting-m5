@@ -11,7 +11,7 @@ class RawDataWithTargetDates:
     date_from: int
     date_to: int
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         RawDataSchema.validate(self.data)
 
 
