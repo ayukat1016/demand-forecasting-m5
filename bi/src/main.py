@@ -6,7 +6,7 @@ from view import build
 logger = configure_logger(__name__)
 
 
-def main():
+def main() -> None:
     logger.info("now loading...")
     logger.info("start fun time")
     db_client = PostgreSQLClient()
