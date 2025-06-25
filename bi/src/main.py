@@ -1,7 +1,7 @@
-from database import PostgreSQLClient
-from logger import configure_logger
-from service import PredictionService, SalesService
-from view import build
+from src.database import PostgreSQLClient
+from src.logger import configure_logger
+from src.service import PredictionService, SalesService
+from src.view import build
 
 logger = configure_logger(__name__)
 

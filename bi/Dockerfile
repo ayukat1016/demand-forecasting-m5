@@ -17,4 +17,6 @@ RUN apt-get -y update && \
 
 COPY ${LOCAL_DIR}/src/ /${PROJECT_DIR}/src/
 
+ENV PYTHONPATH=/${PROJECT_DIR}
+
 CMD [ "streamlit", "run", "src/main.py", "--server.address=0.0.0.0" ]

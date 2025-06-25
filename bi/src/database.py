@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
 
-from logger import configure_logger
+from src.logger import configure_logger
 
 logger = configure_logger(__name__)
 

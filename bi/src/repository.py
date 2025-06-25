@@ -1,9 +1,10 @@
-from typing import List, Optional, Union
+from typing import List, Optional
 
-from database import AbstractDBClient
-from models import Sales as SalesModel, Prediction as PredictionModel
-from schema import Prediction, Sales
-from tables import TABLES
+from src.database import AbstractDBClient
+from src.models import Prediction as PredictionModel
+from src.models import Sales as SalesModel
+from src.schema import Prediction, Sales
+from src.tables import TABLES
 
 
 class BaseRepository(object):
@@ -35,7 +36,9 @@ class SalesRepository(BaseRepository):
                 sales = sales.filter(SalesModel.store_id == store)
             if item is not None:
                 sales = sales.filter(SalesModel.item_id == item)
-            sales = sales.order_by(SalesModel.store_id, SalesModel.item_id, SalesModel.date_id)
+            sales = sales.order_by(
+                SalesModel.store_id, SalesModel.item_id, SalesModel.date_id
+            )
             sales = sales.limit(limit).offset(offset)
             results = sales.all()
             data = [Sales.from_orm(row) for row in results]
@@ -73,7 +76,11 @@ class PredictionRepository(BaseRepository):
                 prediction = prediction.filter(PredictionModel.store_id == store)
             if item is not None:
                 prediction = prediction.filter(PredictionModel.item_id == item)
-            prediction = prediction.order_by(PredictionModel.store_id, PredictionModel.item_id, PredictionModel.date_id)
+            prediction = prediction.order_by(
+                PredictionModel.store_id,
+                PredictionModel.item_id,
+                PredictionModel.date_id,
+            )
             prediction = prediction.limit(limit).offset(offset)
             results = prediction.all()
             data = [Prediction.from_orm(row) for row in results]

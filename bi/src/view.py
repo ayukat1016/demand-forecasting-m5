@@ -5,8 +5,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from logger import configure_logger
-from service import PredictionService, SalesService
+from src.logger import configure_logger
+from src.service import PredictionService, SalesService
 
 logger = configure_logger(__name__)
 

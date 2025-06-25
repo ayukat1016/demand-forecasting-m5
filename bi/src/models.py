@@ -3,7 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Sales(Base):
+
+class Sales(Base):  # type: ignore
     __tablename__ = "sales"
     key = Column(String, primary_key=True)
     id = Column(String)
@@ -15,9 +16,10 @@ class Sales(Base):
     date_id = Column(Integer)
     sales = Column(Float)
 
-class Prediction(Base):
+
+class Prediction(Base):  # type: ignore
     __tablename__ = "prediction"
     store_id = Column(String, primary_key=True)
     item_id = Column(String, primary_key=True)
     date_id = Column(Integer, primary_key=True)
-    prediction = Column(Float) 
+    prediction = Column(Float)
