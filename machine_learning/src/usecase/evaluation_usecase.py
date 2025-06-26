@@ -1,8 +1,7 @@
 from typing import List
 
 import pandas as pd
-from sklearn.metrics import mean_absolute_error  # type: ignore
-from sklearn.metrics import mean_squared_error  # type: ignore
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 from src.domain.algorithm.lightgbm_regressor import AbstractModel
 from src.domain.model.evaluation_data import Evaluation, FeatureImportances
@@ -12,7 +11,7 @@ logger = configure_logger(__name__)
 
 
 class EvaluationUsecase(object):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def evaluate(
@@ -23,7 +22,7 @@ class EvaluationUsecase(object):
         y_true: List[float],
         y_pred: List[float],
     ) -> Evaluation:
-        logger.info(f"start evaluation...")
+        logger.info("start evaluation...")
         rmse = (
             mean_squared_error(
                 y_true=y_true,
@@ -50,7 +49,7 @@ class EvaluationUsecase(object):
             .sort_values(["store_id", "item_id", "date_id"])
             .reset_index(drop=True)
         )
-        logger.info(f"done evaluation")
+        logger.info("done evaluation")
         logger.info(
             f"""evaluation:
 data:

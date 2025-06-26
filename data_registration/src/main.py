@@ -39,7 +39,7 @@ def main(
     calendar_filepath: Optional[str] = None,
     prices_filepath: Optional[str] = None,
     sales_filepath: Optional[str] = None,
-):
+) -> None:
 
     if tables_filepath is None:
         raise ValueError("tables_filepath cannot be None")

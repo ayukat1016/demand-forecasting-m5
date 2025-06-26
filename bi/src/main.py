@@ -1,12 +1,12 @@
-from database import PostgreSQLClient
-from logger import configure_logger
-from service import PredictionService, SalesService
-from view import build
+from src.database import PostgreSQLClient
+from src.logger import configure_logger
+from src.service import PredictionService, SalesService
+from src.view import build
 
 logger = configure_logger(__name__)
 
 
-def main():
+def main() -> None:
     logger.info("now loading...")
     logger.info("start fun time")
     db_client = PostgreSQLClient()

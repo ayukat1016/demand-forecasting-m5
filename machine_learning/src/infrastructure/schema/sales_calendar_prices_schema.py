@@ -1,7 +1,7 @@
 from src.infrastructure.schema.abstract_schema import AbstractSchema
 
 
-class SalesCalendar(AbstractSchema):
+class SalesCalendarPrices(AbstractSchema):
     id: str
     item_id: str
     dept_id: str
@@ -11,13 +11,14 @@ class SalesCalendar(AbstractSchema):
     date_id: int
     sales: float
     wm_yr_wk: int
-    event_name_1: str
-    event_type_1: str
-    event_name_2: str
-    event_type_2: str
-    snap_ca: int
-    snap_tx: int
-    snap_wi: int
+    event_name_1: str | None
+    event_type_1: str | None
+    event_name_2: str | None
+    event_type_2: str | None
+    snap_ca: bool
+    snap_tx: bool
+    snap_wi: bool
+    sell_price: float | None
 
     class Config:
         frozen = True

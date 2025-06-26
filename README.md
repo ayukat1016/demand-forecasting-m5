@@ -482,11 +482,11 @@ docker run \
 /usr/local/lib/python3.10/site-packages/hydra/_internal/hydra.py:119: UserWarning: Future Hydra versions will no longer change working directory at job runtime by default.
 See https://hydra.cc/docs/1.2/upgrades/1.1_to_1.2/changes_to_job_working_dir/ for more information.
   ret = run_job(
-[2024-10-15 07:06:43,974] [INFO] [__main__] [main.py:36] [main] START machine_learning...
-[2024-10-15 07:06:43,975] [INFO] [__main__] [main.py:37] [main] config: {'name': 'demand_forecasting_m5', 'model': {'name': 'lightgbm_regression', 'params': {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}, 'train_params': {'early_stopping_rounds': 10, 'log_evaluation': 10}}, 'period': {'training_date_from': 1, 'training_date_to': 93, 'validation_date_from': 94, 'validation_date_to': 100, 'prediction_date_from': 101, 'prediction_date_to': 107}}
-[2024-10-15 07:06:43,975] [INFO] [__main__] [main.py:41] [main] current working directory: /opt/outputs/2024-10-15/07-06-43
-[2024-10-15 07:06:43,975] [INFO] [__main__] [main.py:42] [main] run_name: 2024-10-15-07-06-43
-[2024-10-15 07:06:43,975] [INFO] [__main__] [main.py:43] [main] parameters:
+[2025-06-25 13:40:36,494] [INFO] [__main__] [main.py:36] [main] START machine_learning...
+[2025-06-25 13:40:36,495] [INFO] [__main__] [main.py:37] [main] config: {'name': 'demand_forecasting_m5', 'model': {'name': 'lightgbm_regression', 'params': {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}, 'train_params': {'early_stopping_rounds': 10, 'log_evaluation': 10}}, 'period': {'training_date_from': 1, 'training_date_to': 93, 'validation_date_from': 94, 'validation_date_to': 100, 'prediction_date_from': 101, 'prediction_date_to': 107}}
+[2025-06-25 13:40:36,495] [INFO] [__main__] [main.py:41] [main] current working directory: /opt/outputs/2025-06-25/13-40-36
+[2025-06-25 13:40:36,495] [INFO] [__main__] [main.py:42] [main] run_name: 2025-06-25-13-40-36
+[2025-06-25 13:40:36,495] [INFO] [__main__] [main.py:43] [main] parameters:
 training_date_from: 1
 training_date_to: 93
 validation_date_from: 94
@@ -494,7 +494,7 @@ validation_date_to: 100
 prediction_date_from: 101
 prediction_date_to: 107
 
-2024/10/15 07:06:44 WARNING mlflow.utils.git_utils: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
+2025/06/25 13:40:36 WARNING mlflow.utils.git_utils: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
 The git executable must be specified in one of the following ways:
     - be included in your $PATH
     - be set via $GIT_PYTHON_GIT_EXECUTABLE
@@ -511,58 +511,58 @@ $GIT_PYTHON_REFRESH environment variable. Use one of the following values:
 Example:
     export GIT_PYTHON_REFRESH=quiet
 
-[2024-10-15 07:06:44,104] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:116] [make_training_data] load data from: 1 to 100
-[2024-10-15 07:06:44,396] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 10000...
-[2024-10-15 07:06:44,642] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 20000...
-[2024-10-15 07:06:44,843] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 30000...
-[2024-10-15 07:06:45,136] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 40000...
-[2024-10-15 07:06:45,343] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 50000...
-[2024-10-15 07:06:45,617] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 60000...
-[2024-10-15 07:06:45,834] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 70000...
-[2024-10-15 07:06:46,070] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 80000...
-[2024-10-15 07:06:46,458] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 90000...
-[2024-10-15 07:06:46,717] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 100000...
-[2024-10-15 07:06:46,943] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 110000...
-[2024-10-15 07:06:47,287] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 120000...
-[2024-10-15 07:06:47,383] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:269] [load_sales_calendar_data] done loading 122800...
-[2024-10-15 07:06:48,191] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 10000...
-[2024-10-15 07:06:48,285] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 20000...
-[2024-10-15 07:06:48,491] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 30000...
-[2024-10-15 07:06:48,674] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 40000...
-[2024-10-15 07:06:48,806] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 50000...
-[2024-10-15 07:06:48,914] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 60000...
-[2024-10-15 07:06:49,016] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 70000...
-[2024-10-15 07:06:49,216] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 80000...
-[2024-10-15 07:06:49,316] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 90000...
-[2024-10-15 07:06:49,443] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 100000...
-[2024-10-15 07:06:49,550] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 110000...
-[2024-10-15 07:06:49,657] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 120000...
-[2024-10-15 07:06:49,874] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 130000...
-[2024-10-15 07:06:49,979] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 140000...
-[2024-10-15 07:06:50,084] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 150000...
-[2024-10-15 07:06:50,191] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 160000...
-[2024-10-15 07:06:50,298] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 170000...
-[2024-10-15 07:06:50,406] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 180000...
-[2024-10-15 07:06:50,644] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 190000...
-[2024-10-15 07:06:50,803] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 200000...
-[2024-10-15 07:06:51,012] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 210000...
-[2024-10-15 07:06:51,132] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 220000...
-[2024-10-15 07:06:51,243] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 230000...
-[2024-10-15 07:06:51,330] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 236880...
-[2024-10-15 07:06:52,190] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:144] [make_training_data] loaded: (122800, 18)
-[2024-10-15 07:06:52,207] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:145] [make_training_data] df:
-                                 id      item_id  dept_id cat_id store_id  ... snap_ca  snap_tx  snap_wi  sell_price release
-0       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        0        0        2.00       0
-1       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        0        0        2.00       0
-2       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        0        0        2.00       0
-3       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       1        1        0        2.00       0
-4       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       1        0        1        2.00       0
-...                             ...          ...      ...    ...      ...  ...     ...      ...      ...         ...     ...
-122795  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       1        0        0        1.98       0
-122796  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       1        1        1        1.98       0
-122797  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       1        1        1        1.98       0
-122798  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       1        1        0        1.98       0
-122799  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       1        0        1        1.98       0
+[2025-06-25 13:40:36,823] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:118] [make_training_data] load data from: 1 to 100
+[2025-06-25 13:40:37,344] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 10000...
+[2025-06-25 13:40:37,822] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 20000...
+[2025-06-25 13:40:38,265] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 30000...
+[2025-06-25 13:40:38,746] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 40000...
+[2025-06-25 13:40:39,201] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 50000...
+[2025-06-25 13:40:39,830] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 60000...
+[2025-06-25 13:40:40,695] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 70000...
+[2025-06-25 13:40:41,349] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 80000...
+[2025-06-25 13:40:41,893] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 90000...
+[2025-06-25 13:40:42,540] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 100000...
+[2025-06-25 13:40:43,071] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 110000...
+[2025-06-25 13:40:43,717] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 120000...
+[2025-06-25 13:40:44,312] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:258] [load_sales_calendar_prices_data] done loading 122800...
+[2025-06-25 13:40:45,659] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 10000...
+[2025-06-25 13:40:45,862] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 20000...
+[2025-06-25 13:40:46,069] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 30000...
+[2025-06-25 13:40:46,310] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 40000...
+[2025-06-25 13:40:46,520] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 50000...
+[2025-06-25 13:40:46,637] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 60000...
+[2025-06-25 13:40:46,871] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 70000...
+[2025-06-25 13:40:47,094] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 80000...
+[2025-06-25 13:40:47,212] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 90000...
+[2025-06-25 13:40:47,431] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 100000...
+[2025-06-25 13:40:47,664] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 110000...
+[2025-06-25 13:40:47,787] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 120000...
+[2025-06-25 13:40:48,030] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 130000...
+[2025-06-25 13:40:48,274] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 140000...
+[2025-06-25 13:40:48,422] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 150000...
+[2025-06-25 13:40:48,664] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 160000...
+[2025-06-25 13:40:48,782] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 170000...
+[2025-06-25 13:40:49,029] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 180000...
+[2025-06-25 13:40:49,158] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 190000...
+[2025-06-25 13:40:49,416] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 200000...
+[2025-06-25 13:40:49,533] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 210000...
+[2025-06-25 13:40:49,791] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 220000...
+[2025-06-25 13:40:49,908] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 230000...
+[2025-06-25 13:40:50,130] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:302] [load_prices_data] done loading 236880...
+[2025-06-25 13:40:50,838] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:140] [make_training_data] loaded: (122800, 18)
+[2025-06-25 13:40:50,856] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:141] [make_training_data] df:
+                                 id      item_id  dept_id cat_id  ... snap_tx snap_wi  sell_price  release
+0       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...   False   False        2.00        0
+1       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...   False   False        2.00        0
+2       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...   False   False        2.00        0
+3       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...    True   False        2.00        0
+4       FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...   False    True        2.00        0
+...                             ...          ...      ...    ...  ...     ...     ...         ...      ...
+122795  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...   False   False        1.98        0
+122796  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...    True    True        1.98        0
+122797  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...    True    True        1.98        0
+122798  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...    True   False        1.98        0
+122799  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...   False    True        1.98        0
 
 [122800 rows x 18 columns]
 column:
@@ -585,54 +585,30 @@ event_name_1     object
 event_type_1     object
 event_name_2     object
 event_type_2     object
-snap_ca           int64
-snap_tx           int64
-snap_wi           int64
+snap_ca            bool
+snap_tx            bool
+snap_wi            bool
 sell_price      float64
 release           int64
 dtype: object
 
-[2024-10-15 07:06:52,938] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:172] [make_prediction_data] load data from: 101 to 107
-[2024-10-15 07:06:53,782] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:291] [load_calendar_data] done loading 1000...
-[2024-10-15 07:06:53,809] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:291] [load_calendar_data] done loading 1969...
-[2024-10-15 07:06:53,959] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 10000...
-[2024-10-15 07:06:54,134] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 20000...
-[2024-10-15 07:06:54,239] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 30000...
-[2024-10-15 07:06:54,399] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 40000...
-[2024-10-15 07:06:54,498] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 50000...
-[2024-10-15 07:06:54,661] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 60000...
-[2024-10-15 07:06:54,765] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 70000...
-[2024-10-15 07:06:54,867] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 80000...
-[2024-10-15 07:06:55,043] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 90000...
-[2024-10-15 07:06:55,155] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 100000...
-[2024-10-15 07:06:55,323] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 110000...
-[2024-10-15 07:06:55,555] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 120000...
-[2024-10-15 07:06:55,662] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 130000...
-[2024-10-15 07:06:55,772] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 140000...
-[2024-10-15 07:06:55,878] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 150000...
-[2024-10-15 07:06:56,113] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 160000...
-[2024-10-15 07:06:56,235] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 170000...
-[2024-10-15 07:06:56,345] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 180000...
-[2024-10-15 07:06:56,453] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 190000...
-[2024-10-15 07:06:56,665] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 200000...
-[2024-10-15 07:06:56,783] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 210000...
-[2024-10-15 07:06:56,896] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 220000...
-[2024-10-15 07:06:57,012] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 230000...
-[2024-10-15 07:06:57,102] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:313] [load_prices_data] done loading 236880...
-[2024-10-15 07:06:57,931] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:228] [make_prediction_data] loaded: (8596, 18)
-[2024-10-15 07:06:57,945] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:229] [make_prediction_data] df:
-                               id      item_id  dept_id cat_id store_id  ... snap_ca  snap_tx  snap_wi  sell_price release
-0     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       1        1        1        2.00       0
-1     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       1        0        0        2.00       0
-2     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        1        1        2.00       0
-3     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        1        1        2.00       0
-4     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS     CA_1  ...       0        1        0        2.00       0
-...                           ...          ...      ...    ...      ...  ...     ...      ...      ...         ...     ...
-8591  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       0        1        1        1.98       0
-8592  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       0        1        1        1.98       0
-8593  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       0        1        0        1.98       0
-8594  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       0        0        1        1.98       0
-8595  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS     CA_2  ...       0        1        1        1.98       0
+[2025-06-25 13:40:51,424] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:173] [make_prediction_data] load data from: 101 to 107
+[2025-06-25 13:40:51,939] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:280] [load_calendar_data] done loading 1000...
+[2025-06-25 13:40:51,957] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:280] [load_calendar_data] done loading 1969...
+[2025-06-25 13:40:52,042] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:217] [make_prediction_data] loaded: (8596, 18)
+[2025-06-25 13:40:52,055] [INFO] [src.usecase.data_loader_usecase] [data_loader_usecase.py:218] [make_prediction_data] df:
+                               id      item_id  dept_id cat_id  ... snap_tx snap_wi  sell_price  release
+0     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...       1       1        2.00        0
+1     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...       0       0        2.00        0
+2     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...       1       1        2.00        0
+3     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...       1       1        2.00        0
+4     FOODS_1_001_CA_1_evaluation  FOODS_1_001  FOODS_1  FOODS  ...       1       0        2.00        0
+...                           ...          ...      ...    ...  ...     ...     ...         ...      ...
+8591  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...       1       1        1.98        0
+8592  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...       1       1        1.98        0
+8593  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...       1       0        1.98        0
+8594  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...       0       1        1.98        0
+8595  FOODS_2_399_CA_2_evaluation  FOODS_2_399  FOODS_2  FOODS  ...       1       1        1.98        0
 
 [8596 rows x 18 columns]
 column:
@@ -662,7 +638,7 @@ sell_price      float64
 release           int64
 dtype: object
 
-[2024-10-15 07:06:58,424] [INFO] [src.domain.algorithm.preprocess] [preprocess.py:66] [run] price data extracted:
+[2025-06-25 13:40:52,350] [INFO] [src.domain.algorithm.preprocess] [preprocess.py:66] [run] price data extracted:
         price_max  price_min  price_std  price_mean  price_norm  price_nunique  item_nunique
 0            2.00       2.00        0.0        2.00         1.0              1          20.0
 1            2.00       2.00        0.0        2.00         1.0              1          20.0
@@ -691,19 +667,19 @@ price_nunique      int64
 item_nunique     float64
 dtype: object
 
-[2024-10-15 07:07:03,676] [INFO] [src.domain.algorithm.preprocess] [preprocess.py:137] [run] sales lag data extracted:
-        lag_21_7  lag_21_8  lag_21_9  lag_21_10  ...  rolling_mean_30  rolling_std_30  rolling_mean_60  rolling_std_60
-0            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
-1            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
-2            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
-3            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
-4            NaN       NaN       NaN        NaN  ...              NaN             NaN              NaN             NaN
-...          ...       ...       ...        ...  ...              ...             ...              ...             ...
-131391       1.0       3.0       8.0       12.0  ...         5.800000        3.231312         6.616667        3.395369
-131392       3.0       1.0       3.0        8.0  ...         5.700000        3.271085         6.516667        3.412299
-131393       7.0       3.0       1.0        3.0  ...         5.700000        3.271085         6.500000        3.407370
-131394       7.0       7.0       3.0        1.0  ...         5.800000        3.263170         6.500000        3.407370
-131395       6.0       7.0       7.0        3.0  ...         5.766667        3.255588         6.483333        3.407328
+[2025-06-25 13:40:56,253] [INFO] [src.domain.algorithm.preprocess] [preprocess.py:137] [run] sales lag data extracted:
+        lag_21_7  lag_21_8  lag_21_9  ...  rolling_std_30  rolling_mean_60  rolling_std_60
+0            NaN       NaN       NaN  ...             NaN              NaN             NaN
+1            NaN       NaN       NaN  ...             NaN              NaN             NaN
+2            NaN       NaN       NaN  ...             NaN              NaN             NaN
+3            NaN       NaN       NaN  ...             NaN              NaN             NaN
+4            NaN       NaN       NaN  ...             NaN              NaN             NaN
+...          ...       ...       ...  ...             ...              ...             ...
+131391       1.0       3.0       8.0  ...        3.231312         6.616667        3.395369
+131392       3.0       1.0       3.0  ...        3.271085         6.516667        3.412299
+131393       7.0       3.0       1.0  ...        3.271085         6.500000        3.407370
+131394       7.0       7.0       3.0  ...        3.263170         6.500000        3.407370
+131395       6.0       7.0       7.0  ...        3.255588         6.483333        3.407328
 
 [131396 rows x 23 columns]
 column:
@@ -740,8 +716,8 @@ rolling_mean_60    float64
 rolling_std_60     float64
 dtype: object
 
-[2024-10-15 07:07:03,746] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:57] [preprocess_dataset] transform training data...
-[2024-10-15 07:07:04,070] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:98] [split_dataset] done preprocessing dataset:
+[2025-06-25 13:40:56,340] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:57] [preprocess_dataset] transform training data...
+[2025-06-25 13:40:56,585] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:98] [split_dataset] done preprocessing dataset:
 x columns:
 Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'event_type_2', 'snap_ca', 'snap_tx', 'snap_wi', 'sell_price',
@@ -754,18 +730,18 @@ Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'rolling_std_30', 'rolling_mean_60', 'rolling_std_60'],
       dtype='object')
 x:
-            item_id  dept_id event_name_1 event_type_1  ... rolling_mean_30 rolling_std_30  rolling_mean_60  rolling_std_60
-0       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-1       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-2       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-3       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-4       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-...             ...      ...          ...          ...  ...             ...            ...              ...             ...
-114199  FOODS_2_399  FOODS_2                            ...        7.100000       3.575298         7.300000        3.669850
-114200  FOODS_2_399  FOODS_2                            ...        7.066667       3.609693         7.066667        3.482969
-114201  FOODS_2_399  FOODS_2                            ...        6.966667       3.624470         6.950000        3.431781
-114202  FOODS_2_399  FOODS_2                            ...        6.733333       3.580920         6.816667        3.387373
-114203  FOODS_2_399  FOODS_2                            ...        6.700000       3.592617         6.816667        3.387373
+            item_id  dept_id event_name_1  ... rolling_std_30 rolling_mean_60 rolling_std_60
+0       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+1       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+2       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+3       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+4       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+...             ...      ...          ...  ...            ...             ...            ...
+114199  FOODS_2_399  FOODS_2               ...       3.575298        7.300000       3.669850
+114200  FOODS_2_399  FOODS_2               ...       3.609693        7.066667       3.482969
+114201  FOODS_2_399  FOODS_2               ...       3.624470        6.950000       3.431781
+114202  FOODS_2_399  FOODS_2               ...       3.580920        6.816667       3.387373
+114203  FOODS_2_399  FOODS_2               ...       3.592617        6.816667       3.387373
 
 [114204 rows x 41 columns]
 y:
@@ -784,8 +760,8 @@ y:
 
 [114204 rows x 1 columns]
 
-[2024-10-15 07:07:04,089] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:62] [preprocess_dataset] transform validation data...
-[2024-10-15 07:07:04,210] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:98] [split_dataset] done preprocessing dataset:
+[2025-06-25 13:40:56,600] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:62] [preprocess_dataset] transform validation data...
+[2025-06-25 13:40:56,648] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:98] [split_dataset] done preprocessing dataset:
 x columns:
 Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'event_type_2', 'snap_ca', 'snap_tx', 'snap_wi', 'sell_price',
@@ -798,18 +774,18 @@ Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'rolling_std_30', 'rolling_mean_60', 'rolling_std_60'],
       dtype='object')
 x:
-          item_id  dept_id   event_name_1 event_type_1  ... rolling_mean_30 rolling_std_30  rolling_mean_60  rolling_std_60
-0     FOODS_1_001  FOODS_1                              ...        0.766667       1.006302         1.133333        1.383519
-1     FOODS_1_001  FOODS_1                              ...        0.700000       0.987857         1.066667        1.338690
-2     FOODS_1_001  FOODS_1                              ...        0.700000       0.987857         1.033333        1.339955
-3     FOODS_1_001  FOODS_1  Cinco De Mayo     Cultural  ...        0.666667       0.994236         1.000000        1.340377
-4     FOODS_1_001  FOODS_1                              ...        0.666667       0.994236         1.000000        1.340377
-...           ...      ...            ...          ...  ...             ...            ...              ...             ...
-8591  FOODS_2_399  FOODS_2                              ...        6.266667       3.741043         6.650000        3.297791
-8592  FOODS_2_399  FOODS_2  Cinco De Mayo     Cultural  ...        6.200000       3.763711         6.533333        3.264948
-8593  FOODS_2_399  FOODS_2                              ...        6.333333       3.790490         6.633333        3.246728
-8594  FOODS_2_399  FOODS_2                              ...        6.633333       3.791855         6.766667        3.259233
-8595  FOODS_2_399  FOODS_2   Mother's day     Cultural  ...        6.666667       3.835706         6.800000        3.302798
+          item_id  dept_id   event_name_1  ... rolling_std_30 rolling_mean_60 rolling_std_60
+0     FOODS_1_001  FOODS_1                 ...       1.006302        1.133333       1.383519
+1     FOODS_1_001  FOODS_1                 ...       0.987857        1.066667       1.338690
+2     FOODS_1_001  FOODS_1                 ...       0.987857        1.033333       1.339955
+3     FOODS_1_001  FOODS_1  Cinco De Mayo  ...       0.994236        1.000000       1.340377
+4     FOODS_1_001  FOODS_1                 ...       0.994236        1.000000       1.340377
+...           ...      ...            ...  ...            ...             ...            ...
+8591  FOODS_2_399  FOODS_2                 ...       3.741043        6.650000       3.297791
+8592  FOODS_2_399  FOODS_2  Cinco De Mayo  ...       3.763711        6.533333       3.264948
+8593  FOODS_2_399  FOODS_2                 ...       3.790490        6.633333       3.246728
+8594  FOODS_2_399  FOODS_2                 ...       3.791855        6.766667       3.259233
+8595  FOODS_2_399  FOODS_2   Mother's day  ...       3.835706        6.800000       3.302798
 
 [8596 rows x 41 columns]
 y:
@@ -828,8 +804,8 @@ y:
 
 [8596 rows x 1 columns]
 
-[2024-10-15 07:07:04,212] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:67] [preprocess_dataset] transform prediction data...
-[2024-10-15 07:07:04,315] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:98] [split_dataset] done preprocessing dataset:
+[2025-06-25 13:40:56,649] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:67] [preprocess_dataset] transform prediction data...
+[2025-06-25 13:40:56,695] [INFO] [src.usecase.preprocess_usecase] [preprocess_usecase.py:98] [split_dataset] done preprocessing dataset:
 x columns:
 Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'event_type_2', 'snap_ca', 'snap_tx', 'snap_wi', 'sell_price',
@@ -842,18 +818,18 @@ Index(['item_id', 'dept_id', 'event_name_1', 'event_type_1', 'event_name_2',
        'rolling_std_30', 'rolling_mean_60', 'rolling_std_60'],
       dtype='object')
 x:
-          item_id  dept_id event_name_1 event_type_1  ... rolling_mean_30 rolling_std_30  rolling_mean_60  rolling_std_60
-0     FOODS_1_001  FOODS_1                            ...        1.066667       1.552158         1.033333        1.365019
-1     FOODS_1_001  FOODS_1                            ...        1.100000       1.539144         1.033333        1.365019
-2     FOODS_1_001  FOODS_1                            ...        0.966667       1.449931         1.000000        1.365433
-3     FOODS_1_001  FOODS_1                            ...        0.966667       1.449931         0.950000        1.345740
-4     FOODS_1_001  FOODS_1                            ...        1.233333       2.062528         1.100000        1.694458
-...           ...      ...          ...          ...  ...             ...            ...              ...             ...
-8591  FOODS_2_399  FOODS_2                            ...        5.800000       3.231312         6.616667        3.395369
-8592  FOODS_2_399  FOODS_2                            ...        5.700000       3.271085         6.516667        3.412299
-8593  FOODS_2_399  FOODS_2                            ...        5.700000       3.271085         6.500000        3.407370
-8594  FOODS_2_399  FOODS_2                            ...        5.800000       3.263170         6.500000        3.407370
-8595  FOODS_2_399  FOODS_2                            ...        5.766667       3.255588         6.483333        3.407328
+          item_id  dept_id event_name_1  ... rolling_std_30 rolling_mean_60 rolling_std_60
+0     FOODS_1_001  FOODS_1               ...       1.552158        1.033333       1.365019
+1     FOODS_1_001  FOODS_1               ...       1.539144        1.033333       1.365019
+2     FOODS_1_001  FOODS_1               ...       1.449931        1.000000       1.365433
+3     FOODS_1_001  FOODS_1               ...       1.449931        0.950000       1.345740
+4     FOODS_1_001  FOODS_1               ...       2.062528        1.100000       1.694458
+...           ...      ...          ...  ...            ...             ...            ...
+8591  FOODS_2_399  FOODS_2               ...       3.231312        6.616667       3.395369
+8592  FOODS_2_399  FOODS_2               ...       3.271085        6.516667       3.412299
+8593  FOODS_2_399  FOODS_2               ...       3.271085        6.500000       3.407370
+8594  FOODS_2_399  FOODS_2               ...       3.263170        6.500000       3.407370
+8595  FOODS_2_399  FOODS_2               ...       3.255588        6.483333       3.407328
 
 [8596 rows x 41 columns]
 y:
@@ -872,12 +848,12 @@ y:
 
 [8596 rows x 1 columns]
 
-[2024-10-15 07:07:06,808] [INFO] [__main__] [main.py:109] [main] save files
-training data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_training_xy_keys.csv', '/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_training_xy_x.csv', '/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_training_xy_y.csv']
-validation data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_validation_xy_keys.csv', '/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_validation_xy_x.csv', '/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_validation_xy_y.csv']
-prediction data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_prediction_xy_keys.csv', '/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_prediction_xy_x.csv', '/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_prediction_xy_y.csv']
+[2025-06-25 13:40:58,548] [INFO] [__main__] [main.py:111] [main] save files
+training data: ['/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_training_xy_keys.csv', '/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_training_xy_x.csv', '/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_training_xy_y.csv']
+validation data: ['/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_validation_xy_keys.csv', '/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_validation_xy_x.csv', '/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_validation_xy_y.csv']
+prediction data: ['/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_prediction_xy_keys.csv', '/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_prediction_xy_x.csv', '/opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_prediction_xy_y.csv']
 
-[2024-10-15 07:07:06,985] [INFO] [__main__] [main.py:145] [main] loaded preprocessed dataset:
+[2025-06-25 13:40:58,796] [INFO] [__main__] [main.py:147] [main] loaded preprocessed dataset:
     training:
     XY(keys=       store_id      item_id  date_id
 0          CA_1  FOODS_1_001        1
@@ -892,18 +868,18 @@ prediction data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_predicti
 114202     CA_2  FOODS_2_399       92
 114203     CA_2  FOODS_2_399       93
 
-[114204 rows x 3 columns], x=            item_id  dept_id event_name_1 event_type_1  ... rolling_mean_30 rolling_std_30  rolling_mean_60  rolling_std_60
-0       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-1       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-2       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-3       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-4       FOODS_1_001  FOODS_1                            ...             NaN            NaN              NaN             NaN
-...             ...      ...          ...          ...  ...             ...            ...              ...             ...
-114199  FOODS_2_399  FOODS_2                            ...        7.100000       3.575298         7.300000        3.669850
-114200  FOODS_2_399  FOODS_2                            ...        7.066667       3.609693         7.066667        3.482969
-114201  FOODS_2_399  FOODS_2                            ...        6.966667       3.624470         6.950000        3.431781
-114202  FOODS_2_399  FOODS_2                            ...        6.733333       3.580920         6.816667        3.387373
-114203  FOODS_2_399  FOODS_2                            ...        6.700000       3.592617         6.816667        3.387373
+[114204 rows x 3 columns], x=            item_id  dept_id event_name_1  ... rolling_std_30 rolling_mean_60 rolling_std_60
+0       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+1       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+2       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+3       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+4       FOODS_1_001  FOODS_1               ...            NaN             NaN            NaN
+...             ...      ...          ...  ...            ...             ...            ...
+114199  FOODS_2_399  FOODS_2               ...       3.575298        7.300000       3.669850
+114200  FOODS_2_399  FOODS_2               ...       3.609693        7.066667       3.482969
+114201  FOODS_2_399  FOODS_2               ...       3.624470        6.950000       3.431781
+114202  FOODS_2_399  FOODS_2               ...       3.580920        6.816667       3.387373
+114203  FOODS_2_399  FOODS_2               ...       3.592617        6.816667       3.387373
 
 [114204 rows x 41 columns], y=        sales
 0         3.0
@@ -933,18 +909,18 @@ prediction data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_predicti
 8594     CA_2  FOODS_2_399       99
 8595     CA_2  FOODS_2_399      100
 
-[8596 rows x 3 columns], x=          item_id  dept_id   event_name_1 event_type_1  ... rolling_mean_30 rolling_std_30  rolling_mean_60  rolling_std_60
-0     FOODS_1_001  FOODS_1                              ...        0.766667       1.006302         1.133333        1.383519
-1     FOODS_1_001  FOODS_1                              ...        0.700000       0.987857         1.066667        1.338690
-2     FOODS_1_001  FOODS_1                              ...        0.700000       0.987857         1.033333        1.339955
-3     FOODS_1_001  FOODS_1  Cinco De Mayo     Cultural  ...        0.666667       0.994236         1.000000        1.340377
-4     FOODS_1_001  FOODS_1                              ...        0.666667       0.994236         1.000000        1.340377
-...           ...      ...            ...          ...  ...             ...            ...              ...             ...
-8591  FOODS_2_399  FOODS_2                              ...        6.266667       3.741043         6.650000        3.297791
-8592  FOODS_2_399  FOODS_2  Cinco De Mayo     Cultural  ...        6.200000       3.763711         6.533333        3.264948
-8593  FOODS_2_399  FOODS_2                              ...        6.333333       3.790490         6.633333        3.246728
-8594  FOODS_2_399  FOODS_2                              ...        6.633333       3.791855         6.766667        3.259233
-8595  FOODS_2_399  FOODS_2   Mother's day     Cultural  ...        6.666667       3.835706         6.800000        3.302798
+[8596 rows x 3 columns], x=          item_id  dept_id   event_name_1  ... rolling_std_30 rolling_mean_60 rolling_std_60
+0     FOODS_1_001  FOODS_1                 ...       1.006302        1.133333       1.383519
+1     FOODS_1_001  FOODS_1                 ...       0.987857        1.066667       1.338690
+2     FOODS_1_001  FOODS_1                 ...       0.987857        1.033333       1.339955
+3     FOODS_1_001  FOODS_1  Cinco De Mayo  ...       0.994236        1.000000       1.340377
+4     FOODS_1_001  FOODS_1                 ...       0.994236        1.000000       1.340377
+...           ...      ...            ...  ...            ...             ...            ...
+8591  FOODS_2_399  FOODS_2                 ...       3.741043        6.650000       3.297791
+8592  FOODS_2_399  FOODS_2  Cinco De Mayo  ...       3.763711        6.533333       3.264948
+8593  FOODS_2_399  FOODS_2                 ...       3.790490        6.633333       3.246728
+8594  FOODS_2_399  FOODS_2                 ...       3.791855        6.766667       3.259233
+8595  FOODS_2_399  FOODS_2   Mother's day  ...       3.835706        6.800000       3.302798
 
 [8596 rows x 41 columns], y=      sales
 0       7.0
@@ -974,18 +950,18 @@ prediction data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_predicti
 8594     CA_2  FOODS_2_399      106
 8595     CA_2  FOODS_2_399      107
 
-[8596 rows x 3 columns], x=          item_id  dept_id event_name_1 event_type_1  ... rolling_mean_30 rolling_std_30  rolling_mean_60  rolling_std_60
-0     FOODS_1_001  FOODS_1                            ...        1.066667       1.552158         1.033333        1.365019
-1     FOODS_1_001  FOODS_1                            ...        1.100000       1.539144         1.033333        1.365019
-2     FOODS_1_001  FOODS_1                            ...        0.966667       1.449931         1.000000        1.365433
-3     FOODS_1_001  FOODS_1                            ...        0.966667       1.449931         0.950000        1.345740
-4     FOODS_1_001  FOODS_1                            ...        1.233333       2.062528         1.100000        1.694458
-...           ...      ...          ...          ...  ...             ...            ...              ...             ...
-8591  FOODS_2_399  FOODS_2                            ...        5.800000       3.231312         6.616667        3.395369
-8592  FOODS_2_399  FOODS_2                            ...        5.700000       3.271085         6.516667        3.412299
-8593  FOODS_2_399  FOODS_2                            ...        5.700000       3.271085         6.500000        3.407370
-8594  FOODS_2_399  FOODS_2                            ...        5.800000       3.263170         6.500000        3.407370
-8595  FOODS_2_399  FOODS_2                            ...        5.766667       3.255588         6.483333        3.407328
+[8596 rows x 3 columns], x=          item_id  dept_id event_name_1  ... rolling_std_30 rolling_mean_60 rolling_std_60
+0     FOODS_1_001  FOODS_1               ...       1.552158        1.033333       1.365019
+1     FOODS_1_001  FOODS_1               ...       1.539144        1.033333       1.365019
+2     FOODS_1_001  FOODS_1               ...       1.449931        1.000000       1.365433
+3     FOODS_1_001  FOODS_1               ...       1.449931        0.950000       1.345740
+4     FOODS_1_001  FOODS_1               ...       2.062528        1.100000       1.694458
+...           ...      ...          ...  ...            ...             ...            ...
+8591  FOODS_2_399  FOODS_2               ...       3.231312        6.616667       3.395369
+8592  FOODS_2_399  FOODS_2               ...       3.271085        6.516667       3.412299
+8593  FOODS_2_399  FOODS_2               ...       3.271085        6.500000       3.407370
+8594  FOODS_2_399  FOODS_2               ...       3.263170        6.500000       3.407370
+8595  FOODS_2_399  FOODS_2               ...       3.255588        6.483333       3.407328
 
 [8596 rows x 41 columns], y=      sales
 0       NaN
@@ -1002,25 +978,25 @@ prediction data: ['/opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_predicti
 
 [8596 rows x 1 columns])
 
-[2024-10-15 07:07:06,985][src.domain.algorithm.lightgbm_regressor][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.05, 'num_leaves': 32, 'subsample': 0.7, 'subsample_freq': 1, 'feature_fraction': 0.8, 'min_data_in_leaf': 50, 'random_state': 123, 'importance_type': 'gain'}
-[2024-10-15 07:07:06,986][src.domain.algorithm.lightgbm_regressor][INFO] - initialized model: LGBMRegressor(feature_fraction=0.8, importance_type='gain', learning_rate=0.05,
+[2025-06-25 13:40:58,796][src.domain.algorithm.lightgbm_regressor][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.05, 'num_leaves': 32, 'subsample': 0.7, 'subsample_freq': 1, 'feature_fraction': 0.8, 'min_data_in_leaf': 50, 'random_state': 123, 'importance_type': 'gain'}
+[2025-06-25 13:40:58,834][src.domain.algorithm.lightgbm_regressor][INFO] - initialized model: LGBMRegressor(feature_fraction=0.8, importance_type='gain', learning_rate=0.05,
               metric='rmse', min_data_in_leaf=50, n_estimators=1000,
               num_leaves=32, objective='rmse', random_state=123, subsample=0.7,
               subsample_freq=1)
-[2024-10-15 07:07:06,987][src.domain.algorithm.lightgbm_regressor][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}
-[2024-10-15 07:07:06,989][src.domain.algorithm.lightgbm_regressor][INFO] - initialized model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
+[2025-06-25 13:40:58,835][src.domain.algorithm.lightgbm_regressor][INFO] - params: {'boosting_type': 'gbdt', 'n_estimators': 1000, 'objective': 'rmse', 'metric': 'rmse', 'learning_rate': 0.03, 'num_leaves': 31, 'min_data_in_leaf': 20, 'random_state': 42, 'importance_type': 'gain'}
+[2025-06-25 13:40:58,836][src.domain.algorithm.lightgbm_regressor][INFO] - initialized model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
               min_data_in_leaf=20, n_estimators=1000, objective='rmse',
               random_state=42)
-[2024-10-15 07:07:07,014] [INFO] [__main__] [main.py:179] [main] START machine learning task for CA_1
-[2024-10-15 07:07:07,026] [INFO] [src.usecase.training_usecase] [training_usecase.py:21] [train] start training: lightgbm_regression...
-[2024-10-15 07:07:07,034][src.domain.algorithm.lightgbm_regressor][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
+[2025-06-25 13:40:58,859] [INFO] [__main__] [main.py:181] [main] START machine learning task for CA_1
+[2025-06-25 13:40:58,869] [INFO] [src.usecase.training_usecase] [training_usecase.py:21] [train] start training: lightgbm_regression...
+[2025-06-25 13:40:58,877][src.domain.algorithm.lightgbm_regressor][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
               min_data_in_leaf=20, n_estimators=1000, objective='rmse',
               random_state=42)
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
 [LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
 [LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.006389 seconds.
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.007278 seconds.
 You can set `force_row_wise=true` to remove the overhead.
 And if memory is not enough, you can set `force_col_wise=true`.
 [LightGBM] [Info] Total Bins 4042
@@ -1036,11 +1012,11 @@ Training until validation scores don't improve for 10 rounds
 [60]    train's rmse: 1.71871   valid's rmse: 1.92623
 Early stopping, best iteration is:
 [58]    train's rmse: 1.7303    valid's rmse: 1.92273
-[2024-10-15 07:07:07,485] [INFO] [src.usecase.training_usecase] [training_usecase.py:33] [train] done training: lightgbm_regression
-[2024-10-15 07:07:07,486] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
+[2025-06-25 13:40:59,339] [INFO] [src.usecase.training_usecase] [training_usecase.py:33] [train] done training: lightgbm_regression
+[2025-06-25 13:40:59,340] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-10-15 07:07:07,530] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
-[2024-10-15 07:07:07,537] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
+[2025-06-25 13:40:59,389] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
+[2025-06-25 13:40:59,394] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
      store_id      item_id  date_id  prediction
 0        CA_1  FOODS_1_001       94    0.892972
 1        CA_1  FOODS_1_001       95    0.833340
@@ -1056,9 +1032,9 @@ Early stopping, best iteration is:
 
 [4298 rows x 4 columns]
 
-[2024-10-15 07:07:07,539] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:26] [evaluate] start evaluation...
-[2024-10-15 07:07:07,548] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:53] [evaluate] done evaluation
-[2024-10-15 07:07:07,555] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:54] [evaluate] evaluation:
+[2025-06-25 13:40:59,396] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:25] [evaluate] start evaluation...
+[2025-06-25 13:40:59,404] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:52] [evaluate] done evaluation
+[2025-06-25 13:40:59,409] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:53] [evaluate] evaluation:
 data:
      store_id      item_id  date_id  y_true    y_pred
 0        CA_1  FOODS_1_001       94     7.0  0.892972
@@ -1077,7 +1053,7 @@ data:
 mean_absolute_error: 0.8846026878702851
 root_mean_squared_error: 1.9227268535062014
 
-[2024-10-15 07:07:07,582] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:79] [export_feature_importance] feature importances
+[2025-06-25 13:40:59,436] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:78] [export_feature_importance] feature importances
        feature_name    importance
 0           item_id  4.486927e+06
 1        sell_price  2.975108e+05
@@ -1121,10 +1097,10 @@ root_mean_squared_error: 1.9227268535062014
 39       price_mean  0.000000e+00
 40    price_nunique  0.000000e+00
 
-[2024-10-15 07:07:07,582] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
+[2025-06-25 13:40:59,436] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-10-15 07:07:07,617] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
-[2024-10-15 07:07:07,623] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
+[2025-06-25 13:40:59,466] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
+[2025-06-25 13:40:59,471] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
      store_id      item_id  date_id  prediction
 0        CA_1  FOODS_1_001      101    1.198667
 1        CA_1  FOODS_1_001      102    1.082044
@@ -1140,20 +1116,20 @@ root_mean_squared_error: 1.9227268535062014
 
 [4298 rows x 4 columns]
 
-[2024-10-15 07:07:07,623] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:20] [register_prediction] register prediction
-[2024-10-15 07:07:07,747] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:24] [register_prediction] done register prediction
-[2024-10-15 07:07:07,747][src.domain.algorithm.lightgbm_regressor][INFO] - save model: /opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_CA_1_model.txt
-[2024-10-15 07:07:07,788] [INFO] [__main__] [main.py:275] [main] DONE machine learning task for CA_1
-[2024-10-15 07:07:07,788] [INFO] [__main__] [main.py:179] [main] START machine learning task for CA_2
-[2024-10-15 07:07:07,801] [INFO] [src.usecase.training_usecase] [training_usecase.py:21] [train] start training: lightgbm_regression...
-[2024-10-15 07:07:07,809][src.domain.algorithm.lightgbm_regressor][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
+[2025-06-25 13:40:59,471] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:20] [register_prediction] register prediction
+[2025-06-25 13:40:59,881] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:24] [register_prediction] done register prediction
+[2025-06-25 13:40:59,881][src.domain.algorithm.lightgbm_regressor][INFO] - save model: /opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_CA_1_model.txt
+[2025-06-25 13:40:59,918] [INFO] [__main__] [main.py:277] [main] DONE machine learning task for CA_1
+[2025-06-25 13:40:59,918] [INFO] [__main__] [main.py:181] [main] START machine learning task for CA_2
+[2025-06-25 13:40:59,926] [INFO] [src.usecase.training_usecase] [training_usecase.py:21] [train] start training: lightgbm_regression...
+[2025-06-25 13:40:59,935][src.domain.algorithm.lightgbm_regressor][INFO] - start train for model: LGBMRegressor(importance_type='gain', learning_rate=0.03, metric='rmse',
               min_data_in_leaf=20, n_estimators=1000, objective='rmse',
               random_state=42)
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
 [LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
 [LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.009924 seconds.
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.006816 seconds.
 You can set `force_row_wise=true` to remove the overhead.
 And if memory is not enough, you can set `force_col_wise=true`.
 [LightGBM] [Info] Total Bins 3447
@@ -1171,11 +1147,11 @@ Training until validation scores don't improve for 10 rounds
 [80]    train's rmse: 1.44168   valid's rmse: 1.44804
 Early stopping, best iteration is:
 [75]    train's rmse: 1.45442   valid's rmse: 1.44756
-[2024-10-15 07:07:08,276] [INFO] [src.usecase.training_usecase] [training_usecase.py:33] [train] done training: lightgbm_regression
-[2024-10-15 07:07:08,276] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
+[2025-06-25 13:41:00,288] [INFO] [src.usecase.training_usecase] [training_usecase.py:33] [train] done training: lightgbm_regression
+[2025-06-25 13:41:00,288] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-10-15 07:07:08,315] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
-[2024-10-15 07:07:08,320] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
+[2025-06-25 13:41:00,321] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
+[2025-06-25 13:41:00,326] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
      store_id      item_id  date_id  prediction
 0        CA_2  FOODS_1_001       94    1.464649
 1        CA_2  FOODS_1_001       95    1.485242
@@ -1191,9 +1167,9 @@ Early stopping, best iteration is:
 
 [4298 rows x 4 columns]
 
-[2024-10-15 07:07:08,322] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:26] [evaluate] start evaluation...
-[2024-10-15 07:07:08,332] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:53] [evaluate] done evaluation
-[2024-10-15 07:07:08,338] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:54] [evaluate] evaluation:
+[2025-06-25 13:41:00,328] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:25] [evaluate] start evaluation...
+[2025-06-25 13:41:00,336] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:52] [evaluate] done evaluation
+[2025-06-25 13:41:00,341] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:53] [evaluate] evaluation:
 data:
      store_id      item_id  date_id  y_true    y_pred
 0        CA_2  FOODS_1_001       94     0.0  1.464649
@@ -1212,7 +1188,7 @@ data:
 mean_absolute_error: 0.5706511222125771
 root_mean_squared_error: 1.4475629905483116
 
-[2024-10-15 07:07:08,370] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:79] [export_feature_importance] feature importances
+[2025-06-25 13:41:00,361] [INFO] [src.usecase.evaluation_usecase] [evaluation_usecase.py:78] [export_feature_importance] feature importances
        feature_name    importance
 0           item_id  2.143069e+06
 1        sell_price  5.177214e+05
@@ -1256,10 +1232,10 @@ root_mean_squared_error: 1.4475629905483116
 39       price_mean  0.000000e+00
 40    price_nunique  0.000000e+00
 
-[2024-10-15 07:07:08,370] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
+[2025-06-25 13:41:00,361] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:20] [predict] start prediction: lightgbm_regression...
 [LightGBM] [Warning] min_data_in_leaf is set=20, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=20
-[2024-10-15 07:07:08,406] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
-[2024-10-15 07:07:08,412] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
+[2025-06-25 13:41:00,391] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:47] [predict] done prediction: lightgbm_regression
+[2025-06-25 13:41:00,396] [INFO] [src.usecase.prediction_usecase] [prediction_usecase.py:48] [predict] prediction:
      store_id      item_id  date_id  prediction
 0        CA_2  FOODS_1_001      101    1.468277
 1        CA_2  FOODS_1_001      102    1.283893
@@ -1275,12 +1251,12 @@ root_mean_squared_error: 1.4475629905483116
 
 [4298 rows x 4 columns]
 
-[2024-10-15 07:07:08,413] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:20] [register_prediction] register prediction
-[2024-10-15 07:07:08,593] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:24] [register_prediction] done register prediction
-[2024-10-15 07:07:08,593][src.domain.algorithm.lightgbm_regressor][INFO] - save model: /opt/outputs/2024-10-15/07-06-43/2024-10-15-07-06-43_CA_2_model.txt
-[2024-10-15 07:07:08,659] [INFO] [__main__] [main.py:275] [main] DONE machine learning task for CA_2
-[2024-10-15 07:07:08,659] [INFO] [__main__] [main.py:277] [main] DONE machine learning task for lightgbm_regression: 2024-10-15-07-06-43
-[2024-10-15 07:07:08,671] [INFO] [__main__] [main.py:279] [main] DONE machine_learning
+[2025-06-25 13:41:00,396] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:20] [register_prediction] register prediction
+[2025-06-25 13:41:00,743] [INFO] [src.usecase.prediction_register_usecase] [prediction_register_usecase.py:24] [register_prediction] done register prediction
+[2025-06-25 13:41:00,744][src.domain.algorithm.lightgbm_regressor][INFO] - save model: /opt/outputs/2025-06-25/13-40-36/2025-06-25-13-40-36_CA_2_model.txt
+[2025-06-25 13:41:00,784] [INFO] [__main__] [main.py:277] [main] DONE machine learning task for CA_2
+[2025-06-25 13:41:00,784] [INFO] [__main__] [main.py:279] [main] DONE machine learning task for lightgbm_regression: 2025-06-25-13-40-36
+[2025-06-25 13:41:00,826] [INFO] [__main__] [main.py:281] [main] DONE machine_learning
 ```
 </details>
 

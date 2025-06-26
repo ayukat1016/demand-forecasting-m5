@@ -10,13 +10,13 @@ logger = configure_logger(__name__)
 
 
 class PredictionRegisterUsecase(object):
-    def __init__(self, prediction_repository: AbstractPredictionRepository):
+    def __init__(self, prediction_repository: AbstractPredictionRepository) -> None:
         self.prediction_repository = prediction_repository
 
     def register_prediction(
         self,
         predictions: pd.DataFrame,
-    ):
+    ) -> None:
         logger.info("register prediction")
         self.register_db(
             predictions=predictions,
@@ -26,7 +26,7 @@ class PredictionRegisterUsecase(object):
     def register_db(
         self,
         predictions: pd.DataFrame,
-    ):
+    ) -> None:
         data: List[dict] = predictions.to_dict(orient="records")
         records: List[Prediction] = []
         for d in data:

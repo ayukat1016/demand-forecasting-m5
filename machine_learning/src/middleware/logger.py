@@ -4,7 +4,7 @@ import os
 LOG_LEVEL = os.getenv("LOG_LEVEL", logging.DEBUG)
 
 
-def configure_logger(name) -> logging.Logger:
+def configure_logger(name: str) -> logging.Logger:
     logger = logging.getLogger(name)
 
     if not logger.handlers:

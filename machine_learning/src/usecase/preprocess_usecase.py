@@ -54,17 +54,17 @@ class PreprocessUsecase(object):
         )
         preds_mask = dataset.prediction_data.date_from <= df["date_id"]
 
-        logger.info(f"transform training data...")
+        logger.info("transform training data...")
         training_data = self.split_dataset(
             raw_data=df[train_mask],
         )
 
-        logger.info(f"transform validation data...")
+        logger.info("transform validation data...")
         validation_data = self.split_dataset(
             raw_data=df[valid_mask],
         )
 
-        logger.info(f"transform prediction data...")
+        logger.info("transform prediction data...")
         prediction_data = self.split_dataset(
             raw_data=df[preds_mask],
         )

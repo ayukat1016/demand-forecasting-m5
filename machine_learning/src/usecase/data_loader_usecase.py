@@ -6,12 +6,12 @@ import pandas as pd
 from src.domain.model.raw_data import RawDataset, RawDataWithTargetDates
 from src.domain.repository.calendar_repository import AbstractCalendarRepository
 from src.domain.repository.prices_repository import AbstractPricesRepository
-from src.domain.repository.sales_calendar_repository import (
-    AbstractSalesCalendarRepository,
+from src.domain.repository.sales_calendar_prices_repository import (
+    AbstractSalesCalendarPricesRepository,
 )
 from src.infrastructure.schema.calendar_schema import Calendar
 from src.infrastructure.schema.prices_schema import Prices
-from src.infrastructure.schema.sales_calendar_schema import SalesCalendar
+from src.infrastructure.schema.sales_calendar_prices_schema import SalesCalendarPrices
 from src.middleware.logger import configure_logger
 
 logger = configure_logger(__name__)
@@ -22,19 +22,19 @@ class DataLoaderUsecase(object):
         self,
         calendar_repository: AbstractCalendarRepository,
         prices_repository: AbstractPricesRepository,
-        sales_calendar_repository: AbstractSalesCalendarRepository,
+        sales_calendar_prices_repository: AbstractSalesCalendarPricesRepository,
     ):
         """Data loader usecase.
 
         Args:
             calendar_repository (AbstractCalendarRepository): Repository to load data for calendar.
             prices_repository (AbstractPricesRepository): Repository to load data for prices.
-            sales_calendar_repository  (AbstractSalesCalendarRepository): Repository to load data for training.
+            sales_calendar_prices_repository (AbstractSalesCalendarPricesRepository): Repository to load joined data for training.
         """
 
         self.calendar_repository = calendar_repository
         self.prices_repository = prices_repository
-        self.sales_calendar_repository = sales_calendar_repository
+        self.sales_calendar_prices_repository = sales_calendar_prices_repository
 
     def load_dataset(
         self,
@@ -58,7 +58,7 @@ class DataLoaderUsecase(object):
         Returns:
             RawDataset: Data loaded from database.
         """
-        training_data = self.make_training_data(
+        training_data, prices_df, release_df = self.make_training_data(
             date_from=training_date_from,
             date_to=validation_date_to,
         )
@@ -84,6 +84,8 @@ class DataLoaderUsecase(object):
             training_data=training_data,
             date_from=prediction_date_from,
             date_to=prediction_date_to,
+            prices_df=prices_df,
+            release_df=release_df,
         )
 
         prediction_data_with_target_dates = RawDataWithTargetDates(
@@ -102,7 +104,7 @@ class DataLoaderUsecase(object):
         self,
         date_from: int,
         date_to: int,
-    ) -> pd.DataFrame:
+    ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         """Load data.
 
         Args:
@@ -110,25 +112,20 @@ class DataLoaderUsecase(object):
             date_to (int): Last date.
 
         Returns:
-            pd.DataFrame: Training and validation data.
+            tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]: Training and validation data, prices data, and release data.
         """
 
         logger.info(f"load data from: {date_from} to {date_to}")
-        sales_data = self.load_sales_calendar_data(
+        data = self.load_sales_calendar_prices_data(
             date_from=date_from,
             date_to=date_to,
         )
-        sales_dataset_dict = [d.model_dump() for d in sales_data]
-        sales_df = pd.DataFrame(sales_dataset_dict)
+        dataset_dict = [d.model_dump() for d in data]
+        df = pd.DataFrame(dataset_dict)
 
         prices_data = self.load_prices_data()
         prices_dataset_dict = [d.model_dump() for d in prices_data]
         prices_df = pd.DataFrame(prices_dataset_dict)
-        sales_df = sales_df.merge(
-            prices_df[["store_id", "item_id", "wm_yr_wk", "sell_price"]],
-            on=["store_id", "item_id", "wm_yr_wk"],
-            how="left",
-        )
 
         release_df = (
             prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"]
@@ -137,9 +134,8 @@ class DataLoaderUsecase(object):
         )
         release_df.columns = pd.Index(["store_id", "item_id", "release"])
         release_df["release"] = release_df["release"] - release_df["release"].min()
-        sales_df = sales_df.merge(release_df, on=["store_id", "item_id"], how="left")
+        df = df.merge(release_df, on=["store_id", "item_id"], how="left")
 
-        df = sales_df
         df = df.sort_values(["store_id", "item_id", "date_id"]).reset_index(drop=True)
         logger.info(f"loaded: {df.shape}")
         logger.info(
@@ -151,19 +147,24 @@ type:
 {df.dtypes}
         """
         )
-        return df
+        return df, prices_df, release_df
 
     def make_prediction_data(
         self,
         training_data: pd.DataFrame,
         date_from: int,
         date_to: int,
+        prices_df: pd.DataFrame,
+        release_df: pd.DataFrame,
     ) -> pd.DataFrame:
         """Make prediction data from prices and calendar table.
 
         Args:
+            training_data (pd.DataFrame): Training data.
             date_from (int): Starting date for prediction data.
             date_to (int): Last date for prediction data.
+            prices_df (pd.DataFrame): Prices data.
+            release_df (pd.DataFrame): Release data.
 
         Returns:
             pd.DataFrame: Prediction data.
@@ -186,18 +187,6 @@ type:
         calendar_data = self.load_calendar_data()
         calendar_dataset_dict = [d.model_dump() for d in calendar_data]
         calendar_df = pd.DataFrame(calendar_dataset_dict)
-
-        prices_data = self.load_prices_data()
-        prices_dataset_dict = [d.model_dump() for d in prices_data]
-        prices_df = pd.DataFrame(prices_dataset_dict)
-
-        release_df = (
-            prices_df.groupby(["store_id", "item_id"])["wm_yr_wk"]
-            .agg(["min"])
-            .reset_index()
-        )
-        release_df.columns = pd.Index(["store_id", "item_id", "release"])
-        release_df["release"] = release_df["release"] - release_df["release"].min()
 
         pred_df = pred_df.merge(
             calendar_df[
@@ -237,35 +226,35 @@ type:
         )
         return df
 
-    def load_sales_calendar_data(
+    def load_sales_calendar_prices_data(
         self,
         date_from: int,
         date_to: int,
-    ) -> List[SalesCalendar]:
-        """Load data from sales and calendar table as training and validation data.
+    ) -> List[SalesCalendarPrices]:
+        """Load data from sales, calendar and prices tables as training and validation data.
 
         Args:
             date_from (int): Starting date.
             date_to (int): Last date.
 
         Returns:
-            List[SalesCalendar]: training and validation data.
+            List[SalesCalendarPrices]: training and validation data.
         """
 
-        data: List[SalesCalendar] = []
+        data: List[SalesCalendarPrices] = []
         position = 0
         limit = 10000
         while True:
-            sales_calendar_data = self.sales_calendar_repository.select(
+            sales_calendar_prices_data = self.sales_calendar_prices_repository.select(
                 date_from=date_from,
                 date_to=date_to,
                 limit=limit,
                 offset=position,
             )
-            if len(sales_calendar_data) == 0:
+            if len(sales_calendar_prices_data) == 0:
                 break
-            data.extend(sales_calendar_data)
-            position += len(sales_calendar_data)
+            data.extend(sales_calendar_prices_data)
+            position += len(sales_calendar_prices_data)
             logger.info(f"done loading {position}...")
         return data
 

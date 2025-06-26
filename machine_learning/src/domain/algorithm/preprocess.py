@@ -12,7 +12,7 @@ logger = configure_logger(__name__)
 
 
 class AbstractExtractor(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     @abstractmethod
@@ -24,7 +24,7 @@ class AbstractExtractor(ABC):
 
 
 class PricesExtractor(AbstractExtractor):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def run(
@@ -76,7 +76,7 @@ type:
 
 
 class LagSalesExtractor(AbstractExtractor):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def run(

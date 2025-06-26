@@ -8,7 +8,7 @@ logger = configure_logger(__name__)
 
 
 class PredictionUsecase(object):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def predict(
