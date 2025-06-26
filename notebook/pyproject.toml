@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "notebook"
+version = "0.1.0"
+description = ""
+authors = ["takuya.mouri <ayukat101699@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.6"
+pandas = "2.2.2"
+numpy = "1.26.4"
+scikit-learn = "1.5.1"
+lightgbm = "4.5.0"
+jupyterlab = "4.2.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
