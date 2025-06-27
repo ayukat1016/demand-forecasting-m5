@@ -160,4 +160,8 @@ cython_debug/
 #.idea/
 
 # Machine Learning
- machine_learning/outputs/
+machine_learning/outputs/
+notebook/outputs/
+
+# Jupyter
+**/.ipynb_checkpoints/

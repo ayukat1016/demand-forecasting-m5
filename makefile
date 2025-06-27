@@ -154,30 +154,76 @@ pull_machine_learning:
 	docker pull $(DOCKER_MACHINE_LEARNING_IMAGE_NAME)
 
 
+############ DEMAND FORECASTING NOTEBOOK COMMANDS ############
+NOTEBOOK_DIR := $(DIR)/notebook
+DOCKERFILE_NOTEBOOK = $(NOTEBOOK_DIR)/$(DOCKERFILE)
+DOCKER_NOTEBOOK_TAG = $(TAG)_notebook
+DOCKER_NOTEBOOK_IMAGE_NAME = $(DOCKER_REPOSITORY):$(DOCKER_NOTEBOOK_TAG)_$(VERSION)
+
+.PHONY: req_notebook
+req_notebook:
+	cd $(NOTEBOOK_DIR) && \
+	poetry export \
+		--without-hashes \
+		-f requirements.txt \
+		--output requirements.txt
+
+.PHONY: build_notebook
+build_notebook:
+	docker build \
+		--platform $(PLATFORM) \
+		-t $(DOCKER_NOTEBOOK_IMAGE_NAME) \
+		-f $(DOCKERFILE_NOTEBOOK) \
+		.
+
+.PHONY: run_notebook
+run_notebook:
+	docker run \
+		-it \
+		--rm \
+		--name notebook \
+		-v $(DIR):/opt \
+		-p 8888:8888 \
+		$(DOCKER_NOTEBOOK_IMAGE_NAME) \
+		jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token=''
+
+.PHONY: push_machine_learning
+push_notebook:
+	docker push $(DOCKER_NOTEBOOK_IMAGE_NAME)
+
+.PHONY: pull_machine_learning
+pull_notebook:
+	docker pull $(DOCKER_NOTEBOOK_IMAGE_NAME)
+
+
 ############ ALL COMMANDS ############
 .PHONY: req_all
 req_all: req_data_registration \
 	req_machine_learning \
 	req_mlflow \
 	req_bi \
+	req_notebook \
 
 .PHONY: build_all
 build_all: build_data_registration \
 	build_machine_learning \
 	build_mlflow \
 	build_bi \
+	build_notebook \
 
 .PHONY: push_all
 push_all: push_data_registration \
 	push_machine_learning \
 	push_mlflow \
 	push_bi \
+	push_notebook \
 
 .PHONY: pull_all
 pull_all: pull_data_registration \
 	pull_machine_learning \
 	pull_mlflow \
 	pull_bi \
+	pull_notebook \
 
 
 ############ DOCKER COMPOSE COMMANDS ############
