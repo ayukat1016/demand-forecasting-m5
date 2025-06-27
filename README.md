@@ -35,7 +35,7 @@
 
 - Kaggleのsalesのレコード件数は100万件を超えますが、テンプレートは処理高速化のため、件数を約12万件に絞ったデモデータを使用します。同様に、pricesのレコード件数も約23万件に絞ります。
 
-- デモデータは[kaggleのデータセット](https://www.kaggle.com/competitions/m5-forecasting-accuracy/data)を以下の仕様で加工し、[data](./data/)に格納済みです。デモデータの作成方法は[notebook](./notebook/)を参照してください。
+- デモデータは[kaggleのデータセット](https://www.kaggle.com/competitions/m5-forecasting-accuracy/data)を以下の仕様で加工し、[data](./data/)に格納済みです。デモデータの作成方法は[notebook](./notebook/)の`demand_forecasting_m5_colab.ipynb`を参照してください。
   - `sales_demo.csv`
     - 元ファイルは`sales_train_evaluation.csv`
     - `store_id`を`CA_1`, `CA_2`で絞り込み
@@ -65,7 +65,7 @@
 - [data_registration](./data_registration/): [Kaggleが提供するM5 Forecasting - Accuracy](https://www.kaggle.com/competitions/m5-forecasting-accuracy)のデータをPostgreSQLに登録するバッチ処理。
 - [machine_learning](./machine_learning/): 機械学習開発のためのテンプレートとして例示したプログラム。PostgreSQLからデータを取得し、前処理、学習、評価、予測を実行し、記録をMLflow tracking serverに記録する。
 - [bi](./bi/): 過去実績の売上数量と機械学習で得られた予測の売上数量をデータベースから取得し、[Streamlit](https://streamlit.io/)で可視化します。
-- [notebook](./notebook/): 本リポジトリの実装前に[Google Colaboratory](https://colab.google/)で動作確認したnotebookを格納しています。本システムの実行結果はnotebookの予測値と一致します。
+- [notebook](./notebook/): 本リポジトリの実装前に[Google Colaboratory](https://colab.google/)で動作確認した`demand_forecasting_m5_colab.ipynb`を格納しています。本システムの実行結果はnotebookの予測値と一致します。
 
 ## machine_learningの構成
 
@@ -120,7 +120,7 @@ GNU Make 4.3
 - 本リポジトリのルートディレクトリに移動します。
 
 ```sh
-# 現在のディレクトリの表示(「/xxx/repository」はユーザにより異なります。)
+# 現在のディレクトリの表示(「/xxx/repository」はユーザーにより異なります。)
 $ pwd
 /home/xxx/repository/demand-forecasting-m5
 ```
@@ -132,117 +132,6 @@ $ pwd
 $ make build_all
 ```
 
-<details> <summary>make build_all実行ログ</summary>
-
-```sh
-$ make build_all
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/data_registration/Dockerfile \
-        .
-[+] Building 35.9s (10/10) FINISHED                                                                          docker:default
- => [internal] load .dockerignore                                                                                      0.0s
- => => transferring context: 2B                                                                                        0.0s
- => [internal] load build definition from Dockerfile                                                                   0.1s
- => => transferring dockerfile: 464B                                                                                   0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  1.9s
- => [1/5] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.2s
- => => resolve docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
- => => sha256:af1108142cf5dcd629f5542acc4dd4cc055d658821016362fef6dd4759dc9e9f 7.50kB / 7.50kB                         0.0s
- => => sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645209d77 1.86kB / 1.86kB                         0.0s
- => => sha256:c8ef926b002a8371fff6b4f40142dcc6d6f7e217f7afce2c2d1ed2e6c28e2b7c 1.37kB / 1.37kB                         0.0s
- => [internal] load build context                                                                                      0.0s
- => => transferring context: 80.61kB                                                                                   0.0s
- => [2/5] WORKDIR /opt                                                                                                 0.0s
- => [3/5] COPY data_registration/requirements.txt /opt/                                                                0.0s
- => [4/5] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm -  31.9s
- => [5/5] COPY data_registration/src/ /opt/src/                                                                        0.0s
- => exporting to image                                                                                                 1.7s
- => => exporting layers                                                                                                1.7s
- => => writing image sha256:931d9f32b572e1657c01c2d9a977b077d4927042403cb0c2b9e4a6ddbabf34e5                           0.0s
- => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0                 0.0s
-
-What's Next?
-  View a summary of image vulnerabilities and recommendations → docker scout quickview
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/machine_learning/Dockerfile \
-        .
-[+] Building 109.0s (11/11) FINISHED                                                                         docker:default
- => [internal] load .dockerignore                                                                                      0.0s
- => => transferring context: 2B                                                                                        0.0s
- => [internal] load build definition from Dockerfile                                                                   0.0s
- => => transferring dockerfile: 511B                                                                                   0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  0.7s
- => [1/6] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
- => [internal] load build context                                                                                      0.0s
- => => transferring context: 231.80kB                                                                                  0.0s
- => CACHED [2/6] WORKDIR /opt                                                                                          0.0s
- => [3/6] COPY machine_learning/requirements.txt /opt/                                                                 0.0s
- => [4/6] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm   101.2s
- => [5/6] COPY machine_learning/src/ /opt/src/                                                                         0.1s
- => [6/6] COPY machine_learning/hydra/ /opt/hydra/                                                                     0.0s
- => exporting to image                                                                                                 6.8s
- => => exporting layers                                                                                                6.8s
- => => writing image sha256:e7076249c0133611d105a19e33d60995faeff1ec3118e42add075add59bf788d                           0.0s
- => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0                  0.0s
-
-What's Next?
-  View a summary of image vulnerabilities and recommendations → docker scout quickview
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/mlflow/Dockerfile \
-        .
-[+] Building 111.2s (9/9) FINISHED                                                                           docker:default
- => [internal] load .dockerignore                                                                                      0.0s
- => => transferring context: 2B                                                                                        0.0s
- => [internal] load build definition from Dockerfile                                                                   0.0s
- => => transferring dockerfile: 394B                                                                                   0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  1.6s
- => [1/4] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
- => [internal] load build context                                                                                      0.0s
- => => transferring context: 4.65kB                                                                                    0.0s
- => CACHED [2/4] WORKDIR /opt                                                                                          0.0s
- => [3/4] COPY mlflow/requirements.txt /opt/                                                                           0.1s
- => [4/4] RUN pip install --no-cache-dir -r requirements.txt                                                         103.4s
- => exporting to image                                                                                                 6.0s
- => => exporting layers                                                                                                6.0s
- => => writing image sha256:4b13438318a380f81837b833708bb9b6cddc2adfebb280a4441a29c4895179c4                           0.0s
- => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0                            0.0s
-
-What's Next?
-  View a summary of image vulnerabilities and recommendations → docker scout quickview
-docker build \
-        --platform linux/amd64 \
-        -t demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
-        -f /home/xxx/repository/demand-forecasting-m5/bi/Dockerfile \
-        .
-[+] Building 109.8s (10/10) FINISHED                                                                         docker:default
- => [internal] load build definition from Dockerfile                                                                   0.1s
- => => transferring dockerfile: 492B                                                                                   0.0s
- => [internal] load .dockerignore                                                                                      0.0s
- => => transferring context: 2B                                                                                        0.0s
- => [internal] load metadata for docker.io/library/python:3.10.6-slim                                                  0.9s
- => [1/5] FROM docker.io/library/python:3.10.6-slim@sha256:dff7fd9200421a8c65e020af221a21c8aab784c5c8a8d55c64a095b645  0.0s
- => [internal] load build context                                                                                      0.0s
- => => transferring context: 33.12kB                                                                                   0.0s
- => CACHED [2/5] WORKDIR /opt                                                                                          0.0s
- => [3/5] COPY bi/requirements.txt /opt/                                                                               0.1s
- => [4/5] RUN apt-get -y update &&     apt-get -y install     apt-utils     gcc g++ &&     apt-get clean &&     rm   101.1s
- => [5/5] COPY bi/src/ /opt/src/                                                                                       0.0s
- => exporting to image                                                                                                 7.6s
- => => exporting layers                                                                                                7.6s
- => => writing image sha256:8045fcf658472308625dec7f945e87194e39012d1b2f8d016f43fe286b0e1720                           0.0s
- => => naming to docker.io/library/demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0                                0.0s
-
-What's Next?
-  View a summary of image vulnerabilities and recommendations → docker scout quickview
-```
-</details>
-
 - Dockerファイルは個別にビルドすることも可能です。
 
 ```sh
@@ -252,6 +141,7 @@ docker build \
         --platform linux/amd64 \
         -t demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/data_registration/Dockerfile \
+        .
 
 # machine_learningのビルド
 $ make build_machine_learning
@@ -259,6 +149,7 @@ docker build \
         --platform linux/amd64 \
         -t demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/machine_learning/Dockerfile \
+        .
 
 # mlflowのビルド
 $ make build_mlflow
@@ -266,6 +157,7 @@ docker build \
         --platform linux/amd64 \
         -t demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/mlflow/Dockerfile \
+        .
 
 # biのビルド
 $ make build_bi
@@ -273,6 +165,14 @@ docker build \
         --platform linux/amd64 \
         -t demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0 \
         -f /home/xxx/repository/demand-forecasting-m5/bi/Dockerfile \
+        .
+
+# notebookのビルド
+docker build \
+        --platform linux/amd64 \
+        -t demand_forecasting_m5:demand_forecasting_m5_notebook_1.0.0 \
+        -f /home/xxx/repository/demand-forecasting-m5/notebook/Dockerfile \
+        .
 ```
 
 - ビルドしたDocker imageを確認します。
@@ -281,6 +181,7 @@ docker build \
 # Docker imageの確認
 $ docker images
 REPOSITORY                   TAG                                                      IMAGE ID       CREATED         SIZE
+demand_forecasting_m5        demand_forecasting_m5_notebook_1.0.0                     f0311ffca9ed   2 minutes ago   847MB
 demand_forecasting_m5        demand_forecasting_m5_bi_1.0.0                           8045fcf65847   2 minutes ago   825MB
 demand_forecasting_m5        demand_forecasting_m5_mlflow_1.0.0                       4b13438318a3   4 minutes ago   836MB
 demand_forecasting_m5        demand_forecasting_m5_machine_learning_1.0.0             e7076249c013   6 minutes ago   1.04GB
@@ -1385,4 +1286,46 @@ docker run \
         --net demand_forecasting_m5 \
         demand_forecasting_m5:demand_forecasting_m5_machine_learning_1.0.0 \
         python -m src.main
+```
+
+## コンテナによるNotebook実行
+- [notebook](./notebook)は処理概要を把握したいとき、[data](./data)のcsvファイルを再作成するときに使用します。
+
+- [notebook](./notebook)の予測値とMLFlowに記録した予測値は一致します。
+
+- [notebook](./notebook)はDockerコンテナを起動して実行します。[makefile](./makefile)の`make run_notebook`はコンテナ内で[Jupyter Lab](https://jupyterlab.readthedocs.io/en/latest/#)のコマンドを実行します。
+
+- コンテナ起動時に`-v`オプションでルートディレクトリ`demand-forecasting-m5`配下のファイルをコンテナ内にマウントします。
+```sh
+# Notebookの実行
+$ make run_notebook
+docker run \
+        -it \
+        --rm \
+        --name notebook \
+        -v /home/xxx/repository/demand-forecasting-m5:/opt \
+        -p 8888:8888 \
+        demand_forecasting_m5:demand_forecasting_m5_notebook_1.0.0 \
+        jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.token=''
+```
+- webブラウザのURL http://localhost:8888 にアクセスし、[notebook](./notebook)の中の`demand_forecasting_m5_jupyter.ipynb`を実行します。
+
+- 利用終了時はコマンドラインで Ctrlキー + C を押下して、Jupyter Labを停止してください。このとき、コンテナは自動的に停止、削除されます。
+
+
+## Poetry仮想環境による静的解析
+- PCの仮想環境でサンプルコードを実行できるよう`pyproject.toml`を用意しました。ディレクトリ`data_registration`, `machine_learning`, `bi`に移動して、ディレクトリ`src`を指定し、静的解析を実行してください。
+
+```sh
+# ディレクトリの移動
+$ cd machine_learning
+
+# 現在のディレクトリの表示(「/xxx/repository」はユーザーにより異なります。)
+$ pwd
+/home/xxx/repository/demand-forecasting-m5
+
+# 静的解析の実行(black 以外に flake8, mypy, isort を実行可能)
+$ poetry run black src/
+All done! ✨ 🍰 ✨
+47 files left unchanged.
 ```
