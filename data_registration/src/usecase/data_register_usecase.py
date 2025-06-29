@@ -69,6 +69,7 @@ class DataRegisterUsecase(object):
             i += 1
             if i % limit == 0:
                 self.calendar_repository.bulk_insert(records=records)
+                records = []
                 logger.info(f"calendar: {i} ...")
         if len(records) > 0:
             self.calendar_repository.bulk_insert(records=records)
@@ -97,6 +98,7 @@ class DataRegisterUsecase(object):
             i += 1
             if i % limit == 0:
                 self.prices_repository.bulk_insert(records=records)
+                records = []
                 logger.info(f"prices: {i} ...")
         if len(records) > 0:
             self.prices_repository.bulk_insert(records=records)
@@ -129,6 +131,7 @@ class DataRegisterUsecase(object):
             i += 1
             if i % limit == 0:
                 self.sales_repository.bulk_insert(records=records)
+                records = []
                 logger.info(f"sales: {i} ...")
         if len(records) > 0:
             self.sales_repository.bulk_insert(records=records)

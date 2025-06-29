@@ -159,9 +159,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Machine Learning
+# Machine learning
 machine_learning/outputs/
-notebook/outputs/
 
-# Jupyter
+# Notebook
+notebook/outputs/
 **/.ipynb_checkpoints/
