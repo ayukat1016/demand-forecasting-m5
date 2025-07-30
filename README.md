@@ -125,7 +125,7 @@ $ pwd
 /home/xxx/repository/demand-forecasting-m5
 ```
 
-- Dockerファイルは3つあり、[makefile](./makefile)の`make build_all`は全てのDockerをまとめてビルドします。
+- Dockerファイルは5つあり、[makefile](./makefile)の`make build_all`は全てのDockerをまとめてビルドします。
 
 ```sh
 # 全てのDockerfileを一括でビルド
