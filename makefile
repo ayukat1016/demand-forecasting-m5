@@ -7,7 +7,16 @@ DOCKER_REPOSITORY := demand_forecasting_m5
 
 DIR := $(ABSOLUTE_PATH)
 TAG = demand_forecasting_m5
-PLATFORM := linux/amd64
+# Mac Apple Silicon: arm64 → linux/arm64
+# WSL2/Linux/Intel Mac: x86_64 → linux/amd64
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_M),arm64)
+	PLATFORM := linux/arm64
+else ifeq ($(UNAME_M),x86_64)
+	PLATFORM := linux/amd64
+else
+	PLATFORM := linux/amd64
+endif
 
 
 ############ DEMAND FORECASTING DATA_REGISTRATION COMMANDS ############
