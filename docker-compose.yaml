@@ -18,7 +18,7 @@ services:
     stdin_open: true
 
   data_registration:
-    container_name: data_registration
+    container_name: data_registration_m5
     image: demand_forecasting_m5:demand_forecasting_m5_data_registration_1.0.0    
     restart: "no"
     networks:
@@ -39,7 +39,7 @@ services:
       - postgres
 
   mlflow:
-    container_name: mlflow
+    container_name: mlflow_m5
     image: demand_forecasting_m5:demand_forecasting_m5_mlflow_1.0.0    
     volumes:
       - ./machine_learning/outputs/mlruns:/opt/outputs/mlruns
@@ -60,7 +60,7 @@ services:
       - postgres
 
   bi:
-    container_name: bi
+    container_name: bi_m5
     image: demand_forecasting_m5:demand_forecasting_m5_bi_1.0.0
     restart: "no"
     volumes:

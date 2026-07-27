@@ -138,7 +138,7 @@ build_machine_learning:
 run_machine_learning:
 	docker run \
 		-it \
-		--name machine_learning \
+		--name machine_learning_m5 \
 		-e POSTGRES_HOST=postgres \
 		-e POSTGRES_PORT=5432 \
 		-e POSTGRES_USER=postgres \
